@@ -1,0 +1,12 @@
+gpflow==2.2.1
+retry==0.9.2
+dm-sonnet==2.0.0
+dm-haiku==0.0.4
+jax==0.2.11
+--find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+jaxlib==0.1.64+cuda111
+neural-tangents==0.3.6
+tensorflow-addons==0.13.0
+optax==0.0.2
+dm-tree==0.1.6
+chex==0.0.7

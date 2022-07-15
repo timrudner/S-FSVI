@@ -1,0 +1,20 @@
+2022-07-14 15:33:08,846 - fsvi_cl.general_utils.log - INFO - Learning task 1
+2022-07-14 15:33:45,658 - fsvi_cl.general_utils.log - INFO - Mean accuracy (test): 0.9991
+2022-07-14 15:33:45,659 - fsvi_cl.general_utils.log - INFO - Accuracies (test): [0.9991]
+
+2022-07-14 15:33:45,659 - fsvi_cl.general_utils.log - INFO - Learning task 2
+2022-07-14 15:34:34,947 - fsvi_cl.general_utils.log - INFO - Mean accuracy (test): 0.6685
+2022-07-14 15:34:34,947 - fsvi_cl.general_utils.log - INFO - Accuracies (test): [0.3409, 0.9961]
+
+2022-07-14 15:34:34,947 - fsvi_cl.general_utils.log - INFO - Learning task 3
+2022-07-14 15:35:37,745 - fsvi_cl.general_utils.log - INFO - Mean accuracy (test): 0.7167
+2022-07-14 15:35:37,745 - fsvi_cl.general_utils.log - INFO - Accuracies (test): [0.3456, 0.8061, 0.9984]
+
+2022-07-14 15:35:37,745 - fsvi_cl.general_utils.log - INFO - Learning task 4
+2022-07-14 15:36:54,330 - fsvi_cl.general_utils.log - INFO - Mean accuracy (test): 0.7079
+2022-07-14 15:36:54,330 - fsvi_cl.general_utils.log - INFO - Accuracies (test): [0.2652, 0.6871, 0.881, 0.9985]
+
+2022-07-14 15:36:54,330 - fsvi_cl.general_utils.log - INFO - Learning task 5
+2022-07-14 15:38:24,746 - fsvi_cl.general_utils.log - INFO - Mean accuracy (test): 0.7818
+2022-07-14 15:38:24,746 - fsvi_cl.general_utils.log - INFO - Accuracies (test): [0.5773, 0.477, 0.9525, 0.9074, 0.995]
+

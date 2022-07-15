@@ -1,0 +1,1182 @@
+Running on oat1.cs.ox.ac.uk
+Running with: fsvi cl --logroot ablation --subdir reproduce_main_results_2 --save_alt --data_training continual_learning_cifar --not_use_val_split --n_permuted_tasks 10 --n_omniglot_tasks 20 --n_valid same --n_omniglot_coreset_chars 2 --seed 0 --n_coreset_inputs_per_task 200 --batch_size 512 --data_ood not_specified --use_val_split --architecture six_layers --activation relu --prior_mean 0.0 --prior_cov 0.03 --prior_covs 0.0 --prior_type bnn_induced --start_var_opt 0 --learning_rate_var 0.001 --dropout_rate 0.0 --regularization 0.0 --inducing_inputs_add_mode 0 --logging 1 --coreset random --coreset_entropy_mode soft_lowest --coreset_entropy_offset 0.0 --coreset_kl_heuristic lowest --coreset_kl_offset 0.0 --coreset_elbo_heuristic lowest --coreset_elbo_offset 0.0 --coreset_elbo_n_samples not_specified --coreset_n_tasks not_specified --coreset_entropy_n_mixed 1 --epochs_first_task 200 --n_epochs_save_params not_specified --n_augment not_specified --augment_mode constant --learning_rate_first_task 5e-4 --first_task_load_exp_path not_specified --only_task_id not_specified --loss_type 1 --n_inducing_input_adjust_amount not_specified --n_marginals 1 --n_condition 0 --inducing_input_type train_pixel_rand_0.5 --inducing_input_ood_data not_specified --inducing_input_ood_data_size 50000 --model_type fsvi_cnn --kl_scale normalized --feature_map_type not_specified --td_prior_scale 0.0 --feature_update 1 --n_samples 5 --n_samples_eval 5 --tau 1.0 --noise_std 1.0 --ind_lim ind_-1_1 --logging_frequency 10 --figsize 10 4 --save_path debug --name  --stochastic_prior_mean not_specified --batch_normalization_mod not_specified --final_layer_variational --kl_sup not_specified --init_logvar 0.0 0.0 --init_logvar_lin 0.0 0.0 --init_logvar_conv 0.0 0.0 --perturbation_param 0.01 --wandb_project not_specified --n_inducing_inputs 50 --n_inducing_inputs_first_task 10 --n_inducing_inputs_second_task 250 --inducing_inputs_bound 0.0 0.0 --optimizer adam --optimizer_var not_specified --momentum 0.0 --momentum_var 0.0 --schedule not_specified --epochs 50 --learning_rate 0.0003 --inducing_points 0
+WARNING: TensorFlow is set to only use CPU.
+WARNING: TensorFlow is set to only use CPU.
+Jax is running on gpu
+
+Device: gpu
+
+Input arguments:
+ {
+    "command":"cl",
+    "logroot":"ablation",
+    "subdir":"reproduce_main_results_2",
+    "save_alt":true,
+    "data_training":"continual_learning_cifar",
+    "not_use_val_split":true,
+    "n_permuted_tasks":10,
+    "n_omniglot_tasks":20,
+    "n_valid":"same",
+    "fix_shuffle":false,
+    "n_omniglot_coreset_chars":2,
+    "omniglot_randomize_test_split":false,
+    "omniglot_randomize_task_sequence":false,
+    "seed":0,
+    "n_coreset_inputs_per_task":"200",
+    "batch_size":512,
+    "debug_n_train":null,
+    "no_artifact":false,
+    "data_ood":[
+        "not_specified"
+    ],
+    "use_val_split":true,
+    "architecture":"six_layers",
+    "activation":"relu",
+    "prior_mean":"0.0",
+    "prior_cov":"0.03",
+    "prior_covs":[
+        0.0
+    ],
+    "prior_type":"bnn_induced",
+    "start_var_opt":0,
+    "learning_rate_var":0.001,
+    "dropout_rate":0.0,
+    "regularization":0.0,
+    "context_points_add_mode":0,
+    "context_point_adjustment":false,
+    "not_use_coreset":false,
+    "context_point_augmentation":false,
+    "plotting":false,
+    "logging":1,
+    "coreset":"random",
+    "coreset_entropy_mode":"soft_lowest",
+    "coreset_entropy_offset":"0.0",
+    "coreset_kl_heuristic":"lowest",
+    "coreset_kl_offset":"0.0",
+    "coreset_elbo_heuristic":"lowest",
+    "coreset_elbo_offset":"0.0",
+    "coreset_elbo_n_samples":5,
+    "coreset_n_tasks":"not_specified",
+    "coreset_entropy_n_mixed":1,
+    "full_ntk":false,
+    "constant_context_points":false,
+    "epochs_first_task":"200",
+    "identity_cov":false,
+    "n_epochs_save_params":"not_specified",
+    "n_augment":"not_specified",
+    "augment_mode":"constant",
+    "learning_rate_first_task":"5e-4",
+    "save_first_task":false,
+    "first_task_load_exp_path":"not_specified",
+    "only_task_id":"not_specified",
+    "loss_type":1,
+    "only_trainable_head":false,
+    "n_context_point_adjust_amount":"not_specified",
+    "save_all_params":false,
+    "n_marginals":1,
+    "n_condition":512,
+    "context_point_type":"train_pixel_rand_0.5",
+    "context_point_ood_data":[
+        "not_specified"
+    ],
+    "context_point_ood_data_size":50000,
+    "model_type":"fsvi_cnn",
+    "kl_scale":"normalized",
+    "feature_map_jacobian":false,
+    "feature_map_jacobian_train_only":false,
+    "feature_map_type":"not_specified",
+    "td_prior_scale":0.0,
+    "feature_update":1,
+    "full_cov":false,
+    "n_samples":5,
+    "n_samples_eval":5,
+    "tau":1.0,
+    "noise_std":1.0,
+    "ind_lim":"ind_-1_1",
+    "logging_frequency":10,
+    "figsize":[
+        "10",
+        "4"
+    ],
+    "save_path":"debug",
+    "save":false,
+    "name":"",
+    "evaluate":false,
+    "resume_training":false,
+    "no_final_layer_bias":false,
+    "extra_linear_layer":false,
+    "map_initialization":false,
+    "stochastic_linearization":false,
+    "grad_flow_jacobian":false,
+    "stochastic_prior_mean":"not_specified",
+    "batch_normalization":false,
+    "batch_normalization_mod":"not_specified",
+    "final_layer_variational":true,
+    "kl_sup":"not_specified",
+    "kl_sampled":false,
+    "fixed_inner_layers_variational_var":false,
+    "init_logvar":[
+        0.0,
+        0.0
+    ],
+    "init_logvar_lin":[
+        0.0,
+        0.0
+    ],
+    "init_logvar_conv":[
+        0.0,
+        0.0
+    ],
+    "perturbation_param":0.01,
+    "debug":false,
+    "wandb_project":"not_specified",
+    "n_context_points":50,
+    "n_context_points_first_task":"10",
+    "n_context_points_second_task":"250",
+    "context_points_bound":[
+        0.0,
+        0.0
+    ],
+    "use_generative_model":false,
+    "optimizer":"adam",
+    "optimizer_var":"not_specified",
+    "momentum":0.0,
+    "momentum_var":0.0,
+    "schedule":"not_specified",
+    "epochs":50,
+    "learning_rate":0.0003,
+    "context_points":0,
+    "init_logvar_minval":0.0,
+    "init_logvar_maxval":0.0,
+    "init_logvar_conv_minval":0.0,
+    "init_logvar_conv_maxval":0.0
+} 
+
+Full NTK computation: False
+Stochastic linearization (posterior): False
+Full NTK computation: False
+Stochastic linearization (prior): False
+
+
+Learning task 1
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------
+  epoch    mean acc    t1 acc
+-------  ----------  --------
+      0       40.01     40.01
+      1       47.10     47.10
+      2       50.49     50.49
+      3       54.62     54.62
+      4       54.71     54.71
+      5       56.57     56.57
+      6       59.46     59.46
+      7       59.88     59.88
+      8       62.05     62.05
+      9       61.99     61.99
+     10       63.64     63.64
+     11       64.40     64.40
+     12       63.83     63.83
+     13       64.00     64.00
+     14       67.01     67.01
+     15       65.57     65.57
+     16       67.32     67.32
+     17       67.63     67.63
+     18       69.07     69.07
+     19       68.81     68.81
+     20       69.50     69.50
+     21       70.39     70.39
+     22       70.72     70.72
+     23       71.50     71.50
+     24       71.30     71.30
+     25       71.89     71.89
+     26       72.08     72.08
+     27       71.86     71.86
+     28       72.60     72.60
+     29       73.12     73.12
+     30       73.53     73.53
+     31       73.86     73.86
+     32       73.98     73.98
+     33       73.85     73.85
+     34       74.51     74.51
+     35       74.96     74.96
+     36       74.65     74.65
+     37       75.28     75.28
+     38       75.05     75.05
+     39       74.79     74.79
+     40       73.95     73.95
+     41       74.92     74.92
+     42       74.68     74.68
+     43       75.70     75.70
+     44       75.74     75.74
+     45       75.62     75.62
+     46       76.21     76.21
+     47       76.89     76.89
+     48       76.20     76.20
+     49       76.24     76.24
+     50       75.91     75.91
+     51       75.78     75.78
+     52       76.92     76.92
+     53       77.08     77.08
+     54       76.44     76.44
+     55       77.21     77.21
+     56       77.54     77.54
+     57       77.92     77.92
+     58       77.17     77.17
+     59       77.46     77.46
+     60       77.88     77.88
+     61       78.07     78.07
+     62       76.70     76.70
+     63       77.99     77.99
+     64       77.85     77.85
+     65       78.15     78.15
+     66       78.18     78.18
+     67       78.71     78.71
+     68       78.38     78.38
+     69       77.55     77.55
+     70       77.90     77.90
+     71       78.86     78.86
+     72       78.79     78.79
+     73       78.61     78.61
+     74       78.92     78.92
+     75       78.35     78.35
+     76       77.40     77.40
+     77       78.67     78.67
+     78       77.28     77.28
+     79       78.64     78.64
+     80       78.54     78.54
+     81       78.57     78.57
+     82       78.53     78.53
+     83       78.77     78.77
+     84       78.31     78.31
+     85       79.36     79.36
+     86       78.87     78.87
+     87       78.71     78.71
+     88       79.33     79.33
+     89       78.70     78.70
+     90       78.27     78.27
+     91       79.26     79.26
+     92       78.89     78.89
+     93       78.16     78.16
+     94       79.07     79.07
+     95       78.93     78.93
+     96       79.15     79.15
+     97       79.15     79.15
+     98       79.74     79.74
+     99       79.29     79.29
+    100       79.09     79.09
+    101       79.22     79.22
+    102       79.15     79.15
+    103       79.55     79.55
+    104       79.40     79.40
+    105       79.47     79.47
+    106       79.36     79.36
+    107       79.77     79.77
+    108       79.54     79.54
+    109       80.15     80.15
+    110       79.44     79.44
+    111       79.97     79.97
+    112       79.30     79.30
+    113       79.33     79.33
+    114       79.63     79.63
+    115       80.11     80.11
+    116       80.16     80.16
+    117       79.39     79.39
+    118       79.60     79.60
+    119       79.74     79.74
+    120       79.86     79.86
+    121       79.33     79.33
+    122       79.69     79.69
+    123       79.98     79.98
+    124       80.23     80.23
+    125       79.50     79.50
+    126       79.71     79.71
+    127       80.37     80.37
+    128       80.26     80.26
+    129       80.25     80.25
+    130       79.73     79.73
+    131       79.60     79.60
+    132       79.99     79.99
+    133       79.88     79.88
+    134       79.91     79.91
+    135       79.74     79.74
+    136       80.57     80.57
+    137       80.01     80.01
+    138       79.93     79.93
+    139       79.99     79.99
+    140       80.40     80.40
+    141       79.89     79.89
+    142       79.90     79.90
+    143       80.44     80.44
+    144       79.31     79.31
+    145       78.93     78.93
+    146       80.17     80.17
+    147       80.38     80.38
+    148       80.68     80.68
+    149       80.10     80.10
+    150       80.36     80.36
+    151       80.23     80.23
+    152       79.98     79.98
+    153       80.28     80.28
+    154       80.59     80.59
+    155       80.26     80.26
+    156       81.10     81.10
+    157       80.76     80.76
+    158       80.31     80.31
+    159       79.98     79.98
+    160       80.47     80.47
+    161       80.25     80.25
+    162       80.02     80.02
+    163       80.03     80.03
+    164       80.54     80.54
+    165       80.35     80.35
+    166       80.44     80.44
+    167       80.29     80.29
+    168       80.34     80.34
+    169       80.59     80.59
+    170       80.05     80.05
+    171       80.00     80.00
+    172       80.52     80.52
+    173       80.03     80.03
+    174       80.15     80.15
+    175       80.32     80.32
+    176       80.73     80.73
+    177       80.33     80.33
+    178       80.46     80.46
+    179       80.30     80.30
+    180       80.54     80.54
+    181       80.76     80.76
+    182       80.33     80.33
+    183       80.04     80.04
+    184       80.56     80.56
+    185       80.45     80.45
+    186       80.81     80.81
+    187       80.44     80.44
+    188       80.26     80.26
+    189       80.68     80.68
+    190       80.50     80.50
+    191       80.48     80.48
+    192       79.99     79.99
+    193       81.09     81.09
+    194       80.64     80.64
+    195       80.15     80.15
+    196       80.70     80.70
+    197       80.25     80.25
+    198       80.74     80.74
+    199       80.51     80.51
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8051 
+Accuracies (test): [0.8051]
+---
+
+
+Learning task 2
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc
+-------  ----------  --------  --------
+      0       60.73     80.27     41.20
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+      1       65.25     80.10     50.40
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+      2       67.83     80.35     55.30
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+      3       69.48     80.26     58.70
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+      4       70.97     80.34     61.60
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+      5       71.89     80.07     63.70
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+      6       73.23     80.15     66.30
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+      7       73.62     80.04     67.20
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+      8       74.34     79.99     68.70
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+      9       75.30     79.89     70.70
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     10       75.57     79.75     71.40
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     11       75.56     79.92     71.20
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     12       76.11     79.72     72.50
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     13       76.72     79.65     73.80
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     14       76.94     79.77     74.10
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     15       77.20     79.49     74.90
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     16       77.11     79.51     74.70
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     17       77.29     79.58     75.00
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     18       77.41     79.72     75.10
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     19       77.87     79.54     76.20
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     20       78.40     79.49     77.30
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     21       78.00     79.50     76.50
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     22       78.21     79.32     77.10
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     23       78.66     79.61     77.70
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     24       78.80     79.59     78.00
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     25       78.96     79.42     78.50
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     26       78.67     79.44     77.90
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     27       78.80     79.50     78.10
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     28       78.94     79.47     78.40
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     29       79.00     79.30     78.70
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     30       78.85     79.39     78.30
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     31       78.91     79.42     78.40
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     32       79.11     79.42     78.80
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     33       79.14     79.29     79.00
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     34       79.29     79.28     79.30
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     35       79.26     79.41     79.10
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     36       79.06     79.02     79.10
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     37       79.52     79.44     79.60
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     38       79.40     79.10     79.70
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     39       79.63     79.36     79.90
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     40       79.56     79.22     79.90
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     41       79.48     79.27     79.70
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     42       79.58     79.26     79.90
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     43       79.71     79.32     80.10
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     44       79.56     79.33     79.80
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     45       79.56     79.23     79.90
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     46       79.61     79.22     80.00
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     47       79.48     79.17     79.80
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     48       79.82     79.04     80.60
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+The number of available coreset points is 200, smaller than the number of points to draw 250
+     49       79.61     79.01     80.20
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7961 
+Accuracies (test): [0.7901, 0.802]
+---
+
+
+Learning task 3
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc
+-------  ----------  --------  --------  --------
+      0       69.15     78.86     80.00     48.60
+      1       71.28     78.85     79.90     55.10
+      2       71.74     78.53     78.60     58.10
+      3       72.66     78.88     79.50     59.60
+      4       73.78     79.13     79.80     62.40
+      5       74.24     78.93     80.00     63.80
+      6       74.47     78.72     79.60     65.10
+      7       75.02     78.66     79.10     67.30
+      8       75.11     78.63     79.90     66.80
+      9       75.15     78.64     79.30     67.50
+     10       75.71     78.83     78.70     69.60
+     11       75.78     78.63     79.80     68.90
+     12       76.55     78.85     80.20     70.60
+     13       76.59     78.67     79.30     71.80
+     14       76.64     78.71     80.10     71.10
+     15       76.80     78.60     80.10     71.70
+     16       76.47     78.52     79.20     71.70
+     17       76.81     78.63     79.20     72.60
+     18       77.13     78.79     79.80     72.80
+     19       76.28     78.64     78.60     71.60
+     20       76.74     78.61     79.30     72.30
+     21       76.65     78.44     78.90     72.60
+     22       76.82     78.67     78.00     73.80
+     23       77.20     78.49     80.00     73.10
+     24       76.80     78.39     78.40     73.60
+     25       77.22     78.65     79.40     73.60
+     26       77.14     78.81     79.10     73.50
+     27       77.21     78.73     79.00     73.90
+     28       77.43     78.80     79.40     74.10
+     29       76.92     78.75     78.20     73.80
+     30       77.10     78.59     78.40     74.30
+     31       77.24     78.71     78.90     74.10
+     32       77.60     78.90     79.20     74.70
+     33       77.67     78.52     79.60     74.90
+     34       77.70     78.60     79.20     75.30
+     35       77.12     78.25     78.10     75.00
+     36       77.76     78.69     79.50     75.10
+     37       77.31     78.73     78.80     74.40
+     38       77.32     78.46     78.50     75.00
+     39       77.35     78.65     78.60     74.80
+     40       77.35     78.65     78.60     74.80
+     41       77.81     78.83     79.60     75.00
+     42       77.61     78.44     79.50     74.90
+     43       78.06     78.78     79.60     75.80
+     44       77.81     79.02     78.80     75.60
+     45       77.86     78.89     78.70     76.00
+     46       77.65     78.65     78.30     76.00
+     47       78.06     78.79     79.20     76.20
+     48       78.05     78.96     79.20     76.00
+     49       78.07     78.80     79.40     76.00
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7807 
+Accuracies (test): [0.788, 0.794, 0.76]
+---
+
+
+Learning task 4
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc
+-------  ----------  --------  --------  --------  --------
+2022-09-26 22:47:00.073688: E external/org_tensorflow/tensorflow/compiler/xla/service/slow_operation_alarm.cc:55] 
+********************************
+Very slow compile?  If you want to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+Compiling module jit_update__5.383012
+********************************
+      0       70.55     78.20     79.00     76.20     48.80
+      1       73.83     78.31     79.60     76.30     61.10
+      2       74.52     77.67     79.80     75.50     65.10
+      3       74.83     77.91     78.80     75.60     67.00
+      4       75.29     77.87     79.90     75.10     68.30
+      5       75.72     77.87     79.90     75.10     70.00
+      6       76.08     77.82     80.00     75.00     71.50
+      7       76.38     77.51     80.40     75.90     71.70
+      8       76.41     77.83     79.30     75.70     72.80
+      9       76.70     77.60     79.10     76.50     73.60
+     10       77.18     77.92     79.50     76.40     74.90
+     11       76.86     77.75     79.10     75.50     75.10
+     12       76.97     77.68     79.10     75.60     75.50
+     13       77.13     77.61     79.40     75.80     75.70
+     14       76.85     77.71     78.10     75.70     75.90
+     15       77.08     77.62     78.60     76.00     76.10
+     16       77.33     77.51     78.90     76.00     76.90
+     17       77.53     77.84     79.10     76.40     76.80
+     18       77.46     77.73     79.40     75.70     77.00
+     19       77.71     77.73     79.50     75.90     77.70
+     20       77.45     77.71     78.70     76.00     77.40
+     21       77.80     77.78     79.50     75.80     78.10
+     22       77.37     77.39     79.10     75.20     77.80
+     23       77.45     77.29     79.30     75.10     78.10
+     24       77.50     77.30     79.40     75.10     78.20
+     25       77.16     77.05     78.30     75.30     78.00
+     26       77.46     77.44     79.50     74.40     78.50
+     27       77.47     77.18     79.30     74.70     78.70
+     28       77.81     77.65     79.10     75.40     79.10
+     29       77.69     77.46     78.90     75.40     79.00
+     30       77.41     77.44     78.90     74.90     78.40
+     31       77.66     77.54     79.10     75.10     78.90
+     32       77.87     77.47     79.40     75.30     79.30
+     33       77.62     77.59     78.60     75.20     79.10
+     34       77.59     77.34     78.60     74.90     79.50
+     35       77.65     77.58     78.90     74.90     79.20
+     36       77.63     77.13     78.70     75.20     79.50
+     37       77.72     77.58     78.60     75.10     79.60
+     38       77.56     77.54     78.70     74.50     79.50
+     39       77.52     77.47     78.40     74.40     79.80
+     40       77.55     77.20     79.00     75.00     79.00
+     41       77.58     77.21     78.80     74.60     79.70
+     42       77.57     77.28     78.50     75.10     79.40
+     43       77.99     77.45     78.90     75.30     80.30
+     44       77.65     77.10     78.70     75.00     79.80
+     45       77.69     77.57     78.80     74.60     79.80
+     46       77.70     77.48     78.40     75.20     79.70
+     47       77.82     77.58     78.60     75.20     79.90
+     48       77.83     77.40     78.60     75.50     79.80
+     49       77.50     77.40     77.80     74.60     80.20
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7750 
+Accuracies (test): [0.774, 0.778, 0.746, 0.802]
+---
+
+
+Learning task 5
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc
+-------  ----------  --------  --------  --------  --------  --------
+      0       71.62     77.49     78.60     75.00     80.40     46.60
+      1       73.73     77.47     77.60     74.90     80.40     58.30
+      2       73.75     76.87     78.00     74.50     79.70     59.70
+      3       74.12     76.92     77.10     75.10     80.00     61.50
+      4       74.33     77.44     77.10     74.40     79.50     63.20
+      5       74.66     77.59     76.70     74.60     79.80     64.60
+      6       74.99     77.43     77.20     75.10     79.60     65.60
+      7       75.25     77.66     77.60     73.70     79.20     68.10
+      8       75.08     76.99     76.50     74.80     79.60     67.50
+      9       75.58     77.71     77.40     74.30     79.50     69.00
+     10       75.45     77.03     77.80     73.40     80.00     69.00
+     11       75.58     77.38     77.70     73.90     79.70     69.20
+     12       75.37     77.07     77.10     73.70     79.50     69.50
+     13       75.88     77.39     77.50     73.80     79.60     71.10
+     14       76.05     77.24     77.60     73.90     80.40     71.10
+     15       76.00     77.28     77.60     73.60     80.00     71.50
+     16       76.23     77.06     78.40     74.10     79.90     71.70
+     17       76.01     77.25     77.10     73.30     79.20     73.20
+     18       76.45     77.35     78.30     73.70     80.00     72.90
+     19       76.26     77.12     76.90     74.00     80.00     73.30
+     20       76.15     77.07     76.50     73.70     79.90     73.60
+     21       76.60     77.48     77.60     73.90     79.90     74.10
+     22       76.74     77.12     77.80     73.60     80.10     75.10
+     23       76.53     77.26     78.00     73.40     79.50     74.50
+     24       76.59     76.96     77.80     73.20     80.00     75.00
+     25       76.81     77.17     77.60     73.40     80.10     75.80
+     26       76.53     77.17     77.30     72.80     80.10     75.30
+     27       76.72     77.10     78.10     72.70     79.90     75.80
+     28       76.30     76.82     77.20     72.40     79.10     76.00
+     29       76.80     77.30     77.90     73.40     79.60     75.80
+     30       76.57     77.04     77.20     72.70     79.80     76.10
+     31       76.85     77.23     78.40     72.70     79.80     76.10
+     32       76.75     77.03     77.40     72.70     79.80     76.80
+     33       76.50     76.79     77.10     72.60     79.70     76.30
+     34       77.16     77.29     77.90     73.80     79.90     76.90
+     35       76.93     76.97     78.00     72.90     79.90     76.90
+     36       76.76     77.02     77.00     73.20     79.30     77.30
+     37       77.35     77.07     78.70     73.40     79.70     77.90
+     38       77.08     77.19     77.90     73.00     79.50     77.80
+     39       77.06     77.38     77.50     73.20     79.60     77.60
+     40       77.00     77.19     76.90     73.60     79.80     77.50
+     41       77.13     76.97     77.90     72.20     79.80     78.80
+     42       77.48     76.80     78.50     73.20     79.80     79.10
+     43       77.31     77.25     78.00     73.40     79.60     78.30
+     44       77.26     77.12     78.30     72.60     79.80     78.50
+     45       77.09     77.44     77.40     72.80     79.50     78.30
+     46       77.24     77.50     77.50     73.10     79.50     78.60
+     47       76.94     77.22     77.40     72.60     79.40     78.10
+     48       77.20     77.11     77.30     72.40     80.00     79.20
+     49       77.35     77.24     77.70     72.90     79.70     79.20
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7735 
+Accuracies (test): [0.7724, 0.777, 0.729, 0.797, 0.792]
+---
+
+
+Learning task 6
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc    t6 acc
+-------  ----------  --------  --------  --------  --------  --------  --------
+      0       74.07     77.35     78.50     73.00     79.90     79.40     56.30
+      1       75.02     76.45     77.90     72.90     78.80     78.30     65.80
+      2       75.73     76.80     78.30     73.60     79.20     78.10     68.40
+      3       75.96     76.75     78.30     73.30     78.60     78.40     70.40
+      4       75.81     76.57     77.70     73.50     78.70     77.30     71.10
+      5       76.06     76.67     77.60     73.00     78.90     77.50     72.70
+      6       76.22     76.90     78.00     73.20     78.90     77.10     73.20
+      7       76.31     76.84     77.90     73.30     79.10     76.90     73.80
+      8       76.75     77.01     77.90     73.50     79.40     77.60     75.10
+      9       76.70     76.98     77.60     73.70     79.50     77.10     75.30
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/multiclass.py:13: DeprecationWarning: Please use `spmatrix` from the `scipy.sparse` namespace, the `scipy.sparse.base` namespace is deprecated.
+  from scipy.sparse.base import spmatrix
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/tensorflow_addons/utils/ensure_tf_install.py:53: UserWarning: Tensorflow Addons supports using Python ops for all Tensorflow versions above or equal to 2.3.0 and strictly below 2.6.0 (nightly versions are not supported). 
+ The versions of TensorFlow you are currently using is 2.6.0 and is not supported. 
+Some things might work, some things might not.
+If you were to encounter a bug, do not file an issue.
+If you want to make sure you're using a tested and supported configuration, either change the TensorFlow version or the TensorFlow Addons's version. 
+You can find the compatibility matrix in TensorFlow Addon's readme:
+https://github.com/tensorflow/addons
+  warnings.warn(
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/feature_extraction/image.py:167: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  dtype=np.int):
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+     10       77.00     77.03     78.30     74.20     79.00     77.80     75.70
+     11       76.98     77.07     78.00     73.40     79.80     77.70     75.90
+     12       77.10     76.89     78.50     73.40     79.50     77.60     76.70
+     13       77.04     77.06     78.60     73.30     79.50     77.40     76.40
+     14       77.17     77.15     78.30     73.40     79.40     77.90     76.90
+     15       77.28     76.77     78.20     73.50     79.50     77.90     77.80
+     16       77.19     76.91     79.10     73.70     79.00     77.10     77.30
+     17       77.41     76.75     79.10     73.10     79.60     77.70     78.20
+     18       77.44     76.71     78.20     73.90     79.00     78.00     78.80
+     19       77.38     77.05     79.00     73.20     78.70     77.60     78.70
+     20       77.17     76.69     77.80     73.70     79.00     77.10     78.70
+     21       77.42     77.11     78.30     73.50     79.60     77.40     78.60
+     22       77.17     76.52     77.60     73.70     78.80     77.50     78.90
+     23       77.39     76.76     78.80     72.70     79.40     77.80     78.90
+     24       77.56     76.55     78.60     73.20     79.50     77.70     79.80
+     25       77.65     77.07     78.90     73.10     79.10     77.60     80.10
+     26       77.52     76.80     78.50     72.70     79.40     77.60     80.10
+     27       77.51     76.85     79.30     73.30     79.30     76.90     79.40
+     28       77.61     76.76     79.10     73.60     79.10     76.90     80.20
+     29       77.58     76.85     78.90     73.70     79.10     77.10     79.80
+     30       77.47     76.90     78.50     73.60     79.20     77.00     79.60
+     31       77.61     76.69     78.70     73.30     79.20     77.40     80.40
+     32       77.43     76.78     77.50     73.80     79.30     77.00     80.20
+     33       77.58     76.88     78.40     73.40     79.20     77.40     80.20
+     34       77.58     76.89     78.80     73.10     79.50     77.00     80.20
+     35       77.65     76.68     78.10     73.40     79.40     78.00     80.30
+     36       77.65     76.80     79.20     72.70     78.80     77.70     80.70
+     37       77.82     76.92     78.40     73.00     79.70     77.50     81.40
+     38       77.66     76.75     78.50     72.90     79.50     77.60     80.70
+     39       77.63     76.70     79.20     73.20     78.90     77.20     80.60
+     40       78.03     76.99     79.80     73.50     79.00     77.20     81.70
+     41       77.71     76.84     78.60     73.30     79.10     77.30     81.10
+     42       77.77     76.63     78.70     73.10     79.20     77.70     81.30
+     43       77.67     76.79     78.80     73.30     78.80     76.90     81.40
+     44       77.79     77.05     78.70     73.20     78.60     77.90     81.30
+     45       77.62     76.93     78.80     73.30     79.00     76.40     81.30
+     46       77.86     76.57     78.40     73.80     79.50     77.40     81.50
+     47       77.66     76.88     77.60     73.10     79.40     77.50     81.50
+     48       77.93     76.85     78.90     72.80     79.70     77.30     82.00
+     49       77.64     76.63     78.50     72.60     78.90     77.30     81.90
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7764 
+Accuracies (test): [0.7663, 0.785, 0.726, 0.789, 0.773, 0.819]
+---
+
+
+------------------- DONE -------------------
+

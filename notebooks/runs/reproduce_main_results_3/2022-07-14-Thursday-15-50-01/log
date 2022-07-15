@@ -1,0 +1,5 @@
+2022-07-14 15:50:11,117 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 1: mean = 0.9910, all = [0.991]
+2022-07-14 15:52:19,606 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 2: mean = 0.9798, all = [0.987  0.9725]
+2022-07-14 15:55:06,970 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 3: mean = 0.9878, all = [0.9905 0.973  1.    ]
+2022-07-14 15:58:34,279 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 4: mean = 0.9898, all = [0.987 0.973 0.999 1.   ]
+2022-07-14 16:03:41,184 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 5: mean = 0.9908, all = [0.9855 0.9715 0.999  1.     0.998 ]

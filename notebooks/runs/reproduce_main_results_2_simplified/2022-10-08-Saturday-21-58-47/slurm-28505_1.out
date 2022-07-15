@@ -1,0 +1,732 @@
+Running on clpc156.cs.ox.ac.uk
+Running with: fsvi cl --logroot ablation --subdir reproduce_main_results_2 --save_alt --data_training continual_learning_cifar --not_use_val_split --n_permuted_tasks 10 --n_omniglot_tasks 20 --n_valid same --n_omniglot_coreset_chars 2 --seed 0 --n_coreset_inputs_per_task 200 --batch_size 512 --data_ood not_specified --use_val_split --architecture six_layers --activation relu --prior_mean 0.0 --prior_cov 0.03 --prior_covs 0.0 --prior_type bnn_induced --start_var_opt 0 --learning_rate_var 0.001 --dropout_rate 0.0 --regularization 0.0 --inducing_inputs_add_mode 0 --logging 1 --coreset random --coreset_entropy_mode soft_lowest --coreset_entropy_offset 0.0 --coreset_kl_heuristic lowest --coreset_kl_offset 0.0 --coreset_elbo_heuristic lowest --coreset_elbo_offset 0.0 --coreset_elbo_n_samples not_specified --coreset_n_tasks not_specified --coreset_entropy_n_mixed 1 --epochs_first_task 200 --n_epochs_save_params not_specified --n_augment not_specified --augment_mode constant --learning_rate_first_task 5e-4 --first_task_load_exp_path not_specified --only_task_id not_specified --loss_type 1 --n_inducing_input_adjust_amount not_specified --n_marginals 1 --n_condition 0 --inducing_input_type train_pixel_rand_0.5 --inducing_input_ood_data not_specified --inducing_input_ood_data_size 50000 --model_type fsvi_cnn --kl_scale normalized --feature_map_type not_specified --td_prior_scale 0.0 --feature_update 1 --n_samples 5 --n_samples_eval 5 --tau 1.0 --noise_std 1.0 --ind_lim ind_-1_1 --logging_frequency 10 --figsize 10 4 --save_path debug --name  --stochastic_prior_mean not_specified --batch_normalization_mod not_specified --final_layer_variational --kl_sup not_specified --init_logvar 0.0 0.0 --init_logvar_lin 0.0 0.0 --init_logvar_conv 0.0 0.0 --perturbation_param 0.01 --wandb_project not_specified --n_inducing_inputs 50 --n_inducing_inputs_first_task 10 --n_inducing_inputs_second_task 200 --inducing_inputs_bound 0.0 0.0 --optimizer adam --optimizer_var not_specified --momentum 0.0 --momentum_var 0.0 --schedule not_specified --epochs 50 --learning_rate 0.0003 --inducing_points 0
+2022-10-08 21:58:03.360562: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-10-08 21:58:03.406597: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-10-08 21:58:03.407271: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2022-10-08 21:58:58.377991: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: TensorFlow is set to only use CPU.
+WARNING: TensorFlow is set to only use CPU.
+Jax is running on gpu
+
+Device: gpu
+
+Input arguments:
+ {
+    "command":"cl",
+    "logroot":"ablation",
+    "subdir":"reproduce_main_results_2",
+    "save_alt":true,
+    "data_training":"continual_learning_cifar",
+    "not_use_val_split":true,
+    "n_permuted_tasks":10,
+    "n_omniglot_tasks":20,
+    "n_valid":"same",
+    "fix_shuffle":false,
+    "n_omniglot_coreset_chars":2,
+    "omniglot_randomize_test_split":false,
+    "omniglot_randomize_task_sequence":false,
+    "seed":0,
+    "n_coreset_inputs_per_task":"200",
+    "batch_size":512,
+    "debug_n_train":null,
+    "no_artifact":false,
+    "data_ood":[
+        "not_specified"
+    ],
+    "use_val_split":true,
+    "architecture":"six_layers",
+    "activation":"relu",
+    "prior_mean":"0.0",
+    "prior_cov":"0.03",
+    "prior_covs":[
+        0.0
+    ],
+    "prior_type":"bnn_induced",
+    "start_var_opt":0,
+    "learning_rate_var":0.001,
+    "dropout_rate":0.0,
+    "regularization":0.0,
+    "context_points_add_mode":0,
+    "context_point_adjustment":false,
+    "not_use_coreset":false,
+    "context_point_augmentation":false,
+    "plotting":false,
+    "logging":1,
+    "coreset":"random",
+    "coreset_entropy_mode":"soft_lowest",
+    "coreset_entropy_offset":"0.0",
+    "coreset_kl_heuristic":"lowest",
+    "coreset_kl_offset":"0.0",
+    "coreset_elbo_heuristic":"lowest",
+    "coreset_elbo_offset":"0.0",
+    "coreset_elbo_n_samples":5,
+    "coreset_n_tasks":"not_specified",
+    "coreset_entropy_n_mixed":1,
+    "full_ntk":false,
+    "constant_context_points":false,
+    "epochs_first_task":"200",
+    "identity_cov":false,
+    "n_epochs_save_params":"not_specified",
+    "n_augment":"not_specified",
+    "augment_mode":"constant",
+    "learning_rate_first_task":"5e-4",
+    "save_first_task":false,
+    "first_task_load_exp_path":"not_specified",
+    "only_task_id":"not_specified",
+    "loss_type":1,
+    "only_trainable_head":false,
+    "n_context_point_adjust_amount":"not_specified",
+    "save_all_params":false,
+    "n_marginals":1,
+    "n_condition":512,
+    "context_point_type":"train_pixel_rand_0.5",
+    "context_point_ood_data":[
+        "not_specified"
+    ],
+    "context_point_ood_data_size":50000,
+    "model_type":"fsvi_cnn",
+    "kl_scale":"normalized",
+    "feature_map_jacobian":false,
+    "feature_map_jacobian_train_only":false,
+    "feature_map_type":"not_specified",
+    "td_prior_scale":0.0,
+    "feature_update":1,
+    "full_cov":false,
+    "n_samples":5,
+    "n_samples_eval":5,
+    "tau":1.0,
+    "noise_std":1.0,
+    "ind_lim":"ind_-1_1",
+    "logging_frequency":10,
+    "figsize":[
+        "10",
+        "4"
+    ],
+    "save_path":"debug",
+    "save":false,
+    "name":"",
+    "evaluate":false,
+    "resume_training":false,
+    "no_final_layer_bias":false,
+    "extra_linear_layer":false,
+    "map_initialization":false,
+    "stochastic_linearization":false,
+    "grad_flow_jacobian":false,
+    "stochastic_prior_mean":"not_specified",
+    "batch_normalization":false,
+    "batch_normalization_mod":"not_specified",
+    "final_layer_variational":true,
+    "kl_sup":"not_specified",
+    "kl_sampled":false,
+    "fixed_inner_layers_variational_var":false,
+    "init_logvar":[
+        0.0,
+        0.0
+    ],
+    "init_logvar_lin":[
+        0.0,
+        0.0
+    ],
+    "init_logvar_conv":[
+        0.0,
+        0.0
+    ],
+    "perturbation_param":0.01,
+    "debug":false,
+    "wandb_project":"not_specified",
+    "n_context_points":50,
+    "n_context_points_first_task":"10",
+    "n_context_points_second_task":"200",
+    "context_points_bound":[
+        0.0,
+        0.0
+    ],
+    "use_generative_model":false,
+    "optimizer":"adam",
+    "optimizer_var":"not_specified",
+    "momentum":0.0,
+    "momentum_var":0.0,
+    "schedule":"not_specified",
+    "epochs":50,
+    "learning_rate":0.0003,
+    "context_points":0,
+    "init_logvar_minval":0.0,
+    "init_logvar_maxval":0.0,
+    "init_logvar_conv_minval":0.0,
+    "init_logvar_conv_maxval":0.0
+} 
+
+Full NTK computation: False
+Stochastic linearization (posterior): False
+Full NTK computation: False
+Stochastic linearization (prior): False
+
+
+Learning task 1
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------
+  epoch    mean acc    t1 acc
+-------  ----------  --------
+      0       39.97     39.97
+      1       47.28     47.28
+      2       50.59     50.59
+      3       54.36     54.36
+      4       54.74     54.74
+      5       56.92     56.92
+      6       59.27     59.27
+      7       59.25     59.25
+      8       61.54     61.54
+      9       61.79     61.79
+     10       63.27     63.27
+     11       63.83     63.83
+     12       63.13     63.13
+     13       64.00     64.00
+     14       66.68     66.68
+     15       65.46     65.46
+     16       66.92     66.92
+     17       67.51     67.51
+     18       68.54     68.54
+     19       68.96     68.96
+     20       68.86     68.86
+     21       70.45     70.45
+     22       69.73     69.73
+     23       71.11     71.11
+     24       70.66     70.66
+     25       70.80     70.80
+     26       71.57     71.57
+     27       71.68     71.68
+     28       72.25     72.25
+     29       73.04     73.04
+     30       73.15     73.15
+     31       73.81     73.81
+     32       73.24     73.24
+     33       73.74     73.74
+     34       74.65     74.65
+     35       74.74     74.74
+     36       74.21     74.21
+     37       74.72     74.72
+     38       74.34     74.34
+     39       74.72     74.72
+     40       73.18     73.18
+     41       74.66     74.66
+     42       75.10     75.10
+     43       75.40     75.40
+     44       75.42     75.42
+     45       75.27     75.27
+     46       76.18     76.18
+     47       76.28     76.28
+     48       75.81     75.81
+     49       76.34     76.34
+     50       75.82     75.82
+     51       75.39     75.39
+     52       76.58     76.58
+     53       76.40     76.40
+     54       76.64     76.64
+     55       77.15     77.15
+     56       77.52     77.52
+     57       77.75     77.75
+     58       75.89     75.89
+     59       77.55     77.55
+     60       77.55     77.55
+     61       77.88     77.88
+     62       76.06     76.06
+     63       77.85     77.85
+     64       77.16     77.16
+     65       78.07     78.07
+     66       78.00     78.00
+     67       78.56     78.56
+     68       77.93     77.93
+     69       78.09     78.09
+     70       78.42     78.42
+     71       78.25     78.25
+     72       78.80     78.80
+     73       77.88     77.88
+     74       78.43     78.43
+     75       78.17     78.17
+     76       77.77     77.77
+     77       78.53     78.53
+     78       77.35     77.35
+     79       78.42     78.42
+     80       77.53     77.53
+     81       78.36     78.36
+     82       78.50     78.50
+     83       78.43     78.43
+     84       78.88     78.88
+     85       78.89     78.89
+     86       78.43     78.43
+     87       79.19     79.19
+     88       79.13     79.13
+     89       78.85     78.85
+     90       78.42     78.42
+     91       79.29     79.29
+     92       78.61     78.61
+     93       78.61     78.61
+     94       78.67     78.67
+     95       78.76     78.76
+     96       79.30     79.30
+     97       78.95     78.95
+     98       79.53     79.53
+     99       79.59     79.59
+    100       78.78     78.78
+    101       79.70     79.70
+    102       79.32     79.32
+    103       79.29     79.29
+    104       79.04     79.04
+    105       79.12     79.12
+    106       78.65     78.65
+    107       79.85     79.85
+    108       79.44     79.44
+    109       79.51     79.51
+    110       79.51     79.51
+    111       79.33     79.33
+    112       79.33     79.33
+    113       79.84     79.84
+    114       79.39     79.39
+    115       80.14     80.14
+    116       79.87     79.87
+    117       78.73     78.73
+    118       79.79     79.79
+    119       80.15     80.15
+    120       79.64     79.64
+    121       79.45     79.45
+    122       79.59     79.59
+    123       79.54     79.54
+    124       80.23     80.23
+    125       79.90     79.90
+    126       79.75     79.75
+    127       79.97     79.97
+    128       79.89     79.89
+    129       80.10     80.10
+    130       79.99     79.99
+    131       80.42     80.42
+    132       79.79     79.79
+    133       79.76     79.76
+    134       79.71     79.71
+    135       79.71     79.71
+    136       80.35     80.35
+    137       79.67     79.67
+    138       80.18     80.18
+    139       79.91     79.91
+    140       80.28     80.28
+    141       80.01     80.01
+    142       80.38     80.38
+    143       79.88     79.88
+    144       79.90     79.90
+    145       80.11     80.11
+    146       79.79     79.79
+    147       80.55     80.55
+    148       80.46     80.46
+    149       79.45     79.45
+    150       79.86     79.86
+    151       80.28     80.28
+    152       79.89     79.89
+    153       79.99     79.99
+    154       80.46     80.46
+    155       80.72     80.72
+    156       80.58     80.58
+    157       80.38     80.38
+    158       80.50     80.50
+    159       79.60     79.60
+    160       80.57     80.57
+    161       80.49     80.49
+    162       80.64     80.64
+    163       80.36     80.36
+    164       80.52     80.52
+    165       80.33     80.33
+    166       80.46     80.46
+    167       80.75     80.75
+    168       80.64     80.64
+    169       80.80     80.80
+    170       80.52     80.52
+    171       80.21     80.21
+    172       80.84     80.84
+    173       80.24     80.24
+    174       80.70     80.70
+    175       80.47     80.47
+    176       80.56     80.56
+    177       80.79     80.79
+    178       80.49     80.49
+    179       80.14     80.14
+    180       80.52     80.52
+    181       80.45     80.45
+    182       80.60     80.60
+    183       80.17     80.17
+    184       80.62     80.62
+    185       80.79     80.79
+    186       80.47     80.47
+    187       79.90     79.90
+    188       79.87     79.87
+    189       80.55     80.55
+    190       80.13     80.13
+    191       80.78     80.78
+    192       80.20     80.20
+    193       80.48     80.48
+    194       80.68     80.68
+    195       80.22     80.22
+    196       80.66     80.66
+    197       80.51     80.51
+    198       80.35     80.35
+    199       80.10     80.10
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8010 
+Accuracies (test): [0.801]
+---
+
+
+Learning task 2
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc
+-------  ----------  --------  --------
+      0       61.09     80.29     41.90
+      1       64.88     80.45     49.30
+      2       67.06     80.23     53.90
+      3       68.78     80.27     57.30
+      4       70.29     80.28     60.30
+      5       71.45     80.19     62.70
+      6       72.65     79.99     65.30
+      7       73.17     79.93     66.40
+      8       73.87     79.93     67.80
+      9       74.56     79.93     69.20
+     10       75.18     79.96     70.40
+     11       75.66     79.91     71.40
+     12       75.61     79.71     71.50
+     13       76.32     79.74     72.90
+     14       76.48     79.97     73.00
+     15       77.00     79.70     74.30
+     16       77.23     79.77     74.70
+     17       77.45     79.89     75.00
+     18       77.75     79.71     75.80
+     19       77.70     79.91     75.50
+     20       78.30     80.10     76.50
+     21       78.00     79.79     76.20
+     22       78.09     79.68     76.50
+     23       78.22     79.75     76.70
+     24       78.43     79.56     77.30
+     25       78.15     79.60     76.70
+     26       78.81     79.52     78.10
+     27       78.89     79.87     77.90
+     28       78.46     79.71     77.20
+     29       79.06     79.81     78.30
+     30       78.64     79.78     77.50
+     31       78.50     79.71     77.30
+     32       78.66     79.52     77.80
+     33       78.81     79.73     77.90
+     34       78.62     79.64     77.60
+     35       79.04     79.68     78.40
+     36       79.18     79.77     78.60
+     37       79.11     79.71     78.50
+     38       79.06     79.61     78.50
+     39       78.93     79.46     78.40
+     40       79.04     79.48     78.60
+     41       79.22     79.75     78.70
+     42       79.50     79.70     79.30
+     43       79.26     79.62     78.90
+     44       79.55     79.71     79.40
+     45       79.29     79.77     78.80
+     46       79.42     79.53     79.30
+     47       79.44     79.48     79.40
+     48       79.69     79.57     79.80
+     49       79.07     79.44     78.70
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7907 
+Accuracies (test): [0.7944, 0.787]
+---
+
+
+Learning task 3
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc
+-------  ----------  --------  --------  --------
+      0       67.48     79.25     78.40     44.80
+      1       70.48     79.15     78.50     53.80
+      2       72.23     79.28     78.80     58.60
+      3       72.15     79.05     77.70     59.70
+      4       73.01     79.42     78.60     61.00
+      5       73.69     79.48     79.00     62.60
+      6       74.25     79.26     79.10     64.40
+      7       74.32     79.15     78.10     65.70
+      8       74.64     79.01     78.20     66.70
+      9       74.72     78.76     77.90     67.50
+     10       75.18     78.95     77.80     68.80
+     11       75.98     78.73     78.80     70.40
+     12       75.68     79.14     77.40     70.50
+     13       75.59     79.06     77.30     70.40
+     14       75.91     79.13     78.20     70.40
+     15       76.39     78.98     77.90     72.30
+     16       76.54     79.13     77.70     72.80
+     17       76.66     79.07     77.40     73.50
+     18       76.74     79.01     78.30     72.90
+     19       76.39     78.67     77.80     72.70
+     20       76.31     78.83     76.80     73.30
+     21       76.65     78.94     77.50     73.50
+     22       76.47     79.01     76.90     73.50
+     23       76.72     79.37     77.20     73.60
+     24       76.86     78.97     77.60     74.00
+     25       76.58     78.94     77.20     73.60
+     26       77.16     79.27     78.10     74.10
+     27       76.82     78.65     77.40     74.40
+     28       77.11     79.04     77.70     74.60
+     29       76.63     78.59     77.00     74.30
+     30       76.88     78.84     77.50     74.30
+     31       77.23     79.20     78.20     74.30
+     32       77.11     78.94     77.40     75.00
+     33       77.53     78.79     78.10     75.70
+     34       76.97     78.71     77.00     75.20
+     35       76.51     78.54     77.30     73.70
+     36       77.57     79.10     78.20     75.40
+     37       77.22     78.97     78.30     74.40
+     38       77.67     79.01     78.30     75.70
+     39       77.57     79.12     77.90     75.70
+     40       77.27     78.90     77.30     75.60
+     41       77.01     78.62     76.70     75.70
+     42       76.98     79.14     77.10     74.70
+     43       77.44     78.73     78.00     75.60
+     44       77.13     79.00     77.10     75.30
+     45       77.25     78.85     77.20     75.70
+     46       77.39     79.06     77.10     76.00
+     47       77.43     79.10     77.40     75.80
+     48       77.28     78.74     76.80     76.30
+     49       77.66     78.69     77.50     76.80
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7766 
+Accuracies (test): [0.7869, 0.775, 0.768]
+---
+
+
+Learning task 4
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc
+-------  ----------  --------  --------  --------  --------
+      0       69.31     78.66     76.90     75.10     46.60
+      1       72.54     78.34     77.60     75.70     58.50
+      2       73.96     77.74     78.10     75.80     64.20
+      3       73.87     77.67     77.50     75.40     64.90
+      4       74.68     78.02     77.50     75.80     67.40
+      5       75.24     77.96     77.70     75.80     69.50
+      6       75.56     78.14     77.80     75.50     70.80
+      7       75.74     77.96     78.20     75.50     71.30
+      8       75.89     77.44     77.70     76.30     72.10
+      9       76.06     77.73     77.90     75.60     73.00
+     10       75.61     78.04     76.80     75.00     72.60
+     11       76.14     77.57     77.60     75.20     74.20
+     12       76.61     77.94     77.80     76.10     74.60
+     13       76.66     77.44     77.90     75.70     75.60
+     14       76.45     77.80     77.50     75.30     75.20
+     15       76.66     77.86     77.50     75.50     75.80
+     16       76.93     77.83     78.00     75.50     76.40
+     17       76.89     77.95     77.70     75.40     76.50
+     18       77.00     77.70     77.30     75.80     77.20
+     19       77.14     77.75     76.90     76.10     77.80
+     20       77.23     78.20     77.60     75.40     77.70
+     21       77.45     77.60     77.40     76.30     78.50
+     22       77.26     77.75     77.30     75.30     78.70
+     23       76.88     77.31     76.70     75.60     77.90
+     24       77.12     77.47     76.70     76.00     78.30
+     25       77.44     77.86     77.20     75.90     78.80
+     26       77.49     77.77     76.70     76.10     79.40
+     27       77.37     77.77     77.00     75.30     79.40
+     28       77.58     77.40     76.90     76.20     79.80
+     29       77.40     77.61     76.70     76.20     79.10
+     30       77.19     77.26     76.60     75.80     79.10
+     31       77.53     77.41     77.00     76.20     79.50
+     32       77.64     77.57     77.60     75.60     79.80
+     33       77.43     77.53     76.70     75.80     79.70
+     34       77.81     77.73     77.00     76.30     80.20
+     35       77.41     77.45     76.30     76.00     79.90
+     36       77.74     77.27     77.20     76.10     80.40
+     37       77.86     77.64     77.50     76.10     80.20
+     38       77.50     77.49     76.40     75.60     80.50
+     39       77.85     77.29     77.20     76.10     80.80
+     40       77.53     77.12     76.60     76.00     80.40
+     41       77.74     77.46     76.40     76.20     80.90
+     42       77.74     77.25     76.20     76.70     80.80
+     43       77.78     77.62     76.40     76.30     80.80
+     44       78.17     77.47     77.10     76.90     81.20
+     45       77.72     77.56     76.00     76.50     80.80
+     46       77.70     77.30     76.80     75.70     81.00
+     47       77.76     77.54     76.60     75.90     81.00
+     48       78.03     77.72     76.90     76.10     81.40
+     49       77.57     77.50     75.80     75.50     81.50
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7757 
+Accuracies (test): [0.775, 0.758, 0.755, 0.815]
+---
+
+
+Learning task 5
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc
+-------  ----------  --------  --------  --------  --------  --------
+      0       70.95     77.43     76.50     76.00     79.90     44.90
+      1       73.96     77.50     77.70     75.10     80.70     58.80
+      2       73.73     77.26     76.00     75.30     80.20     59.90
+      3       74.09     77.27     76.10     74.50     80.20     62.40
+      4       74.63     77.56     76.20     75.70     80.70     63.00
+      5       74.88     77.49     75.90     74.80     80.70     65.50
+      6       74.85     77.37     75.50     75.30     80.30     65.80
+      7       75.32     77.18     75.60     75.60     80.40     67.80
+      8       75.32     76.98     75.60     75.70     80.20     68.10
+      9       76.00     77.30     76.30     75.90     81.00     69.50
+     10       75.65     76.85     76.40     74.90     80.10     70.00
+     11       76.23     77.24     76.50     75.90     80.30     71.20
+     12       75.88     76.90     77.00     74.80     80.10     70.60
+     13       75.88     76.72     76.20     75.20     79.80     71.50
+     14       76.36     76.71     76.60     75.70     80.60     72.20
+     15       76.58     77.22     77.10     75.30     80.20     73.10
+     16       76.36     76.92     76.70     75.40     80.40     72.40
+     17       76.67     76.96     76.70     75.40     80.50     73.80
+     18       76.98     76.92     77.10     76.30     80.40     74.20
+     19       76.95     77.24     76.20     76.60     80.20     74.50
+     20       76.52     76.51     76.40     75.20     80.30     74.20
+     21       77.05     76.76     76.20     76.60     80.60     75.10
+     22       76.65     76.73     76.20     75.50     80.70     74.10
+     23       76.76     76.91     75.70     75.60     80.60     75.00
+     24       76.80     76.40     76.50     74.90     80.40     75.80
+     25       77.07     76.93     76.30     75.80     80.80     75.50
+     26       77.27     76.93     77.00     76.00     80.60     75.80
+     27       77.35     76.74     76.60     76.20     80.50     76.70
+     28       77.15     76.66     76.20     75.90     80.70     76.30
+     29       77.45     77.15     76.90     75.90     80.30     77.00
+     30       77.51     76.85     76.60     76.20     80.70     77.20
+     31       77.59     76.83     76.80     76.20     80.40     77.70
+     32       77.31     76.97     76.40     75.90     80.40     76.90
+     33       77.37     76.63     76.60     75.80     80.50     77.30
+     34       77.60     77.00     76.50     76.50     80.30     77.70
+     35       77.50     76.69     76.90     75.70     80.70     77.50
+     36       77.73     76.64     77.40     76.20     80.10     78.30
+     37       77.48     76.61     76.40     75.80     80.40     78.20
+     38       77.49     76.84     77.00     75.40     80.40     77.80
+     39       77.55     76.94     76.50     75.60     80.90     77.80
+     40       77.73     76.67     76.70     76.00     80.10     79.20
+     41       77.81     76.74     77.20     76.00     79.90     79.20
+     42       77.37     76.23     75.90     75.60     80.40     78.70
+     43       77.69     76.65     76.80     75.80     80.60     78.60
+     44       77.60     76.78     75.80     76.50     80.30     78.60
+     45       77.75     76.67     76.60     76.10     80.10     79.30
+     46       77.97     76.67     77.50     75.60     80.10     80.00
+     47       77.53     76.43     75.80     75.70     80.20     79.50
+     48       77.83     76.54     77.00     76.00     79.90     79.70
+     49       77.56     76.52     77.10     75.30     80.10     78.80
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7756 
+Accuracies (test): [0.7652, 0.771, 0.753, 0.801, 0.788]
+---
+
+
+Learning task 6
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc    t6 acc
+-------  ----------  --------  --------  --------  --------  --------  --------
+      0       74.28     76.69     75.70     74.60     80.30     79.30     59.10
+      1       75.78     76.21     76.70     74.90     80.40     79.20     67.30
+      2       75.64     76.66     75.60     74.40     79.90     78.90     68.40
+      3       76.03     76.30     76.40     75.20     79.80     78.90     69.60
+      4       76.16     76.48     76.00     75.10     80.10     78.60     70.70
+      5       76.28     76.29     75.40     74.10     80.40     79.20     72.30
+      6       76.29     76.45     75.90     74.90     80.20     77.70     72.60
+      7       76.39     76.25     76.10     74.80     80.10     77.90     73.20
+      8       76.88     76.67     76.30     75.40     80.30     78.10     74.50
+      9       76.62     76.64     76.60     74.00     80.20     77.60     74.70
+     10       76.63     76.16     75.50     74.00     80.60     78.10     75.40
+     11       76.77     76.41     76.30     73.80     80.40     77.90     75.80
+     12       77.11     76.55     76.50     74.90     80.40     78.10     76.20
+     13       77.03     76.46     75.90     75.80     80.20     77.20     76.60
+     14       77.35     77.00     76.40     74.80     80.60     78.10     77.20
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/multiclass.py:13: DeprecationWarning: Please use `spmatrix` from the `scipy.sparse` namespace, the `scipy.sparse.base` namespace is deprecated.
+  from scipy.sparse.base import spmatrix
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/tensorflow_addons/utils/ensure_tf_install.py:53: UserWarning: Tensorflow Addons supports using Python ops for all Tensorflow versions above or equal to 2.3.0 and strictly below 2.6.0 (nightly versions are not supported). 
+ The versions of TensorFlow you are currently using is 2.6.0 and is not supported. 
+Some things might work, some things might not.
+If you were to encounter a bug, do not file an issue.
+If you want to make sure you're using a tested and supported configuration, either change the TensorFlow version or the TensorFlow Addons's version. 
+You can find the compatibility matrix in TensorFlow Addon's readme:
+https://github.com/tensorflow/addons
+  warnings.warn(
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/feature_extraction/image.py:167: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  dtype=np.int):
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+     15       77.31     76.46     75.90     75.50     80.70     77.40     77.90
+     16       77.48     76.48     76.90     75.30     80.60     77.70     77.90
+     17       77.50     76.27     77.50     75.10     80.30     77.80     78.00
+     18       77.48     76.57     76.60     75.60     80.70     77.00     78.40
+     19       77.52     76.52     77.00     75.20     80.50     77.50     78.40
+     20       77.43     76.50     76.40     75.60     80.50     76.90     78.70
+     21       77.49     76.33     76.70     75.10     80.90     77.20     78.70
+     22       77.59     76.34     77.30     74.90     80.50     78.20     78.30
+     23       77.58     76.79     77.40     74.10     80.80     77.40     79.00
+     24       77.43     76.36     77.50     74.90     80.60     76.70     78.50
+     25       77.37     76.34     77.10     74.60     80.10     77.10     79.00
+     26       77.62     76.61     77.70     74.60     80.20     77.40     79.20
+     27       77.74     76.26     77.10     75.40     80.10     77.90     79.70
+     28       77.79     76.33     77.60     75.50     80.10     77.20     80.00
+     29       77.83     76.59     77.20     75.40     80.40     77.70     79.70
+     30       77.53     76.46     76.90     74.40     80.10     77.40     79.90
+     31       77.50     76.21     76.40     75.00     79.60     78.20     79.60
+     32       77.54     76.52     76.50     74.40     80.80     77.40     79.60
+     33       77.64     76.32     76.90     74.90     80.40     77.60     79.70
+     34       77.63     76.39     76.40     74.90     80.20     77.60     80.30
+     35       77.60     76.01     76.10     75.00     80.80     77.70     80.00
+     36       77.52     75.94     77.10     74.50     80.90     77.30     79.40
+     37       77.42     76.12     77.00     74.10     80.40     76.70     80.20
+     38       77.47     76.13     76.60     74.50     80.80     77.20     79.60
+     39       77.83     76.20     77.30     75.10     80.10     77.40     80.90
+     40       77.90     76.43     77.00     75.90     80.00     77.60     80.50
+     41       77.78     76.20     77.50     74.50     80.40     77.60     80.50
+     42       77.71     76.05     77.30     75.00     80.20     77.70     80.00
+     43       77.73     76.29     78.10     74.70     80.20     77.00     80.10
+     44       77.72     76.53     77.10     74.50     79.80     77.30     81.10
+     45       77.52     76.31     76.90     74.30     80.00     76.80     80.80
+     46       77.40     76.08     75.90     74.30     80.50     76.90     80.70
+     47       77.70     76.01     76.80     74.50     80.00     77.80     81.10
+     48       77.73     76.19     77.10     74.80     80.80     76.90     80.60
+     49       77.50     76.17     76.10     74.20     80.10     77.60     80.80
+Adding context points to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.7750 
+Accuracies (test): [0.7617, 0.761, 0.742, 0.801, 0.776, 0.808]
+---
+
+
+------------------- DONE -------------------
+

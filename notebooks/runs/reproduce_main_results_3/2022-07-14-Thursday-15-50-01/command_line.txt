@@ -1,0 +1,1 @@
+python fromp --dataset sfashionmnist --n_tasks 5 --batch_size 128 --hidden_size 256 --n_layers 2 --lr 0.0001 --n_epochs 15 --seed 6 --n_seeds 1 --n_points 40 --select_method lambda_descend --tau 10.0 --n_permuted_tasks 10 --smnist_eps 1e-06 --logroot ablation --subdir reproduce_main_results_3 --save_alt --n_coreset_inputs_per_task 40 --n_steps not_specified

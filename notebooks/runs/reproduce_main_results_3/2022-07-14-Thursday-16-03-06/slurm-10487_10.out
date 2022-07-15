@@ -1,0 +1,347 @@
+Running on oat2.cs.ox.ac.uk
+Running with: python /auto/users/timner/qixuan/function-space-variational-inference/fsvi_cl/baselines/vcl/run_vcl.py --dataset pmnist --n_epochs 100 --batch_size 256 --hidden_size 100 --n_layers 2 --seed 12 --select_method random_choice --n_permuted_tasks 10 --logroot ablation --subdir reproduce_main_results_3 --n_coreset_inputs_per_task 0
+2022-07-14 16:03:07.759843: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-07-14 16:03:08.401689: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/tensorflow_addons/utils/ensure_tf_install.py:53: UserWarning: Tensorflow Addons supports using Python ops for all Tensorflow versions above or equal to 2.3.0 and strictly below 2.6.0 (nightly versions are not supported). 
+ The versions of TensorFlow you are currently using is 2.6.0 and is not supported. 
+Some things might work, some things might not.
+If you were to encounter a bug, do not file an issue.
+If you want to make sure you're using a tested and supported configuration, either change the TensorFlow version or the TensorFlow Addons's version. 
+You can find the compatibility matrix in TensorFlow Addon's readme:
+https://github.com/tensorflow/addons
+  warnings.warn(
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/feature_extraction/image.py:167: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  dtype=np.int):
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+WARNING:tensorflow:From /users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/tensorflow/python/compat/v2_compat.py:101: disable_resource_variables (from tensorflow.python.ops.variable_scope) is deprecated and will be removed in a future version.
+Instructions for updating:
+non-resource variables are not supported in the long term
+2022-07-14 16:03:14.961402: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+WARNING:tensorflow:From /auto/users/timner/qixuan/function-space-variational-inference/fsvi_cl/baselines/vcl/alg/cla_models_multihead.py:294: div (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Deprecated in favor of operator or tf.math.divide.
+2022-07-14 16:05:46.634870: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+2022-07-14 16:09:35.945136: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:09:36.829790: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+2022-07-14 16:13:41.529056: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:13:41.745152: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:13:42.707648: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+2022-07-14 16:18:01.538537: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:18:01.837069: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:18:02.141712: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:18:03.278147: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+2022-07-14 16:22:29.799079: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:22:30.167204: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:22:30.516989: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:22:30.902108: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:22:32.343572: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+2022-07-14 16:27:11.156286: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:27:11.593161: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:27:12.061358: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:27:12.518230: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:27:12.982398: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:27:14.448861: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+2022-07-14 16:32:04.966432: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:32:05.495322: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:32:06.037214: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:32:06.582305: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:32:07.104448: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:32:07.647429: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:32:09.150807: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+2022-07-14 16:37:08.431071: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:37:09.080395: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:37:09.705704: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:37:10.402217: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:37:11.065200: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:37:11.722375: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:37:12.376924: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:37:14.161317: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+----------------------------------------------------------------------------------------------------
+Available GPUs, [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+('Epoch:', '0001', 'cost=', '0.473053610')
+('Epoch:', '0006', 'cost=', '0.072108041')
+('Epoch:', '0011', 'cost=', '0.031964199')
+('Epoch:', '0016', 'cost=', '0.014196551')
+('Epoch:', '0021', 'cost=', '0.006511438')
+('Epoch:', '0026', 'cost=', '0.010014242')
+('Epoch:', '0031', 'cost=', '0.001013376')
+('Epoch:', '0036', 'cost=', '0.000377519')
+('Epoch:', '0041', 'cost=', '0.000155526')
+('Epoch:', '0046', 'cost=', '0.008219769')
+('Epoch:', '0051', 'cost=', '0.000192306')
+('Epoch:', '0056', 'cost=', '0.000105803')
+('Epoch:', '0061', 'cost=', '0.000064205')
+('Epoch:', '0066', 'cost=', '0.000039833')
+('Epoch:', '0071', 'cost=', '0.000024478')
+('Epoch:', '0076', 'cost=', '0.000014724')
+('Epoch:', '0081', 'cost=', '0.022634679')
+('Epoch:', '0086', 'cost=', '0.000139108')
+('Epoch:', '0091', 'cost=', '0.000046289')
+('Epoch:', '0096', 'cost=', '0.000028142')
+Optimization Finished!
+('Epoch:', '0001', 'cost=', '3.703197036')
+('Epoch:', '0006', 'cost=', '3.038477082')
+('Epoch:', '0011', 'cost=', '2.438481679')
+('Epoch:', '0016', 'cost=', '1.916790538')
+('Epoch:', '0021', 'cost=', '1.492720257')
+('Epoch:', '0026', 'cost=', '1.208384374')
+('Epoch:', '0031', 'cost=', '1.045891170')
+('Epoch:', '0036', 'cost=', '0.931820178')
+('Epoch:', '0041', 'cost=', '0.836781614')
+('Epoch:', '0046', 'cost=', '0.756851000')
+('Epoch:', '0051', 'cost=', '0.687532304')
+('Epoch:', '0056', 'cost=', '0.629432649')
+('Epoch:', '0061', 'cost=', '0.577474556')
+('Epoch:', '0066', 'cost=', '0.535214411')
+('Epoch:', '0071', 'cost=', '0.499721233')
+('Epoch:', '0076', 'cost=', '0.468054146')
+('Epoch:', '0081', 'cost=', '0.442887973')
+('Epoch:', '0086', 'cost=', '0.419635829')
+('Epoch:', '0091', 'cost=', '0.400709822')
+('Epoch:', '0096', 'cost=', '0.384590421')
+Optimization Finished!
+Accuracy at task 0: [0.9822]
+('Epoch:', '0001', 'cost=', '2.851344245')
+('Epoch:', '0006', 'cost=', '0.697686168')
+('Epoch:', '0011', 'cost=', '0.498799784')
+('Epoch:', '0016', 'cost=', '0.410717005')
+('Epoch:', '0021', 'cost=', '0.358464387')
+('Epoch:', '0026', 'cost=', '0.324929480')
+('Epoch:', '0031', 'cost=', '0.303503164')
+('Epoch:', '0036', 'cost=', '0.287781427')
+('Epoch:', '0041', 'cost=', '0.277289040')
+('Epoch:', '0046', 'cost=', '0.270080823')
+('Epoch:', '0051', 'cost=', '0.262986004')
+('Epoch:', '0056', 'cost=', '0.258030343')
+('Epoch:', '0061', 'cost=', '0.255771610')
+('Epoch:', '0066', 'cost=', '0.251728664')
+('Epoch:', '0071', 'cost=', '0.248189908')
+('Epoch:', '0076', 'cost=', '0.246053506')
+('Epoch:', '0081', 'cost=', '0.243280328')
+('Epoch:', '0086', 'cost=', '0.241122889')
+('Epoch:', '0091', 'cost=', '0.239944080')
+('Epoch:', '0096', 'cost=', '0.239573779')
+Optimization Finished!
+Accuracy at task 1: [0.9707, 0.9739]
+('Epoch:', '0001', 'cost=', '2.136200907')
+('Epoch:', '0006', 'cost=', '0.554654016')
+('Epoch:', '0011', 'cost=', '0.423040902')
+('Epoch:', '0016', 'cost=', '0.359694164')
+('Epoch:', '0021', 'cost=', '0.322884123')
+('Epoch:', '0026', 'cost=', '0.297681459')
+('Epoch:', '0031', 'cost=', '0.281182204')
+('Epoch:', '0036', 'cost=', '0.270248202')
+('Epoch:', '0041', 'cost=', '0.263163037')
+('Epoch:', '0046', 'cost=', '0.256923611')
+('Epoch:', '0051', 'cost=', '0.252697228')
+('Epoch:', '0056', 'cost=', '0.247595536')
+('Epoch:', '0061', 'cost=', '0.244741197')
+('Epoch:', '0066', 'cost=', '0.243845572')
+('Epoch:', '0071', 'cost=', '0.240435910')
+('Epoch:', '0076', 'cost=', '0.238152390')
+('Epoch:', '0081', 'cost=', '0.238991400')
+('Epoch:', '0086', 'cost=', '0.235736742')
+('Epoch:', '0091', 'cost=', '0.235501280')
+('Epoch:', '0096', 'cost=', '0.232888064')
+Optimization Finished!
+Accuracy at task 2: [0.9446, 0.9604, 0.9716]
+('Epoch:', '0001', 'cost=', '1.912056565')
+('Epoch:', '0006', 'cost=', '0.501724050')
+('Epoch:', '0011', 'cost=', '0.382502329')
+('Epoch:', '0016', 'cost=', '0.326676511')
+('Epoch:', '0021', 'cost=', '0.293849960')
+('Epoch:', '0026', 'cost=', '0.274201436')
+('Epoch:', '0031', 'cost=', '0.259876781')
+('Epoch:', '0036', 'cost=', '0.253247772')
+('Epoch:', '0041', 'cost=', '0.246550504')
+('Epoch:', '0046', 'cost=', '0.241585390')
+('Epoch:', '0051', 'cost=', '0.238685442')
+('Epoch:', '0056', 'cost=', '0.237236556')
+('Epoch:', '0061', 'cost=', '0.234982308')
+('Epoch:', '0066', 'cost=', '0.232668323')
+('Epoch:', '0071', 'cost=', '0.231891613')
+('Epoch:', '0076', 'cost=', '0.230619072')
+('Epoch:', '0081', 'cost=', '0.230053562')
+('Epoch:', '0086', 'cost=', '0.228899513')
+('Epoch:', '0091', 'cost=', '0.227624373')
+('Epoch:', '0096', 'cost=', '0.226897548')
+Optimization Finished!
+Accuracy at task 3: [0.9174, 0.9478, 0.9668, 0.9712]
+('Epoch:', '0001', 'cost=', '2.053041834')
+('Epoch:', '0006', 'cost=', '0.511254263')
+('Epoch:', '0011', 'cost=', '0.399132990')
+('Epoch:', '0016', 'cost=', '0.347288402')
+('Epoch:', '0021', 'cost=', '0.315067613')
+('Epoch:', '0026', 'cost=', '0.295056122')
+('Epoch:', '0031', 'cost=', '0.283024248')
+('Epoch:', '0036', 'cost=', '0.274107124')
+('Epoch:', '0041', 'cost=', '0.268319286')
+('Epoch:', '0046', 'cost=', '0.263662156')
+('Epoch:', '0051', 'cost=', '0.259525889')
+('Epoch:', '0056', 'cost=', '0.257312474')
+('Epoch:', '0061', 'cost=', '0.255158180')
+('Epoch:', '0066', 'cost=', '0.253474346')
+('Epoch:', '0071', 'cost=', '0.250998386')
+('Epoch:', '0076', 'cost=', '0.250469688')
+('Epoch:', '0081', 'cost=', '0.249273793')
+('Epoch:', '0086', 'cost=', '0.248714857')
+('Epoch:', '0091', 'cost=', '0.247086532')
+('Epoch:', '0096', 'cost=', '0.247433963')
+Optimization Finished!
+Accuracy at task 4: [0.8877, 0.9158, 0.948, 0.9597, 0.9697]
+('Epoch:', '0001', 'cost=', '1.990050695')
+('Epoch:', '0006', 'cost=', '0.512697799')
+('Epoch:', '0011', 'cost=', '0.409482392')
+('Epoch:', '0016', 'cost=', '0.355492926')
+('Epoch:', '0021', 'cost=', '0.322102699')
+('Epoch:', '0026', 'cost=', '0.300375850')
+('Epoch:', '0031', 'cost=', '0.287245010')
+('Epoch:', '0036', 'cost=', '0.280132463')
+('Epoch:', '0041', 'cost=', '0.272094851')
+('Epoch:', '0046', 'cost=', '0.267155145')
+('Epoch:', '0051', 'cost=', '0.263143873')
+('Epoch:', '0056', 'cost=', '0.261108908')
+('Epoch:', '0061', 'cost=', '0.258933910')
+('Epoch:', '0066', 'cost=', '0.256007644')
+('Epoch:', '0071', 'cost=', '0.254492388')
+('Epoch:', '0076', 'cost=', '0.253133483')
+('Epoch:', '0081', 'cost=', '0.252128820')
+('Epoch:', '0086', 'cost=', '0.250896023')
+('Epoch:', '0091', 'cost=', '0.250359567')
+('Epoch:', '0096', 'cost=', '0.248744702')
+Optimization Finished!
+Accuracy at task 5: [0.8861, 0.9068, 0.9394, 0.9445, 0.9595, 0.9679]
+('Epoch:', '0001', 'cost=', '1.777375629')
+('Epoch:', '0006', 'cost=', '0.478648967')
+('Epoch:', '0011', 'cost=', '0.382624396')
+('Epoch:', '0016', 'cost=', '0.335530112')
+('Epoch:', '0021', 'cost=', '0.305569995')
+('Epoch:', '0026', 'cost=', '0.286604097')
+('Epoch:', '0031', 'cost=', '0.276156467')
+('Epoch:', '0036', 'cost=', '0.268156166')
+('Epoch:', '0041', 'cost=', '0.262773771')
+('Epoch:', '0046', 'cost=', '0.257908687')
+('Epoch:', '0051', 'cost=', '0.254366336')
+('Epoch:', '0056', 'cost=', '0.252479663')
+('Epoch:', '0061', 'cost=', '0.249284310')
+('Epoch:', '0066', 'cost=', '0.248140601')
+('Epoch:', '0071', 'cost=', '0.247005369')
+('Epoch:', '0076', 'cost=', '0.245922130')
+('Epoch:', '0081', 'cost=', '0.243796963')
+('Epoch:', '0086', 'cost=', '0.243825980')
+('Epoch:', '0091', 'cost=', '0.242588688')
+('Epoch:', '0096', 'cost=', '0.242582342')
+Optimization Finished!
+Accuracy at task 6: [0.8671, 0.9155, 0.9164, 0.9259, 0.9495, 0.9593, 0.9658]
+('Epoch:', '0001', 'cost=', '1.920607475')
+('Epoch:', '0006', 'cost=', '0.476058818')
+('Epoch:', '0011', 'cost=', '0.383562598')
+('Epoch:', '0016', 'cost=', '0.339275393')
+('Epoch:', '0021', 'cost=', '0.312948843')
+('Epoch:', '0026', 'cost=', '0.295788695')
+('Epoch:', '0031', 'cost=', '0.285948753')
+('Epoch:', '0036', 'cost=', '0.280518962')
+('Epoch:', '0041', 'cost=', '0.274834888')
+('Epoch:', '0046', 'cost=', '0.271298726')
+('Epoch:', '0051', 'cost=', '0.268229205')
+('Epoch:', '0056', 'cost=', '0.267326852')
+('Epoch:', '0061', 'cost=', '0.265993872')
+2022-07-14 16:42:27.667988: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:42:28.390509: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:42:29.140975: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:42:29.908769: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:42:30.645849: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:42:31.392847: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:42:32.154345: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:42:32.926406: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:42:34.915988: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+2022-07-14 16:47:55.019318: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:47:55.857236: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:47:56.682024: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:47:57.530915: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:47:58.405188: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:47:59.244355: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:48:00.101660: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:48:00.944512: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:48:01.807285: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:48:03.880048: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 22853 MB memory:  -> device: 0, name: NVIDIA TITAN RTX, pci bus id: 0000:89:00.0, compute capability: 7.5
+2022-07-14 16:53:32.881248: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:53:33.845402: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:53:34.825723: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:53:35.835381: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:53:36.820372: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:53:37.832301: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:53:38.824552: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:53:39.834798: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:53:40.850080: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2022-07-14 16:53:41.883804: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:689] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA TITAN RTX" frequency: 1770 num_cores: 72 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 6291456 shared_memory_size_per_multiprocessor: 65536 memory_size: 23963566080 bandwidth: 672096000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+('Epoch:', '0066', 'cost=', '0.264568926')
+('Epoch:', '0071', 'cost=', '0.263422472')
+('Epoch:', '0076', 'cost=', '0.262404561')
+('Epoch:', '0081', 'cost=', '0.261361838')
+('Epoch:', '0086', 'cost=', '0.260900817')
+('Epoch:', '0091', 'cost=', '0.260330038')
+('Epoch:', '0096', 'cost=', '0.259806492')
+Optimization Finished!
+Accuracy at task 7: [0.8589, 0.9037, 0.9109, 0.9104, 0.9313, 0.9468, 0.9566, 0.9633]
+('Epoch:', '0001', 'cost=', '1.658776486')
+('Epoch:', '0006', 'cost=', '0.482013234')
+('Epoch:', '0011', 'cost=', '0.391497888')
+('Epoch:', '0016', 'cost=', '0.349287894')
+('Epoch:', '0021', 'cost=', '0.320655820')
+('Epoch:', '0026', 'cost=', '0.305646034')
+('Epoch:', '0031', 'cost=', '0.295082711')
+('Epoch:', '0036', 'cost=', '0.290260085')
+('Epoch:', '0041', 'cost=', '0.285582350')
+('Epoch:', '0046', 'cost=', '0.282224914')
+('Epoch:', '0051', 'cost=', '0.278344876')
+('Epoch:', '0056', 'cost=', '0.277294958')
+('Epoch:', '0061', 'cost=', '0.275195663')
+('Epoch:', '0066', 'cost=', '0.274964817')
+('Epoch:', '0071', 'cost=', '0.273548693')
+('Epoch:', '0076', 'cost=', '0.271737927')
+('Epoch:', '0081', 'cost=', '0.270522381')
+('Epoch:', '0086', 'cost=', '0.270755046')
+('Epoch:', '0091', 'cost=', '0.269393674')
+('Epoch:', '0096', 'cost=', '0.268283939')
+Optimization Finished!
+Accuracy at task 8: [0.8327, 0.8622, 0.9011, 0.8606, 0.9093, 0.9263, 0.9444, 0.956, 0.962]
+('Epoch:', '0001', 'cost=', '1.928594108')
+('Epoch:', '0006', 'cost=', '0.507320376')
+('Epoch:', '0011', 'cost=', '0.418698998')
+('Epoch:', '0016', 'cost=', '0.373150892')
+('Epoch:', '0021', 'cost=', '0.344455949')
+('Epoch:', '0026', 'cost=', '0.327993014')
+('Epoch:', '0031', 'cost=', '0.315482666')
+('Epoch:', '0036', 'cost=', '0.307740080')
+('Epoch:', '0041', 'cost=', '0.300880674')
+('Epoch:', '0046', 'cost=', '0.296241687')
+('Epoch:', '0051', 'cost=', '0.293607660')
+('Epoch:', '0056', 'cost=', '0.289717223')
+('Epoch:', '0061', 'cost=', '0.287736991')
+('Epoch:', '0066', 'cost=', '0.285968549')
+('Epoch:', '0071', 'cost=', '0.283901664')
+('Epoch:', '0076', 'cost=', '0.282930442')
+('Epoch:', '0081', 'cost=', '0.282016034')
+('Epoch:', '0086', 'cost=', '0.281312616')
+('Epoch:', '0091', 'cost=', '0.279684869')
+('Epoch:', '0096', 'cost=', '0.279218910')
+Optimization Finished!
+Accuracy at task 9: [0.7841, 0.8364, 0.8611, 0.8244, 0.8913, 0.8948, 0.9077, 0.9352, 0.95, 0.9625]
+[[0.9822    nan    nan    nan    nan    nan    nan    nan    nan    nan]
+ [0.9707 0.9739    nan    nan    nan    nan    nan    nan    nan    nan]
+ [0.9446 0.9604 0.9716    nan    nan    nan    nan    nan    nan    nan]
+ [0.9174 0.9478 0.9668 0.9712    nan    nan    nan    nan    nan    nan]
+ [0.8877 0.9158 0.948  0.9597 0.9697    nan    nan    nan    nan    nan]
+ [0.8861 0.9068 0.9394 0.9445 0.9595 0.9679    nan    nan    nan    nan]
+ [0.8671 0.9155 0.9164 0.9259 0.9495 0.9593 0.9658    nan    nan    nan]
+ [0.8589 0.9037 0.9109 0.9104 0.9313 0.9468 0.9566 0.9633    nan    nan]
+ [0.8327 0.8622 0.9011 0.8606 0.9093 0.9263 0.9444 0.956  0.962     nan]
+ [0.7841 0.8364 0.8611 0.8244 0.8913 0.8948 0.9077 0.9352 0.95   0.9625]]
