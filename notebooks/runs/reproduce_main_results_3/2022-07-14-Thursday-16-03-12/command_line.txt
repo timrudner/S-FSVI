@@ -1,0 +1,1 @@
+python vcl --dataset smnist --n_epochs 100 --batch_size not_specified --hidden_size 256 --n_layers 2 --seed 4 --select_method random_choice --n_permuted_tasks 10 --logroot ablation --subdir reproduce_main_results_3 --n_coreset_inputs_per_task 0

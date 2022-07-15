@@ -1,0 +1,569 @@
+Running on oat3.cs.ox.ac.uk
+Running with: fsvi cl --data_training continual_learning_smnist --data_ood not_specified --model_type fsvi_mlp --optimizer adam --optimizer_var not_specified --momentum 0.0 --momentum_var 0.0 --schedule not_specified --architecture fc_256_256 --activation relu --prior_mean 0.0 --prior_cov 0.001 --prior_covs 0.0 --prior_type bnn_induced --epochs 60 --start_var_opt 0 --batch_size 128 --learning_rate 0.0005 --learning_rate_var 0.001 --dropout_rate 0.0 --regularization 0.0 --inducing_points 0 --n_marginals 1 --n_condition 0 --inducing_input_type uniform_rand --inducing_input_ood_data not_specified --inducing_input_ood_data_size 50000 --kl_scale equal --feature_map_type not_specified --td_prior_scale 0.0 --feature_update 1 --n_samples 5 --n_samples_eval 5 --tau 1.0 --noise_std 1.0 --ind_lim ind_-1_1 --logging_frequency 10 --figsize 10 4 --seed 9 --save_path debug --name  --stochastic_prior_mean not_specified --batch_normalization_mod not_specified --kl_sup not_specified --init_logvar 0.0 0.0 --init_logvar_lin 0.0 0.0 --init_logvar_conv 0.0 0.0 --perturbation_param 0.01 --debug --logroot ablation --subdir reproduce_main_results_2 --wandb_project not_specified --n_inducing_inputs 40 --n_inducing_inputs_first_task not_specified --n_inducing_inputs_second_task not_specified --inducing_inputs_bound 0.0 1.0 --inducing_inputs_add_mode 0 --logging 1 --use_val_split --not_use_val_split --coreset random --coreset_entropy_mode soft_highest --coreset_entropy_offset 0.0 --coreset_kl_heuristic lowest --coreset_kl_offset 0.0 --coreset_elbo_heuristic lowest --coreset_elbo_offset 0.0 --coreset_elbo_n_samples not_specified --coreset_n_tasks not_specified --coreset_entropy_n_mixed 1 --n_coreset_inputs_per_task not_specified --n_permuted_tasks 10 --n_omniglot_tasks 20 --epochs_first_task not_specified --n_epochs_save_params not_specified --n_augment not_specified --augment_mode constant --n_valid same --learning_rate_first_task not_specified --save_alt --first_task_load_exp_path not_specified --only_task_id not_specified --loss_type 1 --n_omniglot_coreset_chars 2 --n_inducing_input_adjust_amount not_specified
+WARNING: TensorFlow is set to only use CPU.
+Jax is running on gpu
+WARNING: TensorFlow is set to only use CPU.
+
+Device: gpu
+
+Input arguments:
+ {
+    "command":"cl",
+    "data_training":"continual_learning_smnist",
+    "data_ood":[
+        "not_specified"
+    ],
+    "model_type":"fsvi_mlp",
+    "optimizer":"adam",
+    "optimizer_var":"not_specified",
+    "momentum":0.0,
+    "momentum_var":0.0,
+    "schedule":"not_specified",
+    "architecture":[
+        256,
+        256
+    ],
+    "activation":"relu",
+    "prior_mean":"0.0",
+    "prior_cov":"0.001",
+    "prior_covs":[
+        0.0
+    ],
+    "prior_type":"bnn_induced",
+    "epochs":60,
+    "start_var_opt":0,
+    "batch_size":128,
+    "learning_rate":0.0005,
+    "learning_rate_var":0.001,
+    "dropout_rate":0.0,
+    "regularization":0.0,
+    "inducing_points":0,
+    "n_marginals":1,
+    "n_condition":128,
+    "inducing_input_type":"uniform_rand",
+    "inducing_input_ood_data":[
+        "not_specified"
+    ],
+    "inducing_input_ood_data_size":50000,
+    "kl_scale":"equal",
+    "feature_map_jacobian":false,
+    "feature_map_jacobian_train_only":false,
+    "feature_map_type":"not_specified",
+    "td_prior_scale":0.0,
+    "feature_update":1,
+    "full_cov":false,
+    "n_samples":5,
+    "n_samples_eval":5,
+    "tau":1.0,
+    "noise_std":1.0,
+    "ind_lim":"ind_-1_1",
+    "logging_frequency":10,
+    "figsize":[
+        "10",
+        "4"
+    ],
+    "seed":9,
+    "save_path":"debug",
+    "save":false,
+    "name":"",
+    "evaluate":false,
+    "resume_training":false,
+    "no_final_layer_bias":false,
+    "extra_linear_layer":false,
+    "map_initialization":false,
+    "stochastic_linearization":false,
+    "grad_flow_jacobian":false,
+    "stochastic_prior_mean":"not_specified",
+    "batch_normalization":false,
+    "batch_normalization_mod":"not_specified",
+    "final_layer_variational":false,
+    "kl_sup":"not_specified",
+    "kl_sampled":false,
+    "fixed_inner_layers_variational_var":false,
+    "init_logvar":[
+        0.0,
+        0.0
+    ],
+    "init_logvar_lin":[
+        0.0,
+        0.0
+    ],
+    "init_logvar_conv":[
+        0.0,
+        0.0
+    ],
+    "perturbation_param":0.01,
+    "debug":true,
+    "logroot":"ablation",
+    "subdir":"reproduce_main_results_2",
+    "wandb_project":"not_specified",
+    "n_inducing_inputs":40,
+    "n_inducing_inputs_first_task":"not_specified",
+    "n_inducing_inputs_second_task":"not_specified",
+    "inducing_inputs_bound":[
+        0.0,
+        1.0
+    ],
+    "fix_shuffle":false,
+    "use_generative_model":false,
+    "debug_n_train":null,
+    "inducing_inputs_add_mode":0,
+    "inducing_input_adjustment":false,
+    "not_use_coreset":false,
+    "inducing_input_augmentation":false,
+    "plotting":false,
+    "logging":1,
+    "use_val_split":false,
+    "not_use_val_split":true,
+    "coreset":"random",
+    "coreset_entropy_mode":"soft_highest",
+    "coreset_entropy_offset":"0.0",
+    "coreset_kl_heuristic":"lowest",
+    "coreset_kl_offset":"0.0",
+    "coreset_elbo_heuristic":"lowest",
+    "coreset_elbo_offset":"0.0",
+    "coreset_elbo_n_samples":5,
+    "coreset_n_tasks":"not_specified",
+    "coreset_entropy_n_mixed":1,
+    "n_coreset_inputs_per_task":"not_specified",
+    "full_ntk":false,
+    "constant_inducing_points":false,
+    "n_permuted_tasks":10,
+    "n_omniglot_tasks":20,
+    "epochs_first_task":60,
+    "identity_cov":false,
+    "n_epochs_save_params":"not_specified",
+    "n_augment":"not_specified",
+    "augment_mode":"constant",
+    "n_valid":"same",
+    "learning_rate_first_task":"not_specified",
+    "save_alt":true,
+    "save_first_task":false,
+    "first_task_load_exp_path":"not_specified",
+    "only_task_id":"not_specified",
+    "loss_type":1,
+    "only_trainable_head":false,
+    "n_omniglot_coreset_chars":2,
+    "omniglot_randomize_test_split":false,
+    "omniglot_randomize_task_sequence":false,
+    "n_inducing_input_adjust_amount":"not_specified",
+    "save_all_params":false,
+    "task":"continual_learning_smnist",
+    "architecture_arg":"fc_256_256",
+    "init_logvar_minval":0.0,
+    "init_logvar_maxval":0.0,
+    "init_logvar_lin_minval":0.0,
+    "init_logvar_lin_maxval":0.0,
+    "init_logvar_conv_minval":0.0,
+    "init_logvar_conv_maxval":0.0
+} 
+
+
+MAP initialization: False
+Full NTK computation: False
+Stochastic linearization (posterior): False
+init_logvar_lin_minval: -10.0
+init_logvar_lin_maxval: -8.0
+Full NTK computation: False
+Stochastic linearization (prior): False
+
+
+Learning task 1
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------
+  epoch    mean acc    t1 acc
+-------  ----------  --------
+      0       99.86     99.86
+      1       99.95     99.95
+      2       99.95     99.95
+      3       99.95     99.95
+      4       99.95     99.95
+      5       99.95     99.95
+      6       99.95     99.95
+      7       99.95     99.95
+      8       99.95     99.95
+      9       99.95     99.95
+     10       99.95     99.95
+     11       99.95     99.95
+     12       99.95     99.95
+     13       99.95     99.95
+     14       99.95     99.95
+     15       99.95     99.95
+     16       99.95     99.95
+     17       99.95     99.95
+     18       99.95     99.95
+     19       99.95     99.95
+     20       99.95     99.95
+     21       99.95     99.95
+     22       99.95     99.95
+     23       99.95     99.95
+     24       99.95     99.95
+     25       99.95     99.95
+     26       99.95     99.95
+     27       99.95     99.95
+     28       99.95     99.95
+     29       99.95     99.95
+     30       99.95     99.95
+     31       99.95     99.95
+     32       99.95     99.95
+     33       99.95     99.95
+     34       99.95     99.95
+     35       99.95     99.95
+     36       99.95     99.95
+     37       99.95     99.95
+     38      100.00    100.00
+     39      100.00    100.00
+     40      100.00    100.00
+     41       99.95     99.95
+     42       99.95     99.95
+     43      100.00    100.00
+     44      100.00    100.00
+     45      100.00    100.00
+     46      100.00    100.00
+     47      100.00    100.00
+     48      100.00    100.00
+     49      100.00    100.00
+     50       99.95     99.95
+     51       99.95     99.95
+     52       99.95     99.95
+     53       99.95     99.95
+     54       99.95     99.95
+     55       99.95     99.95
+     56       99.95     99.95
+     57       99.95     99.95
+     58       99.95     99.95
+     59       99.95     99.95
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.9995 
+Accuracies (test): [0.9995]
+---
+
+
+Learning task 2
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc
+-------  ----------  --------  --------
+      0       99.05    100.00     98.09
+      1       99.41    100.00     98.82
+      2       99.64    100.00     99.27
+      3       99.73     99.95     99.51
+      4       99.75    100.00     99.51
+      5       99.70     99.95     99.46
+      6       99.70     99.95     99.46
+      7       99.68     99.95     99.41
+      8       99.66    100.00     99.31
+      9       99.66     99.95     99.36
+     10       99.70     99.95     99.46
+     11       99.86     99.95     99.76
+     12       99.78     99.95     99.61
+     13       99.78     99.95     99.61
+     14       99.78     99.95     99.61
+     15       99.81     99.95     99.66
+     16       99.81     99.95     99.66
+     17       99.81     99.95     99.66
+     18       99.83     99.95     99.71
+     19       99.83     99.95     99.71
+     20       99.81     99.95     99.66
+     21       99.81     99.95     99.66
+     22       99.81     99.95     99.66
+     23       99.83     99.95     99.71
+     24       99.81     99.95     99.66
+     25       99.81     99.95     99.66
+     26       99.78     99.95     99.61
+     27       99.81     99.95     99.66
+     28       99.78     99.95     99.61
+     29       99.83     99.95     99.71
+     30       99.83     99.95     99.71
+     31       99.81     99.95     99.66
+     32       99.78     99.95     99.61
+     33       99.81     99.95     99.66
+     34       99.83     99.95     99.71
+     35       99.78     99.95     99.61
+     36       99.81     99.95     99.66
+     37       99.83     99.95     99.71
+     38       99.86     99.95     99.76
+     39       99.86     99.95     99.76
+     40       99.86     99.95     99.76
+     41       99.81     99.95     99.66
+     42       99.81     99.95     99.66
+     43       99.81     99.95     99.66
+     44       99.78     99.95     99.61
+     45       99.83     99.95     99.71
+     46       99.83     99.95     99.71
+     47       99.83     99.95     99.71
+     48       99.86     99.95     99.76
+     49       99.83     99.95     99.71
+     50       99.81     99.95     99.66
+     51       99.83     99.95     99.71
+     52       99.86     99.95     99.76
+     53       99.86     99.95     99.76
+     54       99.86     99.95     99.76
+     55       99.86     99.95     99.76
+     56       99.81     99.95     99.66
+     57       99.83     99.95     99.71
+     58       99.86     99.95     99.76
+     59       99.86     99.95     99.76
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.9986 
+Accuracies (test): [0.9995, 0.9976]
+---
+
+
+Learning task 3
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc
+-------  ----------  --------  --------  --------
+      0       99.55     99.95     99.17     99.52
+      1       99.69     99.95     99.22     99.89
+      2       99.75     99.95     99.36     99.95
+      3       99.72     99.95     99.27     99.95
+      4       99.75     99.95     99.36     99.95
+      5       99.75     99.95     99.41     99.89
+      6       99.73     99.95     99.36     99.89
+      7       99.72     99.95     99.27     99.95
+      8       99.71     99.95     99.22     99.95
+      9       99.72     99.95     99.27     99.95
+     10       99.74     99.95     99.31     99.95
+     11       99.69     99.95     99.22     99.89
+     12       99.72     99.95     99.27     99.95
+     13       99.65     99.95     99.12     99.89
+     14       99.72     99.95     99.27     99.95
+     15       99.65     99.95     99.12     99.89
+     16       99.69     99.95     99.17     99.95
+     17       99.64     99.91     99.12     99.89
+     18       99.69     99.95     99.22     99.89
+     19       99.72     99.95     99.27     99.95
+     20       99.71     99.95     99.22     99.95
+     21       99.66     99.95     99.07     99.95
+     22       99.69     99.95     99.17     99.95
+     23       99.73     99.95     99.36     99.89
+     24       99.64     99.95     99.07     99.89
+     25       99.67     99.95     99.17     99.89
+     26       99.69     99.95     99.22     99.89
+     27       99.69     99.95     99.17     99.95
+     28       99.66     99.95     99.07     99.95
+     29       99.72     99.95     99.27     99.95
+     30       99.71     99.95     99.22     99.95
+     31       99.70     99.95     99.27     99.89
+     32       99.69     99.95     99.22     99.89
+     33       99.71     99.95     99.22     99.95
+     34       99.71     99.95     99.22     99.95
+     35       99.65     99.95     99.12     99.89
+     36       99.67     99.95     99.17     99.89
+     37       99.69     99.95     99.17     99.95
+     38       99.72     99.95     99.27     99.95
+     39       99.65     99.95     99.12     99.89
+     40       99.67     99.95     99.12     99.95
+     41       99.67     99.95     99.17     99.89
+     42       99.65     99.95     99.12     99.89
+     43       99.72     99.95     99.27     99.95
+     44       99.77     99.95     99.41     99.95
+     45       99.75     99.95     99.36     99.95
+     46       99.67     99.95     99.12     99.95
+     47       99.72     99.95     99.31     99.89
+     48       99.67     99.95     99.12     99.95
+     49       99.77     99.95     99.41     99.95
+     50       99.64     99.95     99.07     99.89
+     51       99.71     99.95     99.22     99.95
+     52       99.65     99.95     99.12     99.89
+     53       99.72     99.95     99.31     99.89
+     54       99.69     99.95     99.17     99.95
+     55       99.72     99.95     99.31     99.89
+     56       99.70     99.95     99.27     99.89
+     57       99.75     99.95     99.41     99.89
+     58       99.70     99.95     99.27     99.89
+     59       99.70     99.95     99.27     99.89
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.9970 
+Accuracies (test): [0.9995, 0.9927, 0.9989]
+---
+
+
+Learning task 4
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc
+-------  ----------  --------  --------  --------  --------
+      0       99.54     99.91     98.92    100.00     99.35
+      1       99.64     99.91     98.92    100.00     99.75
+      2       99.66     99.91     98.92    100.00     99.80
+      3       99.65     99.91     98.87    100.00     99.80
+      4       99.65     99.91     98.87    100.00     99.80
+      5       99.66     99.91     98.87    100.00     99.85
+      6       99.66     99.91     98.87    100.00     99.85
+      7       99.67     99.91     98.92    100.00     99.85
+      8       99.64     99.91     98.82    100.00     99.85
+      9       99.68     99.91     98.97    100.00     99.85
+     10       99.67     99.91     98.87    100.00     99.90
+     11       99.67     99.91     98.87    100.00     99.90
+     12       99.66     99.91     98.82    100.00     99.90
+     13       99.66     99.91     98.87    100.00     99.85
+     14       99.66     99.91     98.92     99.95     99.85
+     15       99.67     99.91     98.97     99.95     99.85
+     16       99.67     99.91     98.92     99.95     99.90
+     17       99.67     99.91     98.97     99.95     99.85
+     18       99.69     99.91     98.97    100.00     99.90
+     19       99.64     99.91     98.82    100.00     99.85
+     20       99.68     99.91     98.92    100.00     99.90
+     21       99.61     99.91     98.63    100.00     99.90
+     22       99.65     99.91     98.78    100.00     99.90
+     23       99.66     99.91     98.87     99.95     99.90
+     24       99.68     99.91     98.92    100.00     99.90
+     25       99.61     99.91     98.63    100.00     99.90
+     26       99.68     99.91     98.92    100.00     99.90
+     27       99.67     99.91     98.92     99.95     99.90
+     28       99.62     99.91     98.73     99.95     99.90
+     29       99.67     99.91     98.87    100.00     99.90
+     30       99.65     99.91     98.78    100.00     99.90
+     31       99.66     99.91     98.87     99.95     99.90
+     32       99.68     99.91     98.92    100.00     99.90
+     33       99.70     99.91     99.02     99.95     99.90
+     34       99.67     99.91     98.92     99.95     99.90
+     35       99.66     99.91     98.92     99.95     99.85
+     36       99.66     99.91     98.92     99.95     99.85
+     37       99.65     99.91     98.87     99.95     99.85
+     38       99.68     99.91     98.97    100.00     99.85
+     39       99.67     99.91     98.92     99.95     99.90
+     40       99.64     99.91     98.82    100.00     99.85
+     41       99.63     99.91     98.82     99.95     99.85
+     42       99.67     99.91     98.97     99.95     99.85
+     43       99.69     99.91     99.07     99.95     99.85
+     44       99.67     99.91     98.92     99.95     99.90
+     45       99.66     99.91     98.92     99.95     99.85
+     46       99.68     99.91     98.97    100.00     99.85
+     47       99.63     99.91     98.82     99.95     99.85
+     48       99.66     99.91     98.87     99.95     99.90
+     49       99.64     99.91     98.82    100.00     99.85
+     50       99.66     99.91     98.87     99.95     99.90
+     51       99.67     99.91     98.92     99.95     99.90
+     52       99.65     99.91     98.78    100.00     99.90
+     53       99.67     99.91     98.92     99.95     99.90
+     54       99.69     99.91     98.97    100.00     99.90
+     55       99.66     99.91     98.92     99.89     99.90
+     56       99.67     99.91     98.92     99.95     99.90
+     57       99.68     99.91     98.97     99.95     99.90
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/tensorflow_addons/utils/ensure_tf_install.py:53: UserWarning: Tensorflow Addons supports using Python ops for all Tensorflow versions above or equal to 2.3.0 and strictly below 2.6.0 (nightly versions are not supported). 
+ The versions of TensorFlow you are currently using is 2.6.0 and is not supported. 
+Some things might work, some things might not.
+If you were to encounter a bug, do not file an issue.
+If you want to make sure you're using a tested and supported configuration, either change the TensorFlow version or the TensorFlow Addons's version. 
+You can find the compatibility matrix in TensorFlow Addon's readme:
+https://github.com/tensorflow/addons
+  warnings.warn(
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/feature_extraction/image.py:167: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  dtype=np.int):
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+     58       99.66     99.91     98.87     99.95     99.90
+     59       99.64     99.91     98.82     99.95     99.90
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.9964 
+Accuracies (test): [0.9991, 0.9882, 0.9995, 0.999]
+---
+
+
+Learning task 5
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc
+-------  ----------  --------  --------  --------  --------  --------
+      0       99.34     99.86     98.82     99.95     99.85     98.23
+      1       99.44     99.86     98.97     99.89     99.85     98.64
+      2       99.50     99.86     98.92     99.89     99.80     99.04
+      3       99.54     99.86     99.07     99.89     99.80     99.09
+      4       99.52     99.81     98.82     99.89     99.85     99.24
+      5       99.58     99.81     98.97     99.95     99.80     99.39
+      6       99.60     99.86     98.97     99.89     99.85     99.45
+      7       99.61     99.86     98.92     99.89     99.80     99.60
+      8       99.58     99.86     98.92     99.89     99.80     99.45
+      9       99.60     99.81     98.87     99.89     99.90     99.55
+     10       99.63     99.86     98.97     99.89     99.80     99.65
+     11       99.66     99.86     98.92     99.95     99.80     99.75
+     12       99.70     99.86     99.12     99.95     99.90     99.65
+     13       99.65     99.86     98.92     99.95     99.85     99.65
+     14       99.65     99.86     98.92     99.89     99.90     99.70
+     15       99.63     99.86     98.87     99.89     99.85     99.70
+     16       99.63     99.81     98.97     99.84     99.90     99.65
+     17       99.64     99.86     98.97     99.89     99.85     99.65
+     18       99.65     99.86     98.87     99.95     99.80     99.75
+     19       99.68     99.86     98.97     99.95     99.90     99.70
+     20       99.64     99.86     98.87     99.89     99.90     99.70
+     21       99.65     99.86     98.92     99.89     99.90     99.70
+     22       99.63     99.86     98.82     99.95     99.80     99.70
+     23       99.62     99.86     98.92     99.84     99.80     99.70
+     24       99.67     99.86     98.92     99.95     99.90     99.70
+     25       99.68     99.86     99.02     99.89     99.90     99.75
+     26       99.65     99.86     98.97     99.89     99.90     99.65
+     27       99.60     99.76     98.87     99.84     99.85     99.70
+     28       99.69     99.86     99.07     99.95     99.80     99.75
+     29       99.65     99.86     98.87     99.89     99.90     99.75
+     30       99.61     99.86     98.92     99.89     99.80     99.60
+     31       99.65     99.81     99.02     99.89     99.85     99.70
+     32       99.68     99.86     99.02     99.95     99.90     99.65
+     33       99.64     99.76     98.92     99.89     99.90     99.75
+     34       99.70     99.86     99.02     99.95     99.90     99.75
+     35       99.62     99.81     98.87     99.89     99.80     99.75
+     36       99.60     99.81     98.87     99.84     99.80     99.70
+     37       99.64     99.81     98.97     99.89     99.85     99.70
+     38       99.65     99.86     98.82     99.95     99.90     99.70
+     39       99.65     99.81     98.87     99.95     99.85     99.75
+     40       99.64     99.86     98.97     99.79     99.90     99.70
+     41       99.68     99.86     98.97     99.95     99.90     99.70
+     42       99.67     99.86     99.02     99.95     99.80     99.70
+     43       99.66     99.86     99.02     99.84     99.90     99.70
+     44       99.62     99.86     98.92     99.84     99.90     99.60
+     45       99.60     99.86     98.87     99.79     99.80     99.70
+     46       99.68     99.86     99.02     99.95     99.85     99.70
+     47       99.63     99.86     98.97     99.84     99.80     99.70
+     48       99.64     99.86     98.87     99.89     99.90     99.70
+     49       99.58     99.86     98.87     99.73     99.90     99.55
+     50       99.66     99.86     98.92     99.89     99.90     99.75
+     51       99.58     99.76     98.97     99.84     99.85     99.50
+     52       99.65     99.86     98.92     99.89     99.85     99.75
+     53       99.65     99.81     98.87     99.95     99.90     99.70
+     54       99.65     99.86     98.92     99.89     99.85     99.75
+     55       99.62     99.81     98.97     99.84     99.80     99.70
+     56       99.61     99.81     98.92     99.89     99.80     99.65
+     57       99.66     99.86     99.02     99.84     99.85     99.75
+     58       99.62     99.81     98.87     99.89     99.90     99.65
+     59       99.62     99.86     98.97     99.79     99.80     99.70
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.9962 
+Accuracies (test): [0.9986, 0.9897, 0.9979, 0.998, 0.997]
+---
+
+
+------------------- DONE -------------------
+

@@ -1,0 +1,3592 @@
+diff --git a/Makefile b/Makefile
+index 32bf2468..15d63ea6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -8,7 +8,7 @@ remote_path_483 = timner@cl483:/scratch/data/qixuan
+ remote_path_oat_qixuan = qixeng@cl:/users/qixeng/workspace
+ remote_path_arc = newc5095@arc:/data/stat-ecr/newc5095/code/git
+ local_path = $(shell pwd)
+-dest = $(remote_path_483)
++dest = $(remote_path_oat)
+ 
+ 
+ .PHONY: rsync
+diff --git a/baselines/frcl/continual_learning_frcl.py b/baselines/frcl/continual_learning_frcl.py
+index 2f3f2336..42225eca 100644
+--- a/baselines/frcl/continual_learning_frcl.py
++++ b/baselines/frcl/continual_learning_frcl.py
+@@ -8,7 +8,7 @@ import tensorflow as tf
+ from tqdm import tqdm
+ 
+ from benchmarking_tasks.continual_learning.data_loaders.get_data import make_iterators, prepare_data
+-from fsvi_cl.baselines.frcl.utils_frcl import (
++from baselines.frcl.utils_frcl import (
+     ContinualGPmodel,
+     MLPNetworkWithBias,
+     evaluate_on_all_tasks,
+diff --git a/baselines/frcl/run_frcl.py b/baselines/frcl/run_frcl.py
+index afb41a7c..7185bdb9 100644
+--- a/baselines/frcl/run_frcl.py
++++ b/baselines/frcl/run_frcl.py
+@@ -15,7 +15,7 @@ import tensorflow as tf
+ #     tf.config.experimental.set_memory_growth(device, True)
+ # import jax
+ # jax.config.update('jax_platform_name', 'cpu')
+-from fsvi_cl.baselines.frcl.continual_learning_frcl import train
++from baselines.frcl.continual_learning_frcl import train
+ from fsvi_cl.general_utils.log import (
+     create_logdir,
+     Hyperparameters,
+diff --git a/baselines/fromp/continual_learning_fromp.py b/baselines/fromp/continual_learning_fromp.py
+index 50e611b8..2245e66b 100644
+--- a/baselines/fromp/continual_learning_fromp.py
++++ b/baselines/fromp/continual_learning_fromp.py
+@@ -5,9 +5,9 @@ import jax
+ from fsvi_cl.fsvi_utils.utils_cl import select_inducing_inputs
+ from fsvi_cl.fsvi_utils.coreset.coreset_heuristics import add_by_random_per_class
+ from benchmarking_tasks.continual_learning.data_loaders.get_data import make_iterators, prepare_data
+-from fsvi_cl.baselines.fromp.models_fromp import MLP, SplitMLP
+-from fsvi_cl.baselines.fromp.opt_fromp import opt_fromp
+-from fsvi_cl.baselines.fromp.utils_fromp import (
++from baselines.fromp.models_fromp import MLP, SplitMLP
++from baselines.fromp.opt_fromp import opt_fromp
++from baselines.fromp.utils_fromp import (
+     process_data,
+     random_memorable_points,
+     select_memorable_points,
+diff --git a/baselines/fromp/opt_fromp.py b/baselines/fromp/opt_fromp.py
+index 3df6c43e..e3e2e4a8 100644
+--- a/baselines/fromp/opt_fromp.py
++++ b/baselines/fromp/opt_fromp.py
+@@ -4,7 +4,7 @@ from torch import nn
+ from torch.nn import functional as F
+ from torch.nn.utils import parameters_to_vector, vector_to_parameters
+ from torch.optim.optimizer import Optimizer
+-from fsvi_cl.baselines.fromp.utils_fromp import logistic_hessian, full_softmax_hessian
++from baselines.fromp.utils_fromp import logistic_hessian, full_softmax_hessian
+ 
+ 
+ def update_input(self, input, output):
+diff --git a/baselines/fromp/run_fromp.py b/baselines/fromp/run_fromp.py
+index f849f7c0..6da6b76c 100644
+--- a/baselines/fromp/run_fromp.py
++++ b/baselines/fromp/run_fromp.py
+@@ -55,7 +55,7 @@ sys.path.insert(0, os.path.abspath(__file__ + "/../../../function_space_vi/"))
+ import argparse
+ import numpy as np
+ import torch
+-from fsvi_cl.baselines.fromp.continual_learning_fromp import train
++from baselines.fromp.continual_learning_fromp import train
+ from fsvi_cl.general_utils.log import (
+     create_logdir,
+     Hyperparameters,
+@@ -176,7 +176,7 @@ def main(args, orig_cmd=None):
+     result = {
+         "mean_accuracies": mean_accuracies,
+     }
+-    if hparams.save_alt and not hparams.no_artifact:
++    if not hparams.no_artifact:
+         save_chkpt(
+             p=logdir / "chkpt", hparams=hparams.as_dict(), result=result,
+         )
+diff --git a/baselines/vcl/alg/data_generator.py b/baselines/vcl/alg/data_generator.py
+index 22b71b8a..38d84c7f 100644
+--- a/baselines/vcl/alg/data_generator.py
++++ b/baselines/vcl/alg/data_generator.py
+@@ -2,7 +2,7 @@ from copy import deepcopy
+ 
+ import numpy as np
+ 
+-from fsvi_cl.baselines.vcl.alg import utils
++from baselines.vcl.alg import utils
+ from benchmarking_tasks.continual_learning.data_loaders.get_data import prepare_data
+ 
+ 
+diff --git a/baselines/vcl/alg/utils.py b/baselines/vcl/alg/utils.py
+index e1fbea77..479bc9f3 100644
+--- a/baselines/vcl/alg/utils.py
++++ b/baselines/vcl/alg/utils.py
+@@ -8,7 +8,7 @@ import matplotlib
+ 
+ # matplotlib.use("agg")
+ import matplotlib.pyplot as plt
+-from fsvi_cl.baselines.vcl.alg.cla_models_multihead import MFVI_NN
++from baselines.vcl.alg.cla_models_multihead import MFVI_NN
+ 
+ 
+ VCL_ROOT = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+diff --git a/baselines/vcl/alg/vcl.py b/baselines/vcl/alg/vcl.py
+index a561aee4..392e7052 100644
+--- a/baselines/vcl/alg/vcl.py
++++ b/baselines/vcl/alg/vcl.py
+@@ -1,7 +1,7 @@
+ import numpy as np
+ 
+-from fsvi_cl.baselines.vcl.alg import utils
+-from fsvi_cl.baselines.vcl.alg.cla_models_multihead import Vanilla_NN, MFVI_NN
++from baselines.vcl.alg import utils
++from baselines.vcl.alg.cla_models_multihead import Vanilla_NN, MFVI_NN
+ 
+ 
+ def run_vcl(
+diff --git a/baselines/vcl/cl_vcl.py b/baselines/vcl/cl_vcl.py
+index 34a37687..75e041c5 100644
+--- a/baselines/vcl/cl_vcl.py
++++ b/baselines/vcl/cl_vcl.py
+@@ -2,8 +2,8 @@
+ import tensorflow as tf
+ import numpy as np
+ 
+-from fsvi_cl.baselines.vcl.alg.data_generator import CustomGenerator, is_single_head
+-from fsvi_cl.baselines.vcl.alg import vcl, coreset
++from baselines.vcl.alg.data_generator import CustomGenerator, is_single_head
++from baselines.vcl.alg import vcl, coreset
+ from fsvi_cl.general_utils.log import save_chkpt, create_logdir, set_up_logging
+ 
+ 
+diff --git a/baselines/vcl/run_permuted.py b/baselines/vcl/run_permuted.py
+index f82ad327..076e24d5 100644
+--- a/baselines/vcl/run_permuted.py
++++ b/baselines/vcl/run_permuted.py
+@@ -7,14 +7,14 @@ sys.path.insert(0, os.path.join(root_folder, "function_space_vi"))
+ import numpy as np
+ import tensorflow as tf
+ 
+-from fsvi_cl.baselines.vcl.alg.data_generator import PermutedMnistGenerator, CustomGenerator
++from baselines.vcl.alg.data_generator import PermutedMnistGenerator, CustomGenerator
+ 
+ tf.compat.v1.disable_eager_execution()
+ import pickle
+ import sys
+ 
+ sys.path.extend(["alg/"])
+-from fsvi_cl.baselines.vcl.alg import vcl, coreset, utils
++from baselines.vcl.alg import vcl, coreset, utils
+ 
+ hidden_size = [100, 100]
+ batch_size = 256
+diff --git a/baselines/vcl/run_split.py b/baselines/vcl/run_split.py
+index bddedece..cbd30833 100644
+--- a/baselines/vcl/run_split.py
++++ b/baselines/vcl/run_split.py
+@@ -3,14 +3,14 @@ import os
+ import numpy as np
+ import tensorflow as tf
+ 
+-from fsvi_cl.baselines.vcl.alg.data_generator import SplitMnistGenerator
++from baselines.vcl.alg.data_generator import SplitMnistGenerator
+ 
+ tf.compat.v1.disable_eager_execution()
+ import pickle
+ import sys
+ 
+ sys.path.extend(["alg/"])
+-from fsvi_cl.baselines.vcl.alg import vcl, coreset, utils
++from baselines.vcl.alg import vcl, coreset, utils
+ 
+ hidden_size = [256, 256]
+ batch_size = None
+diff --git a/baselines/vcl/run_vcl.py b/baselines/vcl/run_vcl.py
+index 619b7879..396b72cd 100644
+--- a/baselines/vcl/run_vcl.py
++++ b/baselines/vcl/run_vcl.py
+@@ -6,7 +6,7 @@ import sys
+ root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+ sys.path.insert(0, root_folder)
+ sys.path.insert(0, os.path.join(root_folder, "function_space_vi"))
+-from fsvi_cl.baselines.vcl.cl_vcl import main
++from baselines.vcl.cl_vcl import main
+ 
+ 
+ def add_vcl_args(parser):
+diff --git a/benchmarking_tasks/continual_learning/data_loaders/get_data.py b/benchmarking_tasks/continual_learning/data_loaders/get_data.py
+index 07aa5755..b4ad7a11 100644
+--- a/benchmarking_tasks/continual_learning/data_loaders/get_data.py
++++ b/benchmarking_tasks/continual_learning/data_loaders/get_data.py
+@@ -11,9 +11,9 @@ from typing import Union
+ import numpy as np
+ import tensorflow as tf
+ 
+-from fsvi_cl.src_cl.utils.data_loaders.mnist_and_cifar import get_mnist_or_cifar
+-from fsvi_cl.src_cl.utils.data_loaders.omniglot import get_omniglot
+-from fsvi_cl.src_cl.utils.data_loaders.toy import get_toy_data
++from benchmarking_tasks.continual_learning.data_loaders.mnist_and_cifar import get_mnist_or_cifar
++from benchmarking_tasks.continual_learning.data_loaders.omniglot import get_omniglot
++from benchmarking_tasks.continual_learning.data_loaders.toy import get_toy_data
+ 
+ 
+ DATA_LOAD = {
+diff --git a/benchmarking_tasks/continual_learning/data_loaders/mnist_and_cifar.py b/benchmarking_tasks/continual_learning/data_loaders/mnist_and_cifar.py
+index d3f163c1..bf221885 100644
+--- a/benchmarking_tasks/continual_learning/data_loaders/mnist_and_cifar.py
++++ b/benchmarking_tasks/continual_learning/data_loaders/mnist_and_cifar.py
+@@ -8,7 +8,7 @@ import sklearn
+ import sklearn.model_selection
+ import tensorflow as tf
+ 
+-from fsvi_cl.src_cl.utils.data_loaders.utils import get_model_head_settings
++from benchmarking_tasks.continual_learning.data_loaders.utils import get_model_head_settings
+ 
+ METADATA = {
+     "smnist": {
+diff --git a/benchmarking_tasks/continual_learning/data_loaders/toy.py b/benchmarking_tasks/continual_learning/data_loaders/toy.py
+index e6a8d3a0..880e0e22 100644
+--- a/benchmarking_tasks/continual_learning/data_loaders/toy.py
++++ b/benchmarking_tasks/continual_learning/data_loaders/toy.py
+@@ -4,7 +4,7 @@ import torch
+ from sklearn.datasets import make_blobs
+ from torch.utils.data import TensorDataset
+ 
+-from fsvi_cl.src_cl.utils.data_loaders.utils import get_model_head_settings
++from benchmarking_tasks.continual_learning.data_loaders.utils import get_model_head_settings
+ 
+ 
+ def get_toy_data(
+diff --git a/benchmarking_tasks/continual_learning/method_cl_fsvi.py b/benchmarking_tasks/continual_learning/method_cl_fsvi.py
+index c935a27b..f3e9faee 100644
+--- a/benchmarking_tasks/continual_learning/method_cl_fsvi.py
++++ b/benchmarking_tasks/continual_learning/method_cl_fsvi.py
+@@ -14,19 +14,19 @@ from benchmarking_tasks.continual_learning.method_cl_template import MethodCLTem
+ from fsvi_cl.general_utils.log import (
+     Hyperparameters,
+ )
+-from fsvi_cl.src_cl.utils.utils_cl import get_minibatch
+-from fsvi_cl.src_cl.utils.utils_cl import initialize_random_keys
+-from fsvi_cl.src_cl.utils.args_cl import NOT_SPECIFIED
+-from fsvi_cl.src_cl.utils.coreset.coreset import Coreset
+-from fsvi_cl.src_cl.utils.coreset.coreset_selection import get_coreset_indices
+-from fsvi_cl.src_cl.utils.coreset.coreset_selection import make_pred_fn
+-from fsvi_cl.src_cl.utils.data_loaders.get_data import TUPLE_OF_TWO_TUPLES
+-from fsvi_cl.src_cl.utils.data_loaders.get_data import get_output_dim_fn
+-from fsvi_cl.src_cl.utils.inducing_points import make_inducing_points
+-from fsvi_cl.src_cl.utils.initializer import Initializer
+-from fsvi_cl.src_cl.utils.replace_params import replace_opt_state_trained
+-from fsvi_cl.src_cl.utils.replace_params import replace_params_trained_heads
+-from fsvi_cl.src_cl.utils.utils_cl import TrainingLog
++from fsvi_cl.fsvi_utils.utils_cl import get_minibatch
++from fsvi_cl.fsvi_utils.utils_cl import initialize_random_keys
++from fsvi_cl.fsvi_utils.args_cl import NOT_SPECIFIED
++from fsvi_cl.fsvi_utils.coreset.coreset import Coreset
++from fsvi_cl.fsvi_utils.coreset.coreset_selection import get_coreset_indices
++from fsvi_cl.fsvi_utils.coreset.coreset_selection import make_pred_fn
++from benchmarking_tasks.continual_learning.data_loaders.get_data import TUPLE_OF_TWO_TUPLES
++from benchmarking_tasks.continual_learning.data_loaders.get_data import get_output_dim_fn
++from fsvi_cl.fsvi_utils.inducing_points import make_inducing_points
++from fsvi_cl.fsvi_utils.initializer import Initializer
++from fsvi_cl.fsvi_utils.replace_params import replace_opt_state_trained
++from fsvi_cl.fsvi_utils.replace_params import replace_params_trained_heads
++from fsvi_cl.fsvi_utils.utils_cl import TrainingLog
+ 
+ 
+ class MethodCLFSVI(MethodCLTemplate):
+@@ -108,7 +108,6 @@ class MethodCLFSVI(MethodCLTemplate):
+         )
+ 
+         for epoch in range(nb_epochs):
+-            # log_gpu_usage(desc=f"task_id={task_id}, epoch={epoch}")
+             self._run_one_epoch(
+                 task_id=task_id,
+                 epoch=epoch,
+diff --git a/benchmarking_tasks/continual_learning/method_cl_template.py b/benchmarking_tasks/continual_learning/method_cl_template.py
+index a5d42498..f97cbd10 100644
+--- a/benchmarking_tasks/continual_learning/method_cl_template.py
++++ b/benchmarking_tasks/continual_learning/method_cl_template.py
+@@ -1,7 +1,7 @@
+ from typing import Callable
+ from typing import Iterator
+ 
+-from fsvi_cl.src_cl.utils.utils_cl import TrainingLog
++from fsvi_cl.fsvi_utils.utils_cl import TrainingLog
+ 
+ 
+ class MethodCLTemplate:
+diff --git a/benchmarking_tasks/continual_learning/trainer_cl.py b/benchmarking_tasks/continual_learning/trainer_cl.py
+index b440a2e7..7a2eb755 100644
+--- a/benchmarking_tasks/continual_learning/trainer_cl.py
++++ b/benchmarking_tasks/continual_learning/trainer_cl.py
+@@ -8,11 +8,11 @@ from fsvi_cl.general_utils.log import create_logdir
+ from fsvi_cl.general_utils.log import save_chkpt
+ from fsvi_cl.general_utils.log import save_kwargs
+ from fsvi_cl.general_utils.log import set_up_logging
+-from fsvi_cl.src_cl.utils.args_cl import NOT_SPECIFIED
+-from fsvi_cl.src_cl.utils.data_loaders.get_data import make_iterators
+-from fsvi_cl.src_cl.utils.data_loaders.get_data import prepare_data
+-from fsvi_cl.src_cl.utils.utils_cl import TrainingLog
+-from fsvi_cl.src_cl.utils.utils_cl import evaluate_on_all_tasks
++from fsvi_cl.fsvi_utils.args_cl import NOT_SPECIFIED
++from benchmarking_tasks.continual_learning.data_loaders.get_data import make_iterators
++from benchmarking_tasks.continual_learning.data_loaders.get_data import prepare_data
++from fsvi_cl.fsvi_utils.utils_cl import TrainingLog
++from fsvi_cl.fsvi_utils.utils_cl import evaluate_on_all_tasks
+ 
+ 
+ class TrainerCL:
+diff --git a/cli.py b/cli.py
+index 4a904949..d8f4b420 100644
+--- a/cli.py
++++ b/cli.py
+@@ -1,13 +1,13 @@
+ import argparse
+ from typing import Dict
+ 
+-from fsvi_cl.baselines.frcl.run_frcl import run_frcl
+-from fsvi_cl.baselines.fromp.run_fromp import run_fromp
+-from fsvi_cl.baselines.vcl.run_vcl import run_vcl
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import FRCL_TEMPLATE
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import FROMP_TEMPLATE
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import VCL_TEMPLATE
+-from fsvi_cl.src_cl.exps.utils.configs import CL_TEMPLATE
++from baselines.frcl.run_frcl import run_frcl
++from baselines.fromp.run_fromp import run_fromp
++from baselines.vcl.run_vcl import run_vcl
++from fsvi_cl.exps.utils.baselines_configs import FRCL_TEMPLATE
++from fsvi_cl.exps.utils.baselines_configs import FROMP_TEMPLATE
++from fsvi_cl.exps.utils.baselines_configs import VCL_TEMPLATE
++from fsvi_cl.exps.utils.configs import CL_TEMPLATE
+ 
+ tf_cpu_only = True  # TODO: check how this affects determinism -- keep set to False
+ if tf_cpu_only:
+@@ -17,7 +17,7 @@ if tf_cpu_only:
+ from jax.lib import xla_bridge
+ print("Jax is running on", xla_bridge.get_backend().platform)
+ 
+-from fsvi_cl.src_cl.utils.args_cl import add_cl_args
++from fsvi_cl.fsvi_utils.args_cl import add_cl_args
+ from fsvi_cl.run_cl import run as cl_run
+ 
+ 
+diff --git a/fsvi_cl/exps/ablation/configs/cifar_coreset.py b/fsvi_cl/exps/ablation/configs/cifar_coreset.py
+index 8e35e538..d7e7d443 100644
+--- a/fsvi_cl/exps/ablation/configs/cifar_coreset.py
++++ b/fsvi_cl/exps/ablation/configs/cifar_coreset.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/cifar_independent.py b/fsvi_cl/exps/ablation/configs/cifar_independent.py
+index f7e2615c..39b8e30b 100644
+--- a/fsvi_cl/exps/ablation/configs/cifar_independent.py
++++ b/fsvi_cl/exps/ablation/configs/cifar_independent.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs, get_keys_to_ignore_for_one_task
+-from fsvi_cl.src_cl.exps.utils import load_utils as lutils
++from fsvi_cl.exps.utils.load_utils import remove_done_runs, get_keys_to_ignore_for_one_task
++from fsvi_cl.exps.utils import load_utils as lutils
+ 
+ 
+ def select_exps() -> List[Dict]:
+diff --git a/fsvi_cl/exps/ablation/configs/cifar_independent_ind_10_v3.py b/fsvi_cl/exps/ablation/configs/cifar_independent_ind_10_v3.py
+index 81d50785..43e4fc9c 100644
+--- a/fsvi_cl/exps/ablation/configs/cifar_independent_ind_10_v3.py
++++ b/fsvi_cl/exps/ablation/configs/cifar_independent_ind_10_v3.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs, get_keys_to_ignore_for_one_task
+-from fsvi_cl.src_cl.exps.utils import load_utils as lutils
++from fsvi_cl.exps.utils.load_utils import remove_done_runs, get_keys_to_ignore_for_one_task
++from fsvi_cl.exps.utils import load_utils as lutils
+ 
+ 
+ def select_exps() -> List[Dict]:
+diff --git a/fsvi_cl/exps/ablation/configs/cifar_joint.py b/fsvi_cl/exps/ablation/configs/cifar_joint.py
+index 74393b03..59311286 100644
+--- a/fsvi_cl/exps/ablation/configs/cifar_joint.py
++++ b/fsvi_cl/exps/ablation/configs/cifar_joint.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/cifar_sweep.py b/fsvi_cl/exps/ablation/configs/cifar_sweep.py
+index dc0f02a0..53347224 100644
+--- a/fsvi_cl/exps/ablation/configs/cifar_sweep.py
++++ b/fsvi_cl/exps/ablation/configs/cifar_sweep.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/cifar_test.py b/fsvi_cl/exps/ablation/configs/cifar_test.py
+index 477c5d2d..1a6ace07 100644
+--- a/fsvi_cl/exps/ablation/configs/cifar_test.py
++++ b/fsvi_cl/exps/ablation/configs/cifar_test.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/coreset_grid.py b/fsvi_cl/exps/ablation/configs/coreset_grid.py
+index 1f4e9494..7b9985ae 100644
+--- a/fsvi_cl/exps/ablation/configs/coreset_grid.py
++++ b/fsvi_cl/exps/ablation/configs/coreset_grid.py
+@@ -2,14 +2,14 @@ from pathlib import Path
+ from typing import Dict
+ import os
+ 
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+     get_cl_split_FashionMNIST_config,
+     get_cl_split_MNIST_single_head_config,
+     EXPS_ROOT, ABLATION_ROOT)
+-from fsvi_cl.src_cl.exps.utils.generate_cmds import (
++from fsvi_cl.exps.utils.generate_cmds import (
+     generate_configs,
+     generate_configs_cartesian,
+     set_configs_key_value,
+diff --git a/fsvi_cl/exps/ablation/configs/coreset_inducing_grid_seeds.py b/fsvi_cl/exps/ablation/configs/coreset_inducing_grid_seeds.py
+index 00614d0a..71d279c9 100644
+--- a/fsvi_cl/exps/ablation/configs/coreset_inducing_grid_seeds.py
++++ b/fsvi_cl/exps/ablation/configs/coreset_inducing_grid_seeds.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+@@ -11,8 +11,8 @@ from fsvi_cl.src_cl.exps.utils.configs import (
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.generate_cmds import remove_kl_oom_configs
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs, get_failed_runs
++from fsvi_cl.exps.utils.generate_cmds import remove_kl_oom_configs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs, get_failed_runs
+ 
+ 
+ def vary(
+diff --git a/fsvi_cl/exps/ablation/configs/coreset_mix.py b/fsvi_cl/exps/ablation/configs/coreset_mix.py
+index 3e289e8c..7d79f28c 100644
+--- a/fsvi_cl/exps/ablation/configs/coreset_mix.py
++++ b/fsvi_cl/exps/ablation/configs/coreset_mix.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+diff --git a/fsvi_cl/exps/ablation/configs/entropy_grid.py b/fsvi_cl/exps/ablation/configs/entropy_grid.py
+index 049b579d..10b7758d 100644
+--- a/fsvi_cl/exps/ablation/configs/entropy_grid.py
++++ b/fsvi_cl/exps/ablation/configs/entropy_grid.py
+@@ -1,14 +1,14 @@
+ import os
+ from pathlib import Path
+ 
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+     get_cl_split_FashionMNIST_config,
+     get_cl_split_MNIST_single_head_config,
+     EXPS_ROOT, ABLATION_ROOT)
+-from fsvi_cl.src_cl.exps.utils.generate_cmds import (
++from fsvi_cl.exps.utils.generate_cmds import (
+     set_configs_kv_pairs,
+     generate_config_single_value,
+     generate_configs_sub_specs,
+diff --git a/fsvi_cl/exps/ablation/configs/hyperparameter_seeds.py b/fsvi_cl/exps/ablation/configs/hyperparameter_seeds.py
+index 9462932e..e7610d8f 100644
+--- a/fsvi_cl/exps/ablation/configs/hyperparameter_seeds.py
++++ b/fsvi_cl/exps/ablation/configs/hyperparameter_seeds.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+@@ -10,7 +10,7 @@ from fsvi_cl.src_cl.exps.utils.configs import (
+     get_cl_split_MNIST_single_head_config,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root)
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(
+diff --git a/fsvi_cl/exps/ablation/configs/hyperparameter_test.py b/fsvi_cl/exps/ablation/configs/hyperparameter_test.py
+index 2f880ed1..c5506114 100644
+--- a/fsvi_cl/exps/ablation/configs/hyperparameter_test.py
++++ b/fsvi_cl/exps/ablation/configs/hyperparameter_test.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(base_config: Dict) -> List[Dict]:
+diff --git a/fsvi_cl/exps/ablation/configs/hyperparameter_test_linear.py b/fsvi_cl/exps/ablation/configs/hyperparameter_test_linear.py
+index ac11c0c3..5be83eb2 100644
+--- a/fsvi_cl/exps/ablation/configs/hyperparameter_test_linear.py
++++ b/fsvi_cl/exps/ablation/configs/hyperparameter_test_linear.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/hyperparameter_test_linear_v2.py b/fsvi_cl/exps/ablation/configs/hyperparameter_test_linear_v2.py
+index 121abd9e..425181a0 100644
+--- a/fsvi_cl/exps/ablation/configs/hyperparameter_test_linear_v2.py
++++ b/fsvi_cl/exps/ablation/configs/hyperparameter_test_linear_v2.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/hyperparameter_test_v7.py b/fsvi_cl/exps/ablation/configs/hyperparameter_test_v7.py
+index 88f6cce6..8895eb44 100644
+--- a/fsvi_cl/exps/ablation/configs/hyperparameter_test_v7.py
++++ b/fsvi_cl/exps/ablation/configs/hyperparameter_test_v7.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(base_config: Dict) -> List[Dict]:
+diff --git a/fsvi_cl/exps/ablation/configs/hyperparameter_test_v9.py b/fsvi_cl/exps/ablation/configs/hyperparameter_test_v9.py
+index 3790e54c..1d0308bf 100644
+--- a/fsvi_cl/exps/ablation/configs/hyperparameter_test_v9.py
++++ b/fsvi_cl/exps/ablation/configs/hyperparameter_test_v9.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(base_config: Dict) -> List[Dict]:
+diff --git a/fsvi_cl/exps/ablation/configs/identity_cov.py b/fsvi_cl/exps/ablation/configs/identity_cov.py
+index 246a04b6..c26fce10 100644
+--- a/fsvi_cl/exps/ablation/configs/identity_cov.py
++++ b/fsvi_cl/exps/ablation/configs/identity_cov.py
+@@ -1,17 +1,17 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.best_configs import get_best_cl_split_MNIST_single_head_config, \
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.best_configs import get_best_cl_split_MNIST_single_head_config, \
+     get_best_cl_split_FashionMNIST_config
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(base_config: Dict, architecture=None, kv_pairs=[]) -> List[Dict]:
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_large.py b/fsvi_cl/exps/ablation/configs/no_coreset_large.py
+index 9a276be1..264d38a7 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_large.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_large.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+@@ -10,7 +10,7 @@ from fsvi_cl.src_cl.exps.utils.configs import (
+     get_cl_split_MNIST_single_head_config,
+     ABLATION_ROOT,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_large_v2.py b/fsvi_cl/exps/ablation/configs/no_coreset_large_v2.py
+index a13f3712..f0b6e4f3 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_large_v2.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_large_v2.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+@@ -10,7 +10,7 @@ from fsvi_cl.src_cl.exps.utils.configs import (
+     get_cl_split_MNIST_single_head_config,
+     ABLATION_ROOT,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_10.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_10.py
+index c3659f8f..d033b291 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_10.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_10.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+@@ -10,7 +10,7 @@ from fsvi_cl.src_cl.exps.utils.configs import (
+     get_cl_split_MNIST_single_head_config,
+     ABLATION_ROOT,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v2.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v2.py
+index ed5a732f..ddce8df9 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v2.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v2.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v4.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v4.py
+index a74b0beb..ad94d722 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v4.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v4.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v5.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v5.py
+index 393a126c..3b6d40e2 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v5.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_linear_v5.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear.py
+index d1971fdb..b89a29d0 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v2.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v2.py
+index fdc270d0..dfe908ab 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v2.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v2.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v3.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v3.py
+index 0b1d0aaf..09201da5 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v3.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v3.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v4.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v4.py
+index 087a580f..080192a8 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v4.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v4.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v6.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v6.py
+index 83e2d56d..cb8e2023 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v6.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v6.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v8.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v8.py
+index 2b40c43b..7fd8f379 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v8.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v8.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v9.py b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v9.py
+index 88a1ea05..53d1b08b 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v9.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_pmnist_non_linear_v9.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import best_configs as bc
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import best_configs as bc
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_single_compare.py b/fsvi_cl/exps/ablation/configs/no_coreset_single_compare.py
+index 15eb9e41..14b948cf 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_single_compare.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_single_compare.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+@@ -10,7 +10,7 @@ from fsvi_cl.src_cl.exps.utils.configs import (
+     get_cl_split_MNIST_single_head_config,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root)
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_smnist_reproduce.py b/fsvi_cl/exps/ablation/configs/no_coreset_smnist_reproduce.py
+index 9500a210..b9b2b68c 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_smnist_reproduce.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_smnist_reproduce.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_smnist_seeds.py b/fsvi_cl/exps/ablation/configs/no_coreset_smnist_seeds.py
+index 348f091b..6a481d1f 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_smnist_seeds.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_smnist_seeds.py
+@@ -1,10 +1,10 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+diff --git a/fsvi_cl/exps/ablation/configs/no_coreset_v3.py b/fsvi_cl/exps/ablation/configs/no_coreset_v3.py
+index 80a935f3..414ef060 100644
+--- a/fsvi_cl/exps/ablation/configs/no_coreset_v3.py
++++ b/fsvi_cl/exps/ablation/configs/no_coreset_v3.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     get_cl_split_MNIST_config,
+     get_cl_permuted_MNIST_base_config,
+@@ -10,7 +10,7 @@ from fsvi_cl.src_cl.exps.utils.configs import (
+     get_cl_split_MNIST_single_head_config,
+     ABLATION_ROOT,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(
+diff --git a/fsvi_cl/exps/ablation/configs/ominglot_1_inducing_v2.py b/fsvi_cl/exps/ablation/configs/ominglot_1_inducing_v2.py
+index fc0760e5..0ca4d0b2 100644
+--- a/fsvi_cl/exps/ablation/configs/ominglot_1_inducing_v2.py
++++ b/fsvi_cl/exps/ablation/configs/ominglot_1_inducing_v2.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/omniglot.py b/fsvi_cl/exps/ablation/configs/omniglot.py
+index 0ab1e6a9..5fb8039e 100644
+--- a/fsvi_cl/exps/ablation/configs/omniglot.py
++++ b/fsvi_cl/exps/ablation/configs/omniglot.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/omniglot_1_inducing.py b/fsvi_cl/exps/ablation/configs/omniglot_1_inducing.py
+index 15bd2673..dce2bd07 100644
+--- a/fsvi_cl/exps/ablation/configs/omniglot_1_inducing.py
++++ b/fsvi_cl/exps/ablation/configs/omniglot_1_inducing.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/omniglot_oom.py b/fsvi_cl/exps/ablation/configs/omniglot_oom.py
+index 3ce8401f..f89ac970 100644
+--- a/fsvi_cl/exps/ablation/configs/omniglot_oom.py
++++ b/fsvi_cl/exps/ablation/configs/omniglot_oom.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/omniglot_oom_v2.py b/fsvi_cl/exps/ablation/configs/omniglot_oom_v2.py
+index 019ecadb..8b1af949 100644
+--- a/fsvi_cl/exps/ablation/configs/omniglot_oom_v2.py
++++ b/fsvi_cl/exps/ablation/configs/omniglot_oom_v2.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/omniglot_seeds.py b/fsvi_cl/exps/ablation/configs/omniglot_seeds.py
+index 71daa682..ae97bb3e 100644
+--- a/fsvi_cl/exps/ablation/configs/omniglot_seeds.py
++++ b/fsvi_cl/exps/ablation/configs/omniglot_seeds.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def get_base_config():
+diff --git a/fsvi_cl/exps/ablation/configs/reproduce_main_results.py b/fsvi_cl/exps/ablation/configs/reproduce_main_results.py
+index 34f81af2..faec1bd2 100644
+--- a/fsvi_cl/exps/ablation/configs/reproduce_main_results.py
++++ b/fsvi_cl/exps/ablation/configs/reproduce_main_results.py
+@@ -4,19 +4,19 @@ from typing import Dict
+ from typing import List
+ 
+ from fsvi_cl.general_utils.log import PROJECT_ROOT
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import ABLATION_ROOT
+-from fsvi_cl.src_cl.exps.utils.configs import CL_TEMPLATE
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import ABLATION_ROOT
++from fsvi_cl.exps.utils.configs import CL_TEMPLATE
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def build_configs() -> List[Dict]:
+ 	paths = [
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_match.pkl"),
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_optimized.pkl"),
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_no_coreset.pkl"),
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_minimal_coreset.pkl"),
++		os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_match.pkl"),
++		os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_optimized.pkl"),
++		os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_no_coreset.pkl"),
++		os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_minimal_coreset.pkl"),
+ 	]
+ 	configs = []
+ 	for path in paths:
+diff --git a/fsvi_cl/exps/ablation/configs/reproduce_main_results_2.py b/fsvi_cl/exps/ablation/configs/reproduce_main_results_2.py
+index aeb5028e..51b95f20 100644
+--- a/fsvi_cl/exps/ablation/configs/reproduce_main_results_2.py
++++ b/fsvi_cl/exps/ablation/configs/reproduce_main_results_2.py
+@@ -8,15 +8,15 @@ from typing import Dict
+ from typing import List
+ 
+ from fsvi_cl.general_utils.log import PROJECT_ROOT
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import ABLATION_ROOT
+-from fsvi_cl.src_cl.exps.utils.configs import CL_TEMPLATE
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import ABLATION_ROOT
++from fsvi_cl.exps.utils.configs import CL_TEMPLATE
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def build_configs() -> List[Dict]:
+-	path = os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs")
++	path = os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs")
+ 	configs = []
+ 	filenames = os.listdir(path)
+ 	for file in filenames:
+diff --git a/fsvi_cl/exps/ablation/configs/reproduce_main_results_3.py b/fsvi_cl/exps/ablation/configs/reproduce_main_results_3.py
+index eca11175..7d19593e 100644
+--- a/fsvi_cl/exps/ablation/configs/reproduce_main_results_3.py
++++ b/fsvi_cl/exps/ablation/configs/reproduce_main_results_3.py
+@@ -8,11 +8,11 @@ from typing import Dict
+ from typing import List
+ 
+ from fsvi_cl.general_utils.log import PROJECT_ROOT
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import baseline_configs_to_file
+-from fsvi_cl.src_cl.exps.utils.configs import ABLATION_ROOT
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.baselines_configs import baseline_configs_to_file
++from fsvi_cl.exps.utils.configs import ABLATION_ROOT
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def extract_task(file):
+@@ -22,7 +22,7 @@ def extract_task(file):
+ 
+ 
+ def build_configs() -> List[Dict]:
+-	path = os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs")
++	path = os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs")
+ 	configs = []
+ 	filenames = os.listdir(path)
+ 	for file in filenames:
+diff --git a/fsvi_cl/exps/ablation/configs/rerun_sfashion_old_code.py b/fsvi_cl/exps/ablation/configs/rerun_sfashion_old_code.py
+index d0e703bc..28e467e1 100644
+--- a/fsvi_cl/exps/ablation/configs/rerun_sfashion_old_code.py
++++ b/fsvi_cl/exps/ablation/configs/rerun_sfashion_old_code.py
+@@ -4,20 +4,20 @@ import os
+ import pickle
+ 
+ from fsvi_cl.general_utils.log import PROJECT_ROOT
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+ 	CL_TEMPLATE,
+ 	ABLATION_ROOT,
+ 	get_relative_path_wrt_exps_root,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def build_configs() -> List[Dict]:
+ 	paths = [
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_match.pkl"),
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_optimized.pkl"),
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_no_coreset.pkl"),
++		os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_match.pkl"),
++		os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_optimized.pkl"),
++		os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_no_coreset.pkl"),
+ 	]
+ 	configs = []
+ 	for path in paths:
+diff --git a/fsvi_cl/exps/ablation/configs/small_cifar_non_linear_v2.py b/fsvi_cl/exps/ablation/configs/small_cifar_non_linear_v2.py
+index e67d2ac5..f42b3323 100644
+--- a/fsvi_cl/exps/ablation/configs/small_cifar_non_linear_v2.py
++++ b/fsvi_cl/exps/ablation/configs/small_cifar_non_linear_v2.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+     get_cl_split_SmallCIFAR_config,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(base_config) -> List[Dict]:
+diff --git a/fsvi_cl/exps/ablation/configs/small_cifar_v2.py b/fsvi_cl/exps/ablation/configs/small_cifar_v2.py
+index c6ffcbcb..121f419b 100644
+--- a/fsvi_cl/exps/ablation/configs/small_cifar_v2.py
++++ b/fsvi_cl/exps/ablation/configs/small_cifar_v2.py
+@@ -1,14 +1,14 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     ABLATION_ROOT,
+     get_relative_path_wrt_exps_root,
+     get_cl_split_SmallCIFAR_config,
+ )
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(base_config) -> List[Dict]:
+diff --git a/fsvi_cl/exps/ablation/coreset_plots.py b/fsvi_cl/exps/ablation/coreset_plots.py
+index f4adba45..a55d65ea 100644
+--- a/fsvi_cl/exps/ablation/coreset_plots.py
++++ b/fsvi_cl/exps/ablation/coreset_plots.py
+@@ -13,7 +13,7 @@ from sklearn.decomposition import PCA
+ from sklearn.manifold import TSNE
+ import matplotlib.patches as mpatches
+ 
+-from fsvi_cl.src_cl.exps.utils.load_utils import load_data, sample_data
++from fsvi_cl.exps.utils.load_utils import load_data, sample_data
+ 
+ 
+ def main(e, n_samples, seed, pca_dim=50):
+diff --git a/fsvi_cl/exps/ablation/generate_cmds.py b/fsvi_cl/exps/ablation/generate_cmds.py
+index a7de606b..30e7c234 100644
+--- a/fsvi_cl/exps/ablation/generate_cmds.py
++++ b/fsvi_cl/exps/ablation/generate_cmds.py
+@@ -2,8 +2,8 @@ from pathlib import Path
+ from typing import Dict
+ import os
+ 
+-from fsvi_cl.src_cl.exps.utils.configs import CL_TEMPLATE, get_cl_split_MNIST_config
+-from fsvi_cl.src_cl.exps.utils.generate_cmds import generate_configs, generate_configs_cartesian, set_configs_key_value, \
++from fsvi_cl.exps.utils.configs import CL_TEMPLATE, get_cl_split_MNIST_config
++from fsvi_cl.exps.utils.generate_cmds import generate_configs, generate_configs_cartesian, set_configs_key_value, \
+     set_configs_kv_pairs
+ 
+ 
+diff --git a/fsvi_cl/exps/ablation/plots.py b/fsvi_cl/exps/ablation/plots.py
+index 4ae18130..d00c9f66 100644
+--- a/fsvi_cl/exps/ablation/plots.py
++++ b/fsvi_cl/exps/ablation/plots.py
+@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
+ import numpy as np
+ import seaborn as sns
+ 
+-from fsvi_cl.src_cl.exps.utils.load_utils import (
++from fsvi_cl.exps.utils.load_utils import (
+     find_diff_keys,
+     get_make_immutable_config,
+     load_raw_training_log,
+diff --git a/fsvi_cl/exps/baselines/configs/compare_single.py b/fsvi_cl/exps/baselines/configs/compare_single.py
+index d39691ba..c1039c6c 100644
+--- a/fsvi_cl/exps/baselines/configs/compare_single.py
++++ b/fsvi_cl/exps/baselines/configs/compare_single.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.baselines_configs import (
+     get_frcl_split_MNIST_config,
+     BASELINE_ROOT,
+     baseline_configs_to_file,
+     get_fromp_split_MNIST_config)
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+ 
+ 
+ def vary(base_config: Dict, dataset: str) -> List[Dict]:
+diff --git a/fsvi_cl/exps/baselines/configs/debug.py b/fsvi_cl/exps/baselines/configs/debug.py
+index 5ed1b5f1..944ef7c7 100644
+--- a/fsvi_cl/exps/baselines/configs/debug.py
++++ b/fsvi_cl/exps/baselines/configs/debug.py
+@@ -1,8 +1,8 @@
+ import pdb
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.baselines_configs import (
+     get_frcl_split_MNIST_config,
+     BASELINE_ROOT,
+     FRCL_TEMPLATE,
+@@ -12,8 +12,8 @@ from fsvi_cl.src_cl.exps.utils.baselines_configs import (
+     baseline_configs_to_file,
+     get_fromp_split_MNIST_config,
+ )
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+ 
+ def vary(base_config: Dict,) -> List[Dict]:
+diff --git a/fsvi_cl/exps/baselines/configs/frcl_omniglot.py b/fsvi_cl/exps/baselines/configs/frcl_omniglot.py
+index 7b89286e..e31a663f 100644
+--- a/fsvi_cl/exps/baselines/configs/frcl_omniglot.py
++++ b/fsvi_cl/exps/baselines/configs/frcl_omniglot.py
+@@ -1,15 +1,15 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.baselines_configs import (
+     get_frcl_omniglot_config,
+     BASELINE_ROOT,
+     baseline_configs_to_file,
+ )
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+ 
+ 
+ def vary(base_config: Dict,) -> List[Dict]:
+diff --git a/fsvi_cl/exps/baselines/configs/frcl_omniglot_random.py b/fsvi_cl/exps/baselines/configs/frcl_omniglot_random.py
+index 644d0bdc..8821a0dd 100644
+--- a/fsvi_cl/exps/baselines/configs/frcl_omniglot_random.py
++++ b/fsvi_cl/exps/baselines/configs/frcl_omniglot_random.py
+@@ -1,15 +1,15 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.baselines_configs import (
+     get_frcl_omniglot_config,
+     BASELINE_ROOT,
+     baseline_configs_to_file,
+ )
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+ 
+ 
+ def vary(base_config: Dict,) -> List[Dict]:
+diff --git a/fsvi_cl/exps/baselines/configs/frcl_random_per_class.py b/fsvi_cl/exps/baselines/configs/frcl_random_per_class.py
+index 48197d5a..96eba760 100644
+--- a/fsvi_cl/exps/baselines/configs/frcl_random_per_class.py
++++ b/fsvi_cl/exps/baselines/configs/frcl_random_per_class.py
+@@ -1,15 +1,15 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.baselines_configs import (
+     get_frcl_split_MNIST_config,
+     BASELINE_ROOT,
+     baseline_configs_to_file,
+ )
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+ 
+ 
+ def vary(base_config: Dict,) -> List[Dict]:
+diff --git a/fsvi_cl/exps/baselines/configs/fromp_random_per_class_smaller.py b/fsvi_cl/exps/baselines/configs/fromp_random_per_class_smaller.py
+index 98b4912c..7a2b61f2 100644
+--- a/fsvi_cl/exps/baselines/configs/fromp_random_per_class_smaller.py
++++ b/fsvi_cl/exps/baselines/configs/fromp_random_per_class_smaller.py
+@@ -1,13 +1,13 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.baselines_configs import (
+     get_frcl_split_MNIST_config,
+     BASELINE_ROOT,
+     baseline_configs_to_file,
+     get_fromp_split_MNIST_config)
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+ 
+ 
+ def vary(base_config: Dict, dataset: str) -> List[Dict]:
+diff --git a/fsvi_cl/exps/baselines/configs/fromp_with_coreset.py b/fsvi_cl/exps/baselines/configs/fromp_with_coreset.py
+index e571214c..fbe63481 100644
+--- a/fsvi_cl/exps/baselines/configs/fromp_with_coreset.py
++++ b/fsvi_cl/exps/baselines/configs/fromp_with_coreset.py
+@@ -2,15 +2,15 @@ from copy import deepcopy
+ from pathlib import Path
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils.load_utils import remove_done_runs
++from fsvi_cl.exps.utils.load_utils import remove_done_runs
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.baselines_configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.baselines_configs import (
+     get_frcl_split_MNIST_config,
+     BASELINE_ROOT,
+     baseline_configs_to_file,
+     get_fromp_split_MNIST_config)
+-from fsvi_cl.src_cl.exps.utils.configs import get_relative_path_wrt_exps_root
++from fsvi_cl.exps.utils.configs import get_relative_path_wrt_exps_root
+ 
+ 
+ def vary(base_config: Dict,) -> List[Dict]:
+@@ -69,7 +69,7 @@ def set_log_folders(configs, logroot, subdir):
+ def main():
+     subdir = "fromp_with_coreset"
+     configs = build_configs()
+-    scratch_baseline_root = Path("/users/timner/qixuan/continual_learning_via_function-space_vi/src_cl/exps/baselines")
++    scratch_baseline_root = Path("/users/timner/qixuan/continual_learning_via_function-space_vi/exps/baselines")
+     configs = remove_done_runs(
+         configs=configs,
+         exps_folder=scratch_baseline_root / "runs" / subdir,
+diff --git a/fsvi_cl/exps/plots/v0/hyperparameter_omniglot.py b/fsvi_cl/exps/plots/v0/hyperparameter_omniglot.py
+index 6ddc63ff..f4bb8f3a 100644
+--- a/fsvi_cl/exps/plots/v0/hyperparameter_omniglot.py
++++ b/fsvi_cl/exps/plots/v0/hyperparameter_omniglot.py
+@@ -5,8 +5,8 @@ import os
+ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+     sys.path.insert(0, ROOT)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.ablation.plots import *
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.ablation.plots import *
+ 
+ 
+ def get_exps():
+diff --git a/fsvi_cl/exps/plots/v0/minimum_coreset.py b/fsvi_cl/exps/plots/v0/minimum_coreset.py
+index b65cb316..1435c957 100644
+--- a/fsvi_cl/exps/plots/v0/minimum_coreset.py
++++ b/fsvi_cl/exps/plots/v0/minimum_coreset.py
+@@ -4,12 +4,12 @@ import sys
+ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+     sys.path.insert(0, ROOT)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.ablation.plots import *
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.ablation.plots import *
+ 
+ 
+ def get_exps():
+-    folder = os.path.join(ROOT, "fsvi_cl/src_cl/exps/plot_data/")
++    folder = os.path.join(ROOT, "fsvi_cl/exps/plot_data/")
+     exps_folders = [
+         os.path.join(folder, "runs/coreset_per_class/"),
+         os.path.join(folder, "runs/coreset_per_class_v2/"),
+diff --git a/fsvi_cl/exps/plots/v0/toy_2d_simplified.py b/fsvi_cl/exps/plots/v0/toy_2d_simplified.py
+index f019a6e4..8d27af1e 100644
+--- a/fsvi_cl/exps/plots/v0/toy_2d_simplified.py
++++ b/fsvi_cl/exps/plots/v0/toy_2d_simplified.py
+@@ -2,13 +2,13 @@ import os
+ import pickle
+ import sys
+ 
+-from fsvi_cl.src_cl.exps.utils.sync_to_gcs import run_command
++from fsvi_cl.exps.utils.sync_to_gcs import run_command
+ 
+ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+     sys.path.insert(0, ROOT)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.toy.uncertainty_plots import *
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.toy.uncertainty_plots import *
+ plt.rcdefaults()
+ 
+ 
+@@ -93,7 +93,7 @@ def plot_uncertainty(mean_plot_data, seed=0, n_train=100, n_samples=50, zoom=Tru
+ 
+ 
+ def main():
+-    path = os.path.join(ROOT, "fsvi_cl/src_cl/exps/plot_data/toy_uncertainty.pkl")
++    path = os.path.join(ROOT, "fsvi_cl/exps/plot_data/toy_uncertainty.pkl")
+     if not os.path.exists(path):
+         print("data doesn't exist locally, pull from GCS...")
+         os.makedirs(os.path.dirname(path), exist_ok=True)
+diff --git a/fsvi_cl/exps/plots/v0/vcl.py b/fsvi_cl/exps/plots/v0/vcl.py
+index 9790f60f..06ae4cab 100644
+--- a/fsvi_cl/exps/plots/v0/vcl.py
++++ b/fsvi_cl/exps/plots/v0/vcl.py
+@@ -4,8 +4,8 @@ import sys
+ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+     sys.path.insert(0, ROOT)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.ablation.plots import *
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.ablation.plots import *
+ 
+ 
+ def load_exps(rel_paths):
+@@ -19,7 +19,7 @@ def load_exps(rel_paths):
+ 
+ 
+ def get_smnist_exps_with_coreset():
+-    exps = load_exps(["fsvi_cl/src_cl/exps/plot_data/runs/hyperparameter_test_v2"])
++    exps = load_exps(["fsvi_cl/exps/plot_data/runs/hyperparameter_test_v2"])
+     fexps = lutils.filter_exps(exps, d={'data_training': 'continual_learning_smnist'})
+     print(f"there are {len(fexps)} for smnist with coreset")
+     smnist_e = fexps[0]
+@@ -29,7 +29,7 @@ def get_smnist_exps_with_coreset():
+ 
+ 
+ def get_smnist_exps_without_coreset():
+-    exps = load_exps(["fsvi_cl/src_cl/exps/plot_data/runs/no_coreset_multiheads_v2"])
++    exps = load_exps(["fsvi_cl/exps/plot_data/runs/no_coreset_multiheads_v2"])
+     fexps = lutils.filter_exps(exps, d={'data_training': 'continual_learning_smnist',
+                                         'inducing_input_type': 'train_pixel_rand_1.0'})
+     print(f"there are {len(fexps)} for smnist without coreset")
+@@ -42,7 +42,7 @@ def get_smnist_exps_without_coreset():
+ 
+ 
+ def get_pmnist_exps_with_coreset():
+-    exps = load_exps(["fsvi_cl/src_cl/exps/plot_data/runs/hyperparameter_test_v2"])
++    exps = load_exps(["fsvi_cl/exps/plot_data/runs/hyperparameter_test_v2"])
+     fexps = lutils.filter_exps(exps, d={'data_training': 'continual_learning_pmnist'})
+     print(f"there are {len(fexps)} for pmnist with coreset")
+     pmnist_e = fexps[0]
+@@ -52,8 +52,8 @@ def get_pmnist_exps_with_coreset():
+ 
+ def get_pmnist_exps_without_coreset():
+     exps = load_exps([
+-        "fsvi_cl/src_cl/exps/plot_data/runs/no_coreset_pmnist_non_linear_v4",
+-        # "fsvi_cl/src_cl/exps/plot_data/runs/no_coreset_pmnist_non_linear_v8",
++        "fsvi_cl/exps/plot_data/runs/no_coreset_pmnist_non_linear_v4",
++        # "fsvi_cl/exps/plot_data/runs/no_coreset_pmnist_non_linear_v8",
+     ])
+     fexps = lutils.filter_exps(exps, d={'data_training': 'continual_learning_pmnist',
+                                         'epochs_first_task': 30})[:10]
+@@ -66,7 +66,7 @@ def get_pmnist_exps_without_coreset():
+ 
+ def get_pmnist_exps_without_coreset_linear():
+     exps = load_exps([
+-        "fsvi_cl/src_cl/exps/plot_data/runs/no_coreset_pmnist_linear_v3",
++        "fsvi_cl/exps/plot_data/runs/no_coreset_pmnist_linear_v3",
+     ])
+     fexps = lutils.filter_exps(exps, d={'data_training': 'continual_learning_pmnist',
+                                         'architecture': 'fc_100_100'})[:10]
+@@ -93,7 +93,7 @@ def get_fsvi_exps():
+ 
+ def get_result_vcl():
+     exps = load_exps([
+-        "fsvi_cl/src_cl/exps/plot_data/runs/vcl_fix",
++        "fsvi_cl/exps/plot_data/runs/vcl_fix",
+     ])
+     smnist_exps = lutils.filter_exps(exps, d={'dataset': "smnist",})
+     pmnist_exps = lutils.filter_exps(exps, d={'dataset': "pmnist",})
+diff --git a/fsvi_cl/exps/plots_preprocessing/coreset_heuristic_cifar.py b/fsvi_cl/exps/plots_preprocessing/coreset_heuristic_cifar.py
+index eab7dc2e..4111ed5e 100644
+--- a/fsvi_cl/exps/plots_preprocessing/coreset_heuristic_cifar.py
++++ b/fsvi_cl/exps/plots_preprocessing/coreset_heuristic_cifar.py
+@@ -6,15 +6,15 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+     sys.path.insert(0, ROOT)
+ 
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.ablation.plots import *
+-from fsvi_cl.src_cl.exps.utils.configs import CL_TEMPLATE
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.ablation.plots import *
++from fsvi_cl.exps.utils.configs import CL_TEMPLATE
+ 
+ 
+ def get_exps():
+     # example of handling larger number of experiments, load the configuration first,
+     # remove the ones you don't use immediately, load the chkpt for the rest
+-    folder = os.path.join(ROOT, "fsvi_cl/src_cl/exps/plot_data/")
++    folder = os.path.join(ROOT, "fsvi_cl/exps/plot_data/")
+     exps_folders = [
+         os.path.join(folder, "runs/cifar_tim_v2"),
+         os.path.join(folder, "runs/cifar_vary_coreset"),
+@@ -54,7 +54,7 @@ def get_exps():
+ 
+ 
+ def main():
+-    path_data = pathlib.Path(ROOT)/"fsvi_cl/src_cl/exps/plots_preprocessing/processed_data/"
++    path_data = pathlib.Path(ROOT)/"fsvi_cl/exps/plots_preprocessing/processed_data/"
+     path_data = path_data/"coreset_heuristic"
+     path_data.mkdir(parents=True, exist_ok=True)
+     exps = get_exps()
+diff --git a/fsvi_cl/exps/plots_preprocessing/fromp.py b/fsvi_cl/exps/plots_preprocessing/fromp.py
+index 4e48a1f4..91a5117f 100644
+--- a/fsvi_cl/exps/plots_preprocessing/fromp.py
++++ b/fsvi_cl/exps/plots_preprocessing/fromp.py
+@@ -7,8 +7,8 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+     sys.path.insert(0, ROOT)
+ 
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.ablation.plots import *
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.ablation.plots import *
+ 
+ 
+ def estimate_joint_from_fromp_plot():
+@@ -119,7 +119,7 @@ def get_plot_data():
+ 
+ 
+ def main():
+-    path_data = pathlib.Path(ROOT)/"fsvi_cl/src_cl/exps/plots_preprocessing/processed_data/"
++    path_data = pathlib.Path(ROOT)/"fsvi_cl/exps/plots_preprocessing/processed_data/"
+     path_data = path_data/"fromp"
+     path_data.mkdir(parents=True, exist_ok=True)
+     data = get_plot_data()
+diff --git a/fsvi_cl/exps/plots_preprocessing/hparam_mnist.py b/fsvi_cl/exps/plots_preprocessing/hparam_mnist.py
+index d9463399..3358a7a1 100644
+--- a/fsvi_cl/exps/plots_preprocessing/hparam_mnist.py
++++ b/fsvi_cl/exps/plots_preprocessing/hparam_mnist.py
+@@ -7,8 +7,8 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+     sys.path.insert(0, ROOT)
+ 
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.ablation.plots import *
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.ablation.plots import *
+ 
+ 
+ def get_exps():
+@@ -40,7 +40,7 @@ def convert_exps_to_plot_data(exps: List[Dict]) -> Dict[str, Dict[str, pd.DataFr
+ 
+ 
+ def main():
+-    path_data = pathlib.Path(ROOT)/"fsvi_cl/src_cl/exps/plots_preprocessing/processed_data/"
++    path_data = pathlib.Path(ROOT)/"fsvi_cl/exps/plots_preprocessing/processed_data/"
+     data = convert_exps_to_plot_data(get_exps())
+     for dataset_long, dfs in data.items():
+         _, dataset = dataset_long.split("learning_")
+diff --git a/fsvi_cl/exps/plots_preprocessing/minimal_coreset.py b/fsvi_cl/exps/plots_preprocessing/minimal_coreset.py
+index abb0bb76..e698534b 100644
+--- a/fsvi_cl/exps/plots_preprocessing/minimal_coreset.py
++++ b/fsvi_cl/exps/plots_preprocessing/minimal_coreset.py
+@@ -6,12 +6,12 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+     sys.path.insert(0, ROOT)
+ 
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.ablation.plots import *
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.ablation.plots import *
+ 
+ 
+ def get_exps():
+-    folder = os.path.join(ROOT, "fsvi_cl/src_cl/exps/plot_data/")
++    folder = os.path.join(ROOT, "fsvi_cl/exps/plot_data/")
+     exps_folders = [
+         os.path.join(folder, "runs/coreset_per_class/"),
+         os.path.join(folder, "runs/coreset_per_class_v2/"),
+@@ -23,7 +23,7 @@ def get_exps():
+ 
+ 
+ def main():
+-    path_data = pathlib.Path(ROOT)/"fsvi_cl/src_cl/exps/plots_preprocessing/processed_data/"
++    path_data = pathlib.Path(ROOT)/"fsvi_cl/exps/plots_preprocessing/processed_data/"
+     path_data = path_data/"minimal_coreset"
+     path_data.mkdir(parents=True, exist_ok=True)
+     exps = get_exps()  # list where exps[i] is a dict with keys "path" and "config"
+diff --git a/fsvi_cl/exps/plots_preprocessing/no_coreset.py b/fsvi_cl/exps/plots_preprocessing/no_coreset.py
+index b88e180c..1aa6a6be 100644
+--- a/fsvi_cl/exps/plots_preprocessing/no_coreset.py
++++ b/fsvi_cl/exps/plots_preprocessing/no_coreset.py
+@@ -6,12 +6,12 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+     sys.path.insert(0, ROOT)
+ 
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.ablation.plots import *
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.ablation.plots import *
+ 
+ 
+ def get_frcl():
+-    folder = os.path.join(ROOT, "fsvi_cl/src_cl/exps/plot_data/")
++    folder = os.path.join(ROOT, "fsvi_cl/exps/plot_data/")
+     exps_folders = [
+         os.path.join(folder, "runs/frcl_coreset"),
+         os.path.join(folder, "runs/frcl_sfashion"),
+@@ -29,7 +29,7 @@ def get_frcl():
+ 
+ 
+ def get_fromp():
+-    folder = os.path.join(ROOT, "fsvi_cl/src_cl/exps/baselines/runs/fromp_coreset")
++    folder = os.path.join(ROOT, "fsvi_cl/exps/baselines/runs/fromp_coreset")
+     lutils.download_data(folder)
+     exps = lutils.read_folder(folder, only_successful=True, only_config=False)
+     df_fromp = lutils.report_test_accuracies(exps, keys=['dataset', 'select_method'],
+@@ -41,7 +41,7 @@ def get_fromp():
+ 
+ 
+ def get_fsvi():
+-    folder = os.path.join(ROOT, "fsvi_cl/src_cl/exps/ablation/runs/no_coreset_multiheads_v2")
++    folder = os.path.join(ROOT, "fsvi_cl/exps/ablation/runs/no_coreset_multiheads_v2")
+     lutils.download_data(folder)
+     exps = lutils.read_folder(folder, only_successful=True, only_config=True)
+     df_fsvi = lutils.report_test_accuracies(exps, original=True)
+@@ -68,7 +68,7 @@ def get_fsvi():
+ 
+ 
+ def main():
+-    path_data = pathlib.Path(ROOT)/"fsvi_cl/src_cl/exps/plots_preprocessing/processed_data/"
++    path_data = pathlib.Path(ROOT)/"fsvi_cl/exps/plots_preprocessing/processed_data/"
+     path_data = path_data/"no_coreset"
+     path_data.mkdir(parents=True, exist_ok=True)
+     df_frcl = get_frcl()
+diff --git a/fsvi_cl/exps/publish/vcl.py b/fsvi_cl/exps/publish/vcl.py
+index 027dbf9f..5939a085 100644
+--- a/fsvi_cl/exps/publish/vcl.py
++++ b/fsvi_cl/exps/publish/vcl.py
+@@ -14,14 +14,14 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
+ if ROOT not in sys.path:
+ 	sys.path.insert(0, ROOT)
+ 
+-from fsvi_cl.src_cl.exps.plots_preprocessing.vcl import get_result_vcl
+-from fsvi_cl.src_cl.exps.publish.fsvi_match import get_example_config
++from fsvi_cl.exps.plots_preprocessing.vcl import get_result_vcl
++from fsvi_cl.exps.publish.fsvi_match import get_example_config
+ from fsvi_cl.general_utils.log import EXPS_ROOT
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
++import fsvi_cl.exps.utils.load_utils as lutils
+ 
+ 
+ def get_vcl_exps():
+-	folder = lutils.EXPS_ROOT / "fsvi_cl/src_cl/exps/baselines/runs/vcl_fix"
++	folder = lutils.EXPS_ROOT / "fsvi_cl/exps/baselines/runs/vcl_fix"
+ 	lutils.download_data(folder)
+ 	exps = lutils.read_folder(
+ 		exps_folder=folder,
+diff --git a/fsvi_cl/exps/toy/configs/fix_uncertainty_v4.py b/fsvi_cl/exps/toy/configs/fix_uncertainty_v4.py
+index 4ec0cf8c..710b7389 100644
+--- a/fsvi_cl/exps/toy/configs/fix_uncertainty_v4.py
++++ b/fsvi_cl/exps/toy/configs/fix_uncertainty_v4.py
+@@ -1,8 +1,8 @@
+ from copy import deepcopy
+ from typing import Dict, List
+ 
+-from fsvi_cl.src_cl.exps.utils import generate_cmds as gc
+-from fsvi_cl.src_cl.exps.utils.configs import (
++from fsvi_cl.exps.utils import generate_cmds as gc
++from fsvi_cl.exps.utils.configs import (
+     CL_TEMPLATE,
+     TOY_ROOT,
+     get_cl_toy_reprod_config,
+diff --git a/fsvi_cl/exps/toy/uncertainty_plots.py b/fsvi_cl/exps/toy/uncertainty_plots.py
+index 20317763..44b9ec93 100644
+--- a/fsvi_cl/exps/toy/uncertainty_plots.py
++++ b/fsvi_cl/exps/toy/uncertainty_plots.py
+@@ -9,7 +9,7 @@ from matplotlib import cm
+ from matplotlib.gridspec import GridSpec
+ import matplotlib.ticker as ticker
+ 
+-from fsvi_cl.src_cl.exps.utils.load_utils import (
++from fsvi_cl.exps.utils.load_utils import (
+     load_raw_training_log,
+     load_kwargs,
+     load_train_data_one_task,
+@@ -19,7 +19,7 @@ from fsvi_cl.src_cl.exps.utils.load_utils import (
+     get_tasks,
+ )
+ 
+-from fsvi_cl.src_cl.utils.data_loaders.toy_dataset import ToydataGenerator
++from benchmarking_tasks.continual_learning.data_loaders.toy_dataset import ToydataGenerator
+ 
+ 
+ def get_test_data(task_id) -> Tuple[np.ndarray, np.ndarray]:
+diff --git a/fsvi_cl/exps/utils/baselines_configs.py b/fsvi_cl/exps/utils/baselines_configs.py
+index 2234bc27..c58049c9 100644
+--- a/fsvi_cl/exps/utils/baselines_configs.py
++++ b/fsvi_cl/exps/utils/baselines_configs.py
+@@ -1,24 +1,24 @@
+ import pdb
+ from typing import Dict, List
+ 
+-from fsvi_cl.baselines.vcl.run_vcl import add_vcl_args
+-from fsvi_cl.baselines.frcl.run_frcl import add_frcl_args
+-from fsvi_cl.baselines.fromp.run_fromp import add_fromp_args
++from baselines.vcl.run_vcl import add_vcl_args
++from baselines.frcl.run_frcl import add_frcl_args
++from baselines.fromp.run_fromp import add_fromp_args
+ from fsvi_cl.general_utils.log import EXPS_ROOT, PROJECT_ROOT
+-from fsvi_cl.src_cl.exps.utils.config_template import ConfigTemplate
++from fsvi_cl.exps.utils.config_template import ConfigTemplate
+ 
+ CL_ROOT = PROJECT_ROOT / "fsvi_cl"
+ FRCL_TEMPLATE = ConfigTemplate(add_args_fn=add_frcl_args)
+ BASELINE_ROOT = EXPS_ROOT / "baselines"
+-FRCL_RUNFILE = CL_ROOT / "baselines/frcl/run_frcl.py"
++FRCL_RUNFILE = PROJECT_ROOT / "baselines/frcl/run_frcl.py"
+ FRCL_PREFIX = f"python {FRCL_RUNFILE}"
+ 
+ FROMP_TEMPLATE = ConfigTemplate(add_args_fn=add_fromp_args)
+-FROMP_RUNFILE = CL_ROOT / "baselines/fromp/run_fromp.py"
++FROMP_RUNFILE = PROJECT_ROOT / "baselines/fromp/run_fromp.py"
+ FROMP_PREFIX = f"python {FROMP_RUNFILE}"
+ 
+ VCL_TEMPLATE = ConfigTemplate(add_args_fn=add_vcl_args)
+-VCL_RUNFILE = CL_ROOT / "baselines/vcl/run_vcl.py"
++VCL_RUNFILE = PROJECT_ROOT / "baselines/vcl/run_vcl.py"
+ VCL_PREFIX = f"python {VCL_RUNFILE}"
+ 
+ 
+diff --git a/fsvi_cl/exps/utils/demo.py b/fsvi_cl/exps/utils/demo.py
+index dcf035c8..98a84d91 100644
+--- a/fsvi_cl/exps/utils/demo.py
++++ b/fsvi_cl/exps/utils/demo.py
+@@ -1,8 +1,8 @@
+-from fsvi_cl.src_cl.exps.utils.generate_cmds import (
++from fsvi_cl.exps.utils.generate_cmds import (
+     generate_configs,
+ )
+-from fsvi_cl.src_cl.exps.utils.config_template import ConfigTemplate
+-from fsvi_cl.src_cl.utils.args_cl import add_cl_args
++from fsvi_cl.exps.utils.config_template import ConfigTemplate
++from fsvi_cl.fsvi_utils.args_cl import add_cl_args
+ 
+ 
+ template = ConfigTemplate(add_args_fn=add_cl_args)
+diff --git a/fsvi_cl/exps/utils/diagonse.py b/fsvi_cl/exps/utils/diagonse.py
+index 8531984c..b2e12cd0 100644
+--- a/fsvi_cl/exps/utils/diagonse.py
++++ b/fsvi_cl/exps/utils/diagonse.py
+@@ -6,7 +6,7 @@ root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."
+ sys.path.insert(0, root_folder)
+ sys.path.insert(0, os.path.join(root_folder, "function_space_vi"))
+ from fsvi_cl.general_utils.log import EXPS_ROOT
+-from fsvi_cl.src_cl.exps.utils import load_utils as lutils
++from fsvi_cl.exps.utils import load_utils as lutils
+ 
+ 
+ def parse_args():
+diff --git a/fsvi_cl/fsvi_utils/coreset/coreset.py b/fsvi_cl/fsvi_utils/coreset/coreset.py
+index fa0bf57e..5f0f3836 100644
+--- a/fsvi_cl/fsvi_utils/coreset/coreset.py
++++ b/fsvi_cl/fsvi_utils/coreset/coreset.py
+@@ -2,8 +2,8 @@ from typing import Dict
+ 
+ import numpy as np
+ 
+-from fsvi_cl.src_cl.utils.args_cl import NOT_SPECIFIED
+-from fsvi_cl.src_cl.utils.coreset.coreset_heuristics import add_by_random_per_class
++from fsvi_cl.fsvi_utils.args_cl import NOT_SPECIFIED
++from fsvi_cl.fsvi_utils.coreset.coreset_heuristics import add_by_random_per_class
+ 
+ 
+ class Coreset:
+diff --git a/fsvi_cl/fsvi_utils/coreset/coreset_heuristics.py b/fsvi_cl/fsvi_utils/coreset/coreset_heuristics.py
+index 70ecfa3c..e394fba7 100644
+--- a/fsvi_cl/fsvi_utils/coreset/coreset_heuristics.py
++++ b/fsvi_cl/fsvi_utils/coreset/coreset_heuristics.py
+@@ -8,11 +8,11 @@ import numpy as np
+ from jax import numpy as jnp
+ from tqdm import tqdm
+ 
+-from fsvi_cl.src_cl.utils.utils_cl import to_float_if_possible
+-from fsvi_cl.src_cl.utils.utils_cl import kl_diag as kl_diag_jax
++from fsvi_cl.fsvi_utils.utils_cl import to_float_if_possible
++from fsvi_cl.fsvi_utils.utils_cl import kl_diag as kl_diag_jax
+ from fsvi_cl.models.haiku_mod import partition_params
+-from fsvi_cl.src_cl.utils.utils_linearization import bnn_linearized_predictive_v2
+-from fsvi_cl.src_cl.utils.utils_cl import eps
++from fsvi_cl.fsvi_utils.utils_linearization import bnn_linearized_predictive_v2
++from fsvi_cl.fsvi_utils.utils_cl import eps
+ 
+ 
+ def add_by_random(x_candidate: np.ndarray, n_add: int):
+diff --git a/fsvi_cl/fsvi_utils/coreset/coreset_selection.py b/fsvi_cl/fsvi_utils/coreset/coreset_selection.py
+index f35ecbeb..ec1920f9 100644
+--- a/fsvi_cl/fsvi_utils/coreset/coreset_selection.py
++++ b/fsvi_cl/fsvi_utils/coreset/coreset_selection.py
+@@ -6,11 +6,11 @@ import haiku as hk
+ 
+ from fsvi_cl.models.networks import Model
+ from fsvi_cl.general_utils.jax_utils import KeyHelper
+-from fsvi_cl.src_cl.utils.utils_cl import TUPLE_OF_TWO_TUPLES
+-from fsvi_cl.src_cl.utils.coreset.coreset_heuristics import add_by_random, add_by_random_per_class, add_by_entropy, add_by_kl, \
++from fsvi_cl.fsvi_utils.utils_cl import TUPLE_OF_TWO_TUPLES
++from fsvi_cl.fsvi_utils.coreset.coreset_heuristics import add_by_random, add_by_random_per_class, add_by_entropy, add_by_kl, \
+     add_by_elbo
+-from fsvi_cl.src_cl.utils.prior import CLPrior
+-from fsvi_cl.src_cl.utils.utils_cl import predict_at_head_fsvi
++from fsvi_cl.fsvi_utils.prior import CLPrior
++from fsvi_cl.fsvi_utils.utils_cl import predict_at_head_fsvi
+ 
+ 
+ def get_coreset_indices(
+diff --git a/fsvi_cl/fsvi_utils/inducing_points.py b/fsvi_cl/fsvi_utils/inducing_points.py
+index 5f3e10d4..fdf61f7b 100644
+--- a/fsvi_cl/fsvi_utils/inducing_points.py
++++ b/fsvi_cl/fsvi_utils/inducing_points.py
+@@ -7,8 +7,8 @@ from typing import Callable, Dict
+ import numpy as np
+ 
+ from fsvi_cl.general_utils.jax_utils import KeyHelper
+-from fsvi_cl.src_cl.utils.args_cl import NOT_SPECIFIED
+-from fsvi_cl.src_cl.utils.coreset.coreset import Coreset
++from fsvi_cl.fsvi_utils.args_cl import NOT_SPECIFIED
++from fsvi_cl.fsvi_utils.coreset.coreset import Coreset
+ 
+ 
+ def make_inducing_points(
+diff --git a/fsvi_cl/fsvi_utils/initializer.py b/fsvi_cl/fsvi_utils/initializer.py
+index 1166ce35..492f8702 100644
+--- a/fsvi_cl/fsvi_utils/initializer.py
++++ b/fsvi_cl/fsvi_utils/initializer.py
+@@ -5,14 +5,12 @@ import jax.numpy as jnp
+ import numpy as np
+ import optax
+ 
+-import fsvi_cl.src_cl.utils.utils_cl
+-import fsvi_cl.src_cl.utils_cl
++import fsvi_cl.fsvi_utils.utils_cl
+ from fsvi_cl.models.networks import CNN, Model
+ from fsvi_cl.models.networks import MLP as MLP
+-from fsvi_cl.utils import utils
+ from fsvi_cl.models.haiku_mod import predicate_var, predicate_batchnorm
+-from fsvi_cl.src_cl.utils.objectives_cl import Objectives_hk
+-from fsvi_cl.src_cl.utils.prior import CLPrior
++from fsvi_cl.fsvi_utils.objectives_cl import Objectives_hk
++from fsvi_cl.fsvi_utils.prior import CLPrior
+ 
+ 
+ class Initializer:
+@@ -145,7 +143,7 @@ class Initializer:
+         def inducing_input_fn(x_batch, rng_key, n_inducing_inputs=None):
+             if n_inducing_inputs is None:
+                 n_inducing_inputs = self.hparams.n_inducing_inputs
+-            return fsvi_cl.src_cl.utils.utils_cl.select_inducing_inputs(
++            return fsvi_cl.fsvi_utils.utils_cl.select_inducing_inputs(
+                 n_inducing_inputs=n_inducing_inputs,
+                 inducing_input_type=self.hparams.inducing_input_type,
+                 inducing_inputs_bound=self.hparams.inducing_inputs_bound,
+diff --git a/fsvi_cl/fsvi_utils/objectives_cl.py b/fsvi_cl/fsvi_utils/objectives_cl.py
+index 8bd29d27..923f529d 100644
+--- a/fsvi_cl/fsvi_utils/objectives_cl.py
++++ b/fsvi_cl/fsvi_utils/objectives_cl.py
+@@ -7,11 +7,11 @@ from jax import jit
+ import haiku as hk
+ 
+ from fsvi_cl.models.networks import Model
+-from fsvi_cl.src_cl.utils import utils_linearization
+-from fsvi_cl.src_cl.utils.utils_cl import kl_diag_tfd
+-from fsvi_cl.src_cl.utils.utils_cl import _slice_cov_diag
+-from fsvi_cl.src_cl.utils.utils_cl import kl_full_cov
+-from fsvi_cl.src_cl.utils.utils_cl import TUPLE_OF_TWO_TUPLES
++from fsvi_cl.fsvi_utils import utils_linearization
++from fsvi_cl.fsvi_utils.utils_cl import kl_diag_tfd
++from fsvi_cl.fsvi_utils.utils_cl import _slice_cov_diag
++from fsvi_cl.fsvi_utils.utils_cl import kl_full_cov
++from fsvi_cl.fsvi_utils.utils_cl import TUPLE_OF_TWO_TUPLES
+ from fsvi_cl.models.haiku_mod import partition_params
+ 
+ 
+diff --git a/fsvi_cl/fsvi_utils/prior.py b/fsvi_cl/fsvi_utils/prior.py
+index e497434a..40413c91 100644
+--- a/fsvi_cl/fsvi_utils/prior.py
++++ b/fsvi_cl/fsvi_utils/prior.py
+@@ -5,8 +5,8 @@ import haiku as hk
+ import jax
+ import jax.numpy as jnp
+ 
+-from fsvi_cl.src_cl.utils import utils_linearization
+-from fsvi_cl.src_cl.utils.utils_cl import generate_4d_identity_cov
++from fsvi_cl.fsvi_utils import utils_linearization
++from fsvi_cl.fsvi_utils.utils_cl import generate_4d_identity_cov
+ 
+ 
+ class CLPrior:
+diff --git a/fsvi_cl/fsvi_utils/utils_linearization.py b/fsvi_cl/fsvi_utils/utils_linearization.py
+index 021ce56e..0b2ef2eb 100644
+--- a/fsvi_cl/fsvi_utils/utils_linearization.py
++++ b/fsvi_cl/fsvi_utils/utils_linearization.py
+@@ -12,12 +12,11 @@ from jax import jit
+ from jax import numpy as jnp
+ from tensorflow_probability.substrates import jax as tfp
+ 
+-import fsvi_cl.src_cl.utils.utils_cl
++import fsvi_cl.fsvi_utils.utils_cl
+ from fsvi_cl.general_utils.haiku_utils import map_variable_name
+ from fsvi_cl.general_utils.ntk_utils import diag_ntk_for_loop
+ from fsvi_cl.general_utils.ntk_utils import explicit_ntk
+ from fsvi_cl.general_utils.ntk_utils import neural_tangent_ntk
+-from fsvi_cl.utils import utils
+ from fsvi_cl.models.haiku_mod import partition_params
+ 
+ tfd = tfp.distributions
+@@ -60,7 +59,7 @@ def bnn_linearized_predictive_v2(
+         is_training=is_training,
+     )[0]
+ 
+-    params_var = fsvi_cl.src_cl.utils.utils_cl.sigma_transform(params_log_var)
++    params_var = fsvi_cl.fsvi_utils.utils_cl.sigma_transform(params_log_var)
+ 
+     if full_ntk:
+         assert not identity_cov, "not implemented"
+@@ -168,7 +167,7 @@ def bnn_linearized_predictive(
+     # mean = predict_f(params, params_feature, state, inputs, rng_key, is_training)
+     mean = predict_f_deterministic(params, params_feature, state, inputs, rng_key, is_training)
+ 
+-    params_var = fsvi_cl.src_cl.utils.utils_cl.sigma_transform(params_log_var)
++    params_var = fsvi_cl.fsvi_utils.utils_cl.sigma_transform(params_log_var)
+ 
+     if full_ntk:
+         direct_ntk = False
+diff --git a/fsvi_cl/general_utils/log.py b/fsvi_cl/general_utils/log.py
+index e051d4b7..ab794b9a 100644
+--- a/fsvi_cl/general_utils/log.py
++++ b/fsvi_cl/general_utils/log.py
+@@ -42,7 +42,7 @@ def set_up_logging(log_path=None, loglevel=logging.DEBUG, stdout=False):
+ 
+ 
+ PROJECT_ROOT = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+-EXPS_ROOT = PROJECT_ROOT / "fsvi_cl/src_cl/exps"
++EXPS_ROOT = PROJECT_ROOT / "fsvi_cl/exps"
+ 
+ 
+ def path_is_relative(path: str) -> bool:
+diff --git a/fsvi_cl/models/custom_cnns.py b/fsvi_cl/models/custom_cnns.py
+index 1e63810f..5fa628fe 100644
+--- a/fsvi_cl/models/custom_cnns.py
++++ b/fsvi_cl/models/custom_cnns.py
+@@ -8,7 +8,7 @@ from fsvi_cl.models.haiku_mod import BatchNorm as BatchNorm_mod
+ 
+ from fsvi_cl.models.haiku_mod import conv2D_stochastic, dense_stochastic_hk
+ from fsvi_cl.general_utils.jax_utils import KeyHelper
+-from fsvi_cl.src_cl.utils.utils_cl import get_inner_layers_stochastic
++from fsvi_cl.fsvi_utils.utils_cl import get_inner_layers_stochastic
+ 
+ 
+ class CNN(hk.Module):
+diff --git a/fsvi_cl/models/custom_mlps.py b/fsvi_cl/models/custom_mlps.py
+index 9650ad8e..407ae2b6 100644
+--- a/fsvi_cl/models/custom_mlps.py
++++ b/fsvi_cl/models/custom_mlps.py
+@@ -8,7 +8,7 @@ from fsvi_cl.models.haiku_mod import BatchNorm as BatchNorm_mod
+ 
+ from fsvi_cl.models.haiku_mod import dense_stochastic_hk
+ from fsvi_cl.general_utils.jax_utils import KeyHelper
+-from fsvi_cl.src_cl.utils.utils_cl import get_inner_layers_stochastic
++from fsvi_cl.fsvi_utils.utils_cl import get_inner_layers_stochastic
+ 
+ 
+ class MLP(hk.Module):
+diff --git a/fsvi_cl/models/networks.py b/fsvi_cl/models/networks.py
+index f2b8b8ce..b00d1874 100644
+--- a/fsvi_cl/models/networks.py
++++ b/fsvi_cl/models/networks.py
+@@ -14,7 +14,7 @@ from fsvi_cl.models.haiku_mod import partition_all_params
+ from fsvi_cl.models.haiku_mod import partition_params_final_layer_bnn
+ from fsvi_cl.models.haiku_mod import predicate_batchnorm
+ from fsvi_cl.models.haiku_mod import predicate_mean
+-from fsvi_cl.src_cl.utils.utils_linearization import convert_predict_f_only_mean
++from fsvi_cl.fsvi_utils.utils_linearization import convert_predict_f_only_mean
+ 
+ relu = jax.nn.relu
+ tanh = jnp.tanh
+diff --git a/fsvi_cl/run_cl.py b/fsvi_cl/run_cl.py
+index f435bb29..6297889c 100644
+--- a/fsvi_cl/run_cl.py
++++ b/fsvi_cl/run_cl.py
+@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.join(root_folder, "function_space_variational_inferen
+ from benchmarking_tasks.continual_learning.trainer_cl import TrainerCL
+ from benchmarking_tasks.continual_learning.method_cl_fsvi import MethodCLFSVI
+ from fsvi_cl.general_utils.log import save_kwargs
+-from fsvi_cl.src_cl.utils.args_cl import add_cl_args, NOT_SPECIFIED
++from fsvi_cl.fsvi_utils.args_cl import add_cl_args, NOT_SPECIFIED
+ 
+ tf_cpu_only = True  # TODO: check how this affects determinism -- keep set to False
+ if tf_cpu_only:
+diff --git a/publish/Reproduce.ipynb b/publish/Reproduce.ipynb
+index f15af79a..20fc6533 100644
+--- a/publish/Reproduce.ipynb
++++ b/publish/Reproduce.ipynb
+@@ -145,8 +145,8 @@
+     "if root not in sys.path:\n",
+     "    sys.path.insert(0, root)\n",
+     "\n",
+-    "import fsvi_cl.src_cl.exps.utils.load_utils as lutils\n",
+-    "from fsvi_cl.src_cl.exps.ablation.plots import *\n",
++    "import fsvi_cl.exps.utils.load_utils as lutils\n",
++    "from fsvi_cl.exps.ablation.plots import *\n",
+     "from cli import run_config"
+    ]
+   },
+@@ -718,7 +718,7 @@
+    "metadata": {},
+    "outputs": [],
+    "source": [
+-    "from fsvi_cl.src_cl.exps.publish.toy2d import plot_toy_2d\n",
++    "from fsvi_cl.exps.publish.toy2d import plot_toy_2d\n",
+     "plot_toy_2d(lutils.read_exp(logdir))"
+    ]
+   }
+diff --git a/publish/notebooks/Reproduce-SMNIST.ipynb b/publish/notebooks/Reproduce-SMNIST.ipynb
+index 9913c6fb..43bf4b81 100644
+--- a/publish/notebooks/Reproduce-SMNIST.ipynb
++++ b/publish/notebooks/Reproduce-SMNIST.ipynb
+@@ -56,6 +56,804 @@
+     "Troubleshooting: see more details [here](https://medium.com/@nrk25693/how-to-add-your-conda-environment-to-your-jupyter-notebook-in-just-4-steps-abeab8b8d084)"
+    ]
+   },
++  {
++   "cell_type": "code",
++   "execution_count": 157,
++   "metadata": {},
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "loading experiments: 100%|██████████| 15/15 [00:00<00:00, 238.51it/s]\n"
++     ]
++    }
++   ],
++   "source": [
++    "root = \"/users/timner/qixuan/function-space-variational-inference\"\n",
++    "path = os.path.join(root, \"fsvi_cl/exps/ablation/runs/reproduce_main_results_3\")\n",
++    "exps = lutils.read_folder(path, only_config=True, only_failed=True)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 151,
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "fexps = [e for e in exps if \"fromp\" in lutils.read_command_line(e)]"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 154,
++   "metadata": {
++    "collapsed": true
++   },
++   "outputs": [
++    {
++     "data": {
++      "text/plain": [
++       "{'dataset': 'sfashionmnist',\n",
++       " 'n_tasks': 5,\n",
++       " 'batch_size': 128,\n",
++       " 'hidden_size': 256,\n",
++       " 'n_layers': 2,\n",
++       " 'lr': 0.0001,\n",
++       " 'n_epochs': 15,\n",
++       " 'seed': 6,\n",
++       " 'n_seeds': 1,\n",
++       " 'n_points': 40,\n",
++       " 'select_method': 'lambda_descend',\n",
++       " 'tau': 10.0,\n",
++       " 'use_val_split': False,\n",
++       " 'n_permuted_tasks': 10,\n",
++       " 'smnist_eps': 1e-06,\n",
++       " 'logroot': 'ablation',\n",
++       " 'subdir': 'reproduce_main_results_3',\n",
++       " 'save_alt': True,\n",
++       " 'n_coreset_inputs_per_task': '40',\n",
++       " 'n_steps': 'not_specified',\n",
++       " 'no_artifact': False}"
++      ]
++     },
++     "execution_count": 154,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "fexps[0][\"config\"]"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "metadata": {},
++   "outputs": [],
++   "source": []
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 126,
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "x = lutils.load_raw_training_log(exps[0], only_last_task=True)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 142,
++   "metadata": {
++    "collapsed": true
++   },
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "loading experiments: 100%|██████████| 17/17 [00:00<00:00, 165.74it/s]"
++     ]
++    },
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "17 runs found in the folder\n",
++      "3 runs failed, displaying their config and logs...\n",
++      "no slurm output file found in /users/timner/qixuan/function-space-variational-inference/fsvi_cl/exps/ablation/runs/reproduce_main_results_2/2022-07-14-Thursday-17-22-42\n",
++      "no slurm output file found in /users/timner/qixuan/function-space-variational-inference/fsvi_cl/exps/ablation/runs/reproduce_main_results_2/2022-07-14-Thursday-17-22-43\n",
++      "no slurm output file found in /users/timner/qixuan/function-space-variational-inference/fsvi_cl/exps/ablation/runs/reproduce_main_results_2/2022-07-14-Thursday-17-22-45\n",
++      "no slurm output file found in /users/timner/qixuan/function-space-variational-inference/fsvi_cl/exps/ablation/runs/reproduce_main_results_2/2022-07-14-Thursday-17-22-42\n",
++      "no slurm output file found in /users/timner/qixuan/function-space-variational-inference/fsvi_cl/exps/ablation/runs/reproduce_main_results_2/2022-07-14-Thursday-17-22-43\n",
++      "no slurm output file found in /users/timner/qixuan/function-space-variational-inference/fsvi_cl/exps/ablation/runs/reproduce_main_results_2/2022-07-14-Thursday-17-22-45\n",
++      "There are 3 exps that don't have slurm logs\n",
++      "There are 0 exps that got OOM error \n",
++      "amoung which 0 exps fall back to CPU\n",
++      "There are 0 exps with unknown cause\n"
++     ]
++    },
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "\n"
++     ]
++    }
++   ],
++   "source": [
++    "lutils.diagnose_exp_folder(path)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 143,
++   "metadata": {
++    "scrolled": true
++   },
++   "outputs": [
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "loading experiments: 100%|██████████| 15/15 [00:00<00:00, 235.26it/s]"
++     ]
++    },
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "15 runs found in the folder\n",
++      "3 runs failed, displaying their config and logs...\n",
++      "no slurm output file found in /users/timner/qixuan/function-space-variational-inference/fsvi_cl/exps/ablation/runs/reproduce_main_results_3/2022-07-14-Thursday-15-56-58\n",
++      "no slurm output file found in /users/timner/qixuan/function-space-variational-inference/fsvi_cl/exps/ablation/runs/reproduce_main_results_3/2022-07-14-Thursday-15-56-58\n",
++      "There are 1 exps that don't have slurm logs\n",
++      "There are 0 exps that got OOM error \n",
++      "amoung which 0 exps fall back to CPU\n",
++      "There are 2 exps with unknown cause\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "Here is the logs of unknown experiments\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "{\n",
++      "    \"dataset\": \"sfashionmnist\",\n",
++      "    \"seed\": 5\n",
++      "}\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "log file\n",
++      "2022-07-14 15:48:40,765 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 1: mean = 0.9895, all = [0.9895]\n",
++      "2022-07-14 15:50:25,038 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 2: mean = 0.9603, all = [0.9465 0.974 ]\n",
++      "2022-07-14 15:52:57,807 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 3: mean = 0.8107, all = [0.681 0.752 0.999]\n",
++      "2022-07-14 15:56:32,203 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 4: mean = 0.9159, all = [0.8775 0.79   0.996  1.    ]\n",
++      "2022-07-14 16:00:58,633 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 5: mean = 0.9571, all = [0.955  0.837  0.9955 1.     0.998 ]\n",
++      "\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "slurm file\n",
++      "Running on clpc158.cs.ox.ac.uk\n",
++      "Running with: python /auto/users/timner/qixuan/function-space-variational-inference/fsvi_cl/baselines/fromp/run_fromp.py --dataset sfashionmnist --n_tasks 5 --batch_size 128 --hidden_size 256 --n_layers 2 --lr 0.0001 --n_epochs 15 --seed 5 --n_seeds 1 --n_points 40 --select_method random_noise --tau 10.0 --n_permuted_tasks 10 --smnist_eps 1e-06 --logroot ablation --subdir reproduce_main_results_3 --n_coreset_inputs_per_task not_specified --n_steps not_specified\n",
++      "2022-07-14 15:48:35.581343: W tensorflow/core/common_runtime/gpu/gpu_bfc_allocator.cc:39] Overriding allow_growth setting because the TF_FORCE_GPU_ALLOW_GROWTH environment variable is set. Original config value was 0.\n",
++      "/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/tensorflow_addons/utils/ensure_tf_install.py:53: UserWarning: Tensorflow Addons supports using Python ops for all Tensorflow versions above or equal to 2.3.0 and strictly below 2.6.0 (nightly versions are not supported). \n",
++      " The versions of TensorFlow you are currently using is 2.6.0 and is not supported. \n",
++      "Some things might work, some things might not.\n",
++      "If you were to encounter a bug, do not file an issue.\n",
++      "If you want to make sure you're using a tested and supported configuration, either change the TensorFlow version or the TensorFlow Addons's version. \n",
++      "You can find the compatibility matrix in TensorFlow Addon's readme:\n",
++      "https://github.com/tensorflow/addons\n",
++      "  warnings.warn(\n",
++      "/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/feature_extraction/image.py:167: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.\n",
++      "Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations\n",
++      "  dtype=np.int):\n",
++      "/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.\n",
++      "Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations\n",
++      "  return floored.astype(np.int)\n",
++      "/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.\n",
++      "Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations\n",
++      "  return floored.astype(np.int)\n",
++      "/auto/users/timner/qixuan/function-space-variational-inference/fsvi_cl/baselines/fromp/opt_fromp.py:307: UserWarning: This overload of add_ is deprecated:\n",
++      "\tadd_(Number alpha, Tensor other)\n",
++      "Consider using one of the following signatures instead:\n",
++      "\tadd_(Tensor other, *, Number alpha) (Triggered internally at  /opt/conda/conda-bld/pytorch_1616554796012/work/torch/csrc/utils/python_arg_parser.cpp:1005.)\n",
++      "  exp_avg.mul_(beta1).add_(1-beta1, grad)\n",
++      "\n",
++      "sfashionmnist, seed 5\n",
++      "start working on task 0\n",
++      "Test accuracies, task 1: mean = 0.9895, all = [0.9895]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "start working on task 1\n",
++      "Test accuracies, task 2: mean = 0.9603, all = [0.9465 0.974 ]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "start working on task 2\n",
++      "Test accuracies, task 3: mean = 0.8107, all = [0.681 0.752 0.999]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "start working on task 3\n",
++      "Test accuracies, task 4: mean = 0.9159, all = [0.8775 0.79   0.996  1.    ]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "start working on task 4\n",
++      "Test accuracies, task 5: mean = 0.9571, all = [0.955  0.837  0.9955 1.     0.998 ]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "\n",
++      "Test accuracy: mean = 0.9571, std = 0.0000\n",
++      "\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "{\n",
++      "    \"dataset\": \"smnist\",\n",
++      "    \"seed\": 11\n",
++      "}\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "log file\n",
++      "2022-07-14 15:49:09,218 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 1: mean = 0.9995, all = [0.9995]\n",
++      "2022-07-14 15:51:05,773 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 2: mean = 0.9946, all = [0.9986 0.9907]\n",
++      "2022-07-14 15:53:47,326 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 3: mean = 0.9806, all = [0.9773 0.9662 0.9984]\n",
++      "2022-07-14 15:57:25,623 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 4: mean = 0.9733, all = [0.9768 0.9412 0.976  0.999 ]\n",
++      "2022-07-14 16:01:53,381 - fsvi_cl.general_utils.log - INFO - Test accuracies, task 5: mean = 0.9679, all = [0.991  0.8918 0.9669 0.997  0.9929]\n",
++      "\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "slurm file\n",
++      "Running on clpc158.cs.ox.ac.uk\n",
++      "Running with: python /auto/users/timner/qixuan/function-space-variational-inference/fsvi_cl/baselines/fromp/run_fromp.py --dataset smnist --n_tasks 5 --batch_size 128 --hidden_size 256 --n_layers 2 --lr 0.0001 --n_epochs 15 --seed 11 --n_seeds 1 --n_points 40 --select_method random_noise --tau 10.0 --n_permuted_tasks 10 --smnist_eps 1e-06 --logroot ablation --subdir reproduce_main_results_3 --n_coreset_inputs_per_task not_specified --n_steps not_specified\n",
++      "2022-07-14 15:49:03.041029: W tensorflow/core/common_runtime/gpu/gpu_bfc_allocator.cc:39] Overriding allow_growth setting because the TF_FORCE_GPU_ALLOW_GROWTH environment variable is set. Original config value was 0.\n",
++      "/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/tensorflow_addons/utils/ensure_tf_install.py:53: UserWarning: Tensorflow Addons supports using Python ops for all Tensorflow versions above or equal to 2.3.0 and strictly below 2.6.0 (nightly versions are not supported). \n",
++      " The versions of TensorFlow you are currently using is 2.6.0 and is not supported. \n",
++      "Some things might work, some things might not.\n",
++      "If you were to encounter a bug, do not file an issue.\n",
++      "If you want to make sure you're using a tested and supported configuration, either change the TensorFlow version or the TensorFlow Addons's version. \n",
++      "You can find the compatibility matrix in TensorFlow Addon's readme:\n",
++      "https://github.com/tensorflow/addons\n",
++      "  warnings.warn(\n",
++      "/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/feature_extraction/image.py:167: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.\n",
++      "Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations\n",
++      "  dtype=np.int):\n",
++      "/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.\n",
++      "Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations\n",
++      "  return floored.astype(np.int)\n",
++      "/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.\n",
++      "Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations\n",
++      "  return floored.astype(np.int)\n",
++      "/auto/users/timner/qixuan/function-space-variational-inference/fsvi_cl/baselines/fromp/opt_fromp.py:307: UserWarning: This overload of add_ is deprecated:\n",
++      "\tadd_(Number alpha, Tensor other)\n",
++      "Consider using one of the following signatures instead:\n",
++      "\tadd_(Tensor other, *, Number alpha) (Triggered internally at  /opt/conda/conda-bld/pytorch_1616554796012/work/torch/csrc/utils/python_arg_parser.cpp:1005.)\n",
++      "  exp_avg.mul_(beta1).add_(1-beta1, grad)\n",
++      "\n",
++      "smnist, seed 11\n",
++      "start working on task 0\n",
++      "Test accuracies, task 1: mean = 0.9995, all = [0.9995]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "start working on task 1\n",
++      "Test accuracies, task 2: mean = 0.9946, all = [0.9986 0.9907]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "start working on task 2\n",
++      "Test accuracies, task 3: mean = 0.9806, all = [0.9773 0.9662 0.9984]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "start working on task 3\n",
++      "Test accuracies, task 4: mean = 0.9733, all = [0.9768 0.9412 0.976  0.999 ]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "start working on task 4\n",
++      "Test accuracies, task 5: mean = 0.9679, all = [0.991  0.8918 0.9669 0.997  0.9929]\n",
++      "memorable points appended!\n",
++      "updated fisher!\n",
++      "\n",
++      "Test accuracy: mean = 0.9679, std = 0.0000\n",
++      "\n"
++     ]
++    },
++    {
++     "name": "stderr",
++     "output_type": "stream",
++     "text": [
++      "\n"
++     ]
++    }
++   ],
++   "source": [
++    "lutils.diagnose_exp_folder(os.path.join(root, \"fsvi_cl/exps/ablation/runs/reproduce_main_results_3\"))"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "metadata": {},
++   "outputs": [],
++   "source": []
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 132,
++   "metadata": {
++    "collapsed": true
++   },
++   "outputs": [
++    {
++     "data": {
++      "text/html": [
++       "<div>\n",
++       "<style scoped>\n",
++       "    .dataframe tbody tr th:only-of-type {\n",
++       "        vertical-align: middle;\n",
++       "    }\n",
++       "\n",
++       "    .dataframe tbody tr th {\n",
++       "        vertical-align: top;\n",
++       "    }\n",
++       "\n",
++       "    .dataframe thead th {\n",
++       "        text-align: right;\n",
++       "    }\n",
++       "</style>\n",
++       "<table border=\"1\" class=\"dataframe\">\n",
++       "  <thead>\n",
++       "    <tr style=\"text-align: right;\">\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th>mean</th>\n",
++       "      <th>std</th>\n",
++       "      <th>standard_error</th>\n",
++       "      <th>nb_seeds</th>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th>architecture</th>\n",
++       "      <th>constant_inducing_points</th>\n",
++       "      <th>coreset</th>\n",
++       "      <th>data_training</th>\n",
++       "      <th>epochs</th>\n",
++       "      <th>epochs_first_task</th>\n",
++       "      <th>inducing_input_type</th>\n",
++       "      <th>learning_rate</th>\n",
++       "      <th>n_coreset_inputs_per_task</th>\n",
++       "      <th>n_inducing_inputs</th>\n",
++       "      <th>not_use_coreset</th>\n",
++       "      <th>prior_cov</th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "      <th></th>\n",
++       "    </tr>\n",
++       "  </thead>\n",
++       "  <tbody>\n",
++       "    <tr>\n",
++       "      <th rowspan=\"2\" valign=\"top\">fc_100_100</th>\n",
++       "      <th rowspan=\"2\" valign=\"top\">0</th>\n",
++       "      <th rowspan=\"2\" valign=\"top\">random</th>\n",
++       "      <th rowspan=\"2\" valign=\"top\">continual_learning_pmnist</th>\n",
++       "      <th>5</th>\n",
++       "      <th>10</th>\n",
++       "      <th>uniform_rand</th>\n",
++       "      <th>0.0001</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>1</th>\n",
++       "      <th>0.001</th>\n",
++       "      <td>0.8340</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th>10</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>uniform_rand</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>0</th>\n",
++       "      <th>0.001</th>\n",
++       "      <td>0.9585</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th>fc_200_200_200_200</th>\n",
++       "      <th>0</th>\n",
++       "      <th>random</th>\n",
++       "      <th>continual_learning_sfashionmnist</th>\n",
++       "      <th>60</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>uniform_rand</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>0</th>\n",
++       "      <th>0.001</th>\n",
++       "      <td>0.9830</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th rowspan=\"6\" valign=\"top\">fc_256_256</th>\n",
++       "      <th rowspan=\"3\" valign=\"top\">0</th>\n",
++       "      <th rowspan=\"3\" valign=\"top\">random</th>\n",
++       "      <th>continual_learning_sfashionmnist</th>\n",
++       "      <th>60</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>uniform_rand</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>0</th>\n",
++       "      <th>0.001</th>\n",
++       "      <td>0.9914</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th>continual_learning_smnist</th>\n",
++       "      <th>60</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>uniform_rand</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>0</th>\n",
++       "      <th>0.001</th>\n",
++       "      <td>0.9962</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th>continual_learning_smnist_sh</th>\n",
++       "      <th>80</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>uniform_rand</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>0</th>\n",
++       "      <th>0.001</th>\n",
++       "      <td>0.9290</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th rowspan=\"3\" valign=\"top\">1</th>\n",
++       "      <th rowspan=\"3\" valign=\"top\">random</th>\n",
++       "      <th>continual_learning_sfashionmnist</th>\n",
++       "      <th>60</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>train_pixel_rand_1.0</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>1</th>\n",
++       "      <th>100.0</th>\n",
++       "      <td>0.9907</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th>continual_learning_smnist</th>\n",
++       "      <th>20</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>train_pixel_rand_1.0</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>1</th>\n",
++       "      <th>100.0</th>\n",
++       "      <td>0.9952</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th>continual_learning_smnist_sh</th>\n",
++       "      <th>80</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>train_pixel_rand_1.0</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>1</th>\n",
++       "      <th>100.0</th>\n",
++       "      <td>0.1987</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th rowspan=\"2\" valign=\"top\">fc_300_300</th>\n",
++       "      <th rowspan=\"2\" valign=\"top\">0</th>\n",
++       "      <th rowspan=\"2\" valign=\"top\">random_per_class</th>\n",
++       "      <th>continual_learning_pmnist</th>\n",
++       "      <th>10</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>train_pixel_rand_0.0</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>10</th>\n",
++       "      <th>10</th>\n",
++       "      <th>0</th>\n",
++       "      <th>10.0</th>\n",
++       "      <td>0.9092</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th>continual_learning_smnist_sh</th>\n",
++       "      <th>80</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>train_pixel_rand_0.0</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>10</th>\n",
++       "      <th>10</th>\n",
++       "      <th>0</th>\n",
++       "      <th>10.0</th>\n",
++       "      <td>0.5156</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "    <tr>\n",
++       "      <th>fc_400</th>\n",
++       "      <th>0</th>\n",
++       "      <th>random</th>\n",
++       "      <th>continual_learning_smnist</th>\n",
++       "      <th>60</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>uniform_rand</th>\n",
++       "      <th>0.0005</th>\n",
++       "      <th>not_specified</th>\n",
++       "      <th>40</th>\n",
++       "      <th>0</th>\n",
++       "      <th>0.001</th>\n",
++       "      <td>0.9980</td>\n",
++       "      <td>NaN</td>\n",
++       "      <td>0.0</td>\n",
++       "      <td>1.0</td>\n",
++       "    </tr>\n",
++       "  </tbody>\n",
++       "</table>\n",
++       "</div>"
++      ],
++      "text/plain": [
++       "                                                                                                                                                                                                                                   mean  \\\n",
++       "architecture       constant_inducing_points coreset          data_training                    epochs epochs_first_task inducing_input_type  learning_rate n_coreset_inputs_per_task n_inducing_inputs not_use_coreset prior_cov           \n",
++       "fc_100_100         0                        random           continual_learning_pmnist        5      10                uniform_rand         0.0001        not_specified             40                1               0.001      0.8340   \n",
++       "                                                                                              10     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      0.9585   \n",
++       "fc_200_200_200_200 0                        random           continual_learning_sfashionmnist 60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      0.9830   \n",
++       "fc_256_256         0                        random           continual_learning_sfashionmnist 60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      0.9914   \n",
++       "                                                             continual_learning_smnist        60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      0.9962   \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      0.9290   \n",
++       "                   1                        random           continual_learning_sfashionmnist 60     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0      0.9907   \n",
++       "                                                             continual_learning_smnist        20     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0      0.9952   \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0      0.1987   \n",
++       "fc_300_300         0                        random_per_class continual_learning_pmnist        10     not_specified     train_pixel_rand_0.0 0.0005        10                        10                0               10.0       0.9092   \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     train_pixel_rand_0.0 0.0005        10                        10                0               10.0       0.5156   \n",
++       "fc_400             0                        random           continual_learning_smnist        60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      0.9980   \n",
++       "\n",
++       "                                                                                                                                                                                                                                 std  \\\n",
++       "architecture       constant_inducing_points coreset          data_training                    epochs epochs_first_task inducing_input_type  learning_rate n_coreset_inputs_per_task n_inducing_inputs not_use_coreset prior_cov        \n",
++       "fc_100_100         0                        random           continual_learning_pmnist        5      10                uniform_rand         0.0001        not_specified             40                1               0.001      NaN   \n",
++       "                                                                                              10     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      NaN   \n",
++       "fc_200_200_200_200 0                        random           continual_learning_sfashionmnist 60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      NaN   \n",
++       "fc_256_256         0                        random           continual_learning_sfashionmnist 60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      NaN   \n",
++       "                                                             continual_learning_smnist        60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      NaN   \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      NaN   \n",
++       "                   1                        random           continual_learning_sfashionmnist 60     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0      NaN   \n",
++       "                                                             continual_learning_smnist        20     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0      NaN   \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0      NaN   \n",
++       "fc_300_300         0                        random_per_class continual_learning_pmnist        10     not_specified     train_pixel_rand_0.0 0.0005        10                        10                0               10.0       NaN   \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     train_pixel_rand_0.0 0.0005        10                        10                0               10.0       NaN   \n",
++       "fc_400             0                        random           continual_learning_smnist        60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001      NaN   \n",
++       "\n",
++       "                                                                                                                                                                                                                                 standard_error  \\\n",
++       "architecture       constant_inducing_points coreset          data_training                    epochs epochs_first_task inducing_input_type  learning_rate n_coreset_inputs_per_task n_inducing_inputs not_use_coreset prior_cov                   \n",
++       "fc_100_100         0                        random           continual_learning_pmnist        5      10                uniform_rand         0.0001        not_specified             40                1               0.001                 0.0   \n",
++       "                                                                                              10     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001                 0.0   \n",
++       "fc_200_200_200_200 0                        random           continual_learning_sfashionmnist 60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001                 0.0   \n",
++       "fc_256_256         0                        random           continual_learning_sfashionmnist 60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001                 0.0   \n",
++       "                                                             continual_learning_smnist        60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001                 0.0   \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001                 0.0   \n",
++       "                   1                        random           continual_learning_sfashionmnist 60     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0                 0.0   \n",
++       "                                                             continual_learning_smnist        20     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0                 0.0   \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0                 0.0   \n",
++       "fc_300_300         0                        random_per_class continual_learning_pmnist        10     not_specified     train_pixel_rand_0.0 0.0005        10                        10                0               10.0                  0.0   \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     train_pixel_rand_0.0 0.0005        10                        10                0               10.0                  0.0   \n",
++       "fc_400             0                        random           continual_learning_smnist        60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001                 0.0   \n",
++       "\n",
++       "                                                                                                                                                                                                                                 nb_seeds  \n",
++       "architecture       constant_inducing_points coreset          data_training                    epochs epochs_first_task inducing_input_type  learning_rate n_coreset_inputs_per_task n_inducing_inputs not_use_coreset prior_cov            \n",
++       "fc_100_100         0                        random           continual_learning_pmnist        5      10                uniform_rand         0.0001        not_specified             40                1               0.001           1.0  \n",
++       "                                                                                              10     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001           1.0  \n",
++       "fc_200_200_200_200 0                        random           continual_learning_sfashionmnist 60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001           1.0  \n",
++       "fc_256_256         0                        random           continual_learning_sfashionmnist 60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001           1.0  \n",
++       "                                                             continual_learning_smnist        60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001           1.0  \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001           1.0  \n",
++       "                   1                        random           continual_learning_sfashionmnist 60     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0           1.0  \n",
++       "                                                             continual_learning_smnist        20     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0           1.0  \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     train_pixel_rand_1.0 0.0005        not_specified             40                1               100.0           1.0  \n",
++       "fc_300_300         0                        random_per_class continual_learning_pmnist        10     not_specified     train_pixel_rand_0.0 0.0005        10                        10                0               10.0            1.0  \n",
++       "                                                             continual_learning_smnist_sh     80     not_specified     train_pixel_rand_0.0 0.0005        10                        10                0               10.0            1.0  \n",
++       "fc_400             0                        random           continual_learning_smnist        60     not_specified     uniform_rand         0.0005        not_specified             40                0               0.001           1.0  "
++      ]
++     },
++     "execution_count": 132,
++     "metadata": {},
++     "output_type": "execute_result"
++    }
++   ],
++   "source": [
++    "lutils.report_test_accuracies(exps)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 141,
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "from tests.fsvi_cl.test_reproduce_main_results import test_exps"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 138,
++   "metadata": {},
++   "outputs": [],
++   "source": [
++    "sub_exps = lutils.filter_exps(exps, d={\"data_training\": \"continual_learning_pmnist\"})"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 139,
++   "metadata": {
++    "collapsed": true
++   },
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: architecture\n",
++      "fc_100_100    2\n",
++      "fc_300_300    1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: coreset\n",
++      "random              2\n",
++      "random_per_class    1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: epochs\n",
++      "10    2\n",
++      "5     1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: epochs_first_task\n",
++      "not_specified    2\n",
++      "10               1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: inducing_input_type\n",
++      "uniform_rand            2\n",
++      "train_pixel_rand_0.0    1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: learning_rate\n",
++      "0.0005    2\n",
++      "0.0001    1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: n_coreset_inputs_per_task\n",
++      "not_specified    2\n",
++      "10               1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: n_inducing_inputs\n",
++      "40    2\n",
++      "10    1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: not_use_coreset\n",
++      "0    2\n",
++      "1    1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: prior_cov\n",
++      "0.001    2\n",
++      "10.0     1\n",
++      "dtype: int64\n",
++      "----------------------------------------------------------------------------------------------------\n",
++      "key: seed\n",
++      "8     1\n",
++      "4     1\n",
++      "12    1\n",
++      "dtype: int64\n"
++     ]
++    }
++   ],
++   "source": [
++    "lutils.show_stats(sub_exps)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "metadata": {},
++   "outputs": [],
++   "source": []
++  },
++  {
++   "cell_type": "code",
++   "execution_count": 137,
++   "metadata": {
++    "collapsed": true
++   },
++   "outputs": [
++    {
++     "name": "stdout",
++     "output_type": "stream",
++     "text": [
++      "fsvi_match\n",
++      "fsvi_optimized\n",
++      "fsvi_no_coreset\n",
++      "fsvi_minimal_coreset\n",
++      "> \u001b[0;32m/auto/users/timner/qixuan/function-space-variational-inference/tests/fsvi_cl/test_reproduce_main_results.py\u001b[0m(37)\u001b[0;36mselect_exps\u001b[0;34m()\u001b[0m\n",
++      "\u001b[0;32m     35 \u001b[0;31m        \u001b[0;32mfor\u001b[0m \u001b[0mgroup\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0m\u001b[0;32m     36 \u001b[0;31m                \u001b[0mtemp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0m\u001b[0;32m---> 37 \u001b[0;31m                \u001b[0;32mfor\u001b[0m \u001b[0mts\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mgroup\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0m\u001b[0;32m     38 \u001b[0;31m                        \u001b[0mc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mgroup\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mts\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0m\u001b[0;32m     39 \u001b[0;31m                        \u001b[0mc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0mk\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mv\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0mk\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mv\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mc\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mitems\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0mk\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mkeys\u001b[0m \u001b[0;32mand\u001b[0m \u001b[0mk\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32min\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m\"seed\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"subdir\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"data_ood\"\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0m\n",
++      "ipdb> print(c)\n",
++      "{'data_training': 'continual_learning_pmnist', 'architecture': 'fc_500_500', 'prior_cov': 0.001, 'epochs': 20, 'learning_rate': 0.0001, 'inducing_input_type': 'uniform_rand', 'n_inducing_inputs': 30, 'not_use_coreset': False, 'coreset': 'random', 'n_coreset_inputs_per_task': 'not_specified', 'constant_inducing_points': False, 'epochs_first_task': 'not_specified'}\n",
++      "ipdb> q\n"
++     ]
++    },
++    {
++     "ename": "BdbQuit",
++     "evalue": "",
++     "output_type": "error",
++     "traceback": [
++      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
++      "\u001b[0;31mBdbQuit\u001b[0m                                   Traceback (most recent call last)",
++      "\u001b[0;32m<ipython-input-137-e27730437657>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mtest_exps\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mexps\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
++      "\u001b[0;32m/auto/users/timner/qixuan/function-space-variational-inference/tests/fsvi_cl/test_reproduce_main_results.py\u001b[0m in \u001b[0;36mtest_exps\u001b[0;34m(exps)\u001b[0m\n\u001b[1;32m     59\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0mtest_exps\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mexps\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     60\u001b[0m         \u001b[0mconfigs\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_load_configs\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 61\u001b[0;31m         \u001b[0mgexps\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mselect_exps\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mexps\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     62\u001b[0m         \u001b[0mshow_reprod_res\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mgexps\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m/auto/users/timner/qixuan/function-space-variational-inference/tests/fsvi_cl/test_reproduce_main_results.py\u001b[0m in \u001b[0;36mselect_exps\u001b[0;34m(exps, configs)\u001b[0m\n\u001b[1;32m     35\u001b[0m         \u001b[0;32mfor\u001b[0m \u001b[0mgroup\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     36\u001b[0m                 \u001b[0mtemp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 37\u001b[0;31m                 \u001b[0;32mfor\u001b[0m \u001b[0mts\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mgroup\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     38\u001b[0m                         \u001b[0mc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mgroup\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mts\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     39\u001b[0m                         \u001b[0mc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0mk\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mv\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0mk\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mv\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mc\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mitems\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0mk\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mkeys\u001b[0m \u001b[0;32mand\u001b[0m \u001b[0mk\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32min\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m\"seed\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"subdir\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"data_ood\"\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m/auto/users/timner/qixuan/function-space-variational-inference/tests/fsvi_cl/test_reproduce_main_results.py\u001b[0m in \u001b[0;36mselect_exps\u001b[0;34m(exps, configs)\u001b[0m\n\u001b[1;32m     35\u001b[0m         \u001b[0;32mfor\u001b[0m \u001b[0mgroup\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     36\u001b[0m                 \u001b[0mtemp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 37\u001b[0;31m                 \u001b[0;32mfor\u001b[0m \u001b[0mts\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mgroup\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     38\u001b[0m                         \u001b[0mc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mconfigs\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mgroup\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mts\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     39\u001b[0m                         \u001b[0mc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0mk\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mv\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0mk\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mv\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mc\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mitems\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0mk\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mkeys\u001b[0m \u001b[0;32mand\u001b[0m \u001b[0mk\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32min\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m\"seed\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"subdir\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"data_ood\"\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m~/.conda/envs/fsvi-cl/lib/python3.8/bdb.py\u001b[0m in \u001b[0;36mtrace_dispatch\u001b[0;34m(self, frame, event, arg)\u001b[0m\n\u001b[1;32m     86\u001b[0m             \u001b[0;32mreturn\u001b[0m \u001b[0;31m# None\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     87\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mevent\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0;34m'line'\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 88\u001b[0;31m             \u001b[0;32mreturn\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdispatch_line\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mframe\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     89\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mevent\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0;34m'call'\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     90\u001b[0m             \u001b[0;32mreturn\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdispatch_call\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mframe\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0marg\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;32m~/.conda/envs/fsvi-cl/lib/python3.8/bdb.py\u001b[0m in \u001b[0;36mdispatch_line\u001b[0;34m(self, frame)\u001b[0m\n\u001b[1;32m    111\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mstop_here\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mframe\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbreak_here\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mframe\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    112\u001b[0m             \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0muser_line\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mframe\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 113\u001b[0;31m             \u001b[0;32mif\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mquitting\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0;32mraise\u001b[0m \u001b[0mBdbQuit\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    114\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtrace_dispatch\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    115\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
++      "\u001b[0;31mBdbQuit\u001b[0m: "
++     ]
++    }
++   ],
++   "source": [
++    "test_exps(exps)"
++   ]
++  },
++  {
++   "cell_type": "code",
++   "execution_count": null,
++   "metadata": {},
++   "outputs": [],
++   "source": []
++  },
+   {
+    "cell_type": "markdown",
+    "metadata": {},
+@@ -65,7 +863,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 1,
++   "execution_count": 114,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+@@ -75,7 +873,7 @@
+   },
+   {
+    "cell_type": "code",
+-   "execution_count": 8,
++   "execution_count": 118,
+    "metadata": {
+     "scrolled": true
+    },
+@@ -104,8 +902,8 @@
+     "if root not in sys.path:\n",
+     "    sys.path.insert(0, root)\n",
+     "\n",
+-    "import fsvi_cl.src_cl.exps.utils.load_utils as lutils\n",
+-    "from fsvi_cl.src_cl.exps.ablation.plots import *\n",
++    "import fsvi_cl.exps.utils.load_utils as lutils\n",
++    "from fsvi_cl.exps.ablation.plots import *\n",
+     "from cli import run_config"
+    ]
+   },
+diff --git a/publish/notebooks/common.py b/publish/notebooks/common.py
+index 536d9be0..1ada688f 100644
+--- a/publish/notebooks/common.py
++++ b/publish/notebooks/common.py
+@@ -9,8 +9,8 @@ if root not in sys.path:
+ from cli import run_config
+ 
+ 
+-TEST = False
+-configs_folder = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs")
++TEST = True
++configs_folder = os.path.join(root, "fsvi_cl/exps/publish/configs")
+ 
+ 
+ def read_config_and_run(filename, task_sequence, runner="fsvi"):
+diff --git a/publish/notebooks/main.py b/publish/notebooks/main.py
+index 42a0bda0..88a0ed73 100644
+--- a/publish/notebooks/main.py
++++ b/publish/notebooks/main.py
+@@ -1,8 +1,8 @@
+ # from importlib import reload
+ # import tensorflow as tf
+-# import publish.notebooks.smnist_mh
+-# import publish.notebooks.smnist_sh
+-# import publish.notebooks.pmnist_sh
+-# import publish.notebooks.sfashionmnist_mh
++import publish.notebooks.smnist_mh
++import publish.notebooks.smnist_sh
++import publish.notebooks.pmnist_sh
++import publish.notebooks.sfashionmnist_mh
+ import publish.notebooks.split_cifar
+ import publish.notebooks.omniglot
+diff --git a/publish/notebooks/omniglot.ipynb b/publish/notebooks/omniglot.ipynb
+index 854a64ed..9ec4ae84 100644
+--- a/publish/notebooks/omniglot.ipynb
++++ b/publish/notebooks/omniglot.ipynb
+@@ -71,7 +71,7 @@
+     "root = os.path.abspath(os.path.join(os.getcwd(), \"../..\"))\n",
+     "if root not in sys.path:\n",
+     "\tsys.path.insert(0, root)\n",
+-    "import fsvi_cl.src_cl.exps.utils.load_utils as lutils\n",
++    "import fsvi_cl.exps.utils.load_utils as lutils\n",
+     "from publish.notebooks.common import read_config_and_run\n",
+     "\n",
+     "configs_folder = os.path.join(root, \"fsvi_cl/src_cl/exps/publish/configs\")\n",
+diff --git a/publish/notebooks/omniglot.py b/publish/notebooks/omniglot.py
+index 747e2627..80b78cc5 100644
+--- a/publish/notebooks/omniglot.py
++++ b/publish/notebooks/omniglot.py
+@@ -7,10 +7,10 @@ import sys
+ root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+ if root not in sys.path:
+ 	sys.path.insert(0, root)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
++import fsvi_cl.exps.utils.load_utils as lutils
+ from publish.notebooks.common import read_config_and_run
+ 
+-configs_folder = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs")
++configs_folder = os.path.join(root, "fsvi_cl/exps/publish/configs")
+ 
+ task_sequence = "omniglot"
+ 
+diff --git a/publish/notebooks/pmnist_sh.ipynb b/publish/notebooks/pmnist_sh.ipynb
+index ac115a00..1d030973 100644
+--- a/publish/notebooks/pmnist_sh.ipynb
++++ b/publish/notebooks/pmnist_sh.ipynb
+@@ -71,7 +71,7 @@
+     "root = os.path.abspath(os.path.join(os.getcwd(), \"../..\"))\n",
+     "if root not in sys.path:\n",
+     "\tsys.path.insert(0, root)\n",
+-    "import fsvi_cl.src_cl.exps.utils.load_utils as lutils\n",
++    "import fsvi_cl.exps.utils.load_utils as lutils\n",
+     "from publish.notebooks.common import read_config_and_run\n",
+     "\n",
+     "configs_folder = os.path.join(root, \"fsvi_cl/src_cl/exps/publish/configs\")\n",
+diff --git a/publish/notebooks/pmnist_sh.py b/publish/notebooks/pmnist_sh.py
+index 3953adbe..d3f97ddb 100644
+--- a/publish/notebooks/pmnist_sh.py
++++ b/publish/notebooks/pmnist_sh.py
+@@ -7,10 +7,10 @@ import sys
+ root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+ if root not in sys.path:
+ 	sys.path.insert(0, root)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
++import fsvi_cl.exps.utils.load_utils as lutils
+ from publish.notebooks.common import read_config_and_run
+ 
+-configs_folder = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs")
++configs_folder = os.path.join(root, "fsvi_cl/exps/publish/configs")
+ 
+ task_sequence = "pmnist_sh"
+ 
+diff --git a/publish/notebooks/sfashionmnist_mh.ipynb b/publish/notebooks/sfashionmnist_mh.ipynb
+index 4c039cbe..41836403 100644
+--- a/publish/notebooks/sfashionmnist_mh.ipynb
++++ b/publish/notebooks/sfashionmnist_mh.ipynb
+@@ -119,7 +119,7 @@
+     "root = os.path.abspath(os.path.join(os.getcwd(), \"../..\"))\n",
+     "if root not in sys.path:\n",
+     "\tsys.path.insert(0, root)\n",
+-    "import fsvi_cl.src_cl.exps.utils.load_utils as lutils\n",
++    "import fsvi_cl.exps.utils.load_utils as lutils\n",
+     "from publish.notebooks.common import read_config_and_run\n",
+     "\n",
+     "configs_folder = os.path.join(root, \"fsvi_cl/src_cl/exps/publish/configs\")\n",
+diff --git a/publish/notebooks/sfashionmnist_mh.py b/publish/notebooks/sfashionmnist_mh.py
+index abe19538..797beccb 100644
+--- a/publish/notebooks/sfashionmnist_mh.py
++++ b/publish/notebooks/sfashionmnist_mh.py
+@@ -7,10 +7,10 @@ import sys
+ root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+ if root not in sys.path:
+ 	sys.path.insert(0, root)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
++import fsvi_cl.exps.utils.load_utils as lutils
+ from publish.notebooks.common import read_config_and_run
+ 
+-configs_folder = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs")
++configs_folder = os.path.join(root, "fsvi_cl/exps/publish/configs")
+ 
+ task_sequence = "sfashionmnist_mh"
+ 
+diff --git a/publish/notebooks/smnist_mh.ipynb b/publish/notebooks/smnist_mh.ipynb
+index ee952b5e..1be6915a 100644
+--- a/publish/notebooks/smnist_mh.ipynb
++++ b/publish/notebooks/smnist_mh.ipynb
+@@ -71,7 +71,7 @@
+     "root = os.path.abspath(os.path.join(os.getcwd(), \"../..\"))\n",
+     "if root not in sys.path:\n",
+     "    sys.path.insert(0, root)\n",
+-    "import fsvi_cl.src_cl.exps.utils.load_utils as lutils\n",
++    "import fsvi_cl.exps.utils.load_utils as lutils\n",
+     "from publish.notebooks.common import read_config_and_run\n",
+     "\n",
+     "configs_folder = os.path.join(root, \"fsvi_cl/src_cl/exps/publish/configs\")\n",
+diff --git a/publish/notebooks/smnist_mh.py b/publish/notebooks/smnist_mh.py
+index edd5d2c3..9d7a881a 100644
+--- a/publish/notebooks/smnist_mh.py
++++ b/publish/notebooks/smnist_mh.py
+@@ -7,10 +7,10 @@ import sys
+ root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+ if root not in sys.path:
+ 	sys.path.insert(0, root)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
++import fsvi_cl.exps.utils.load_utils as lutils
+ from publish.notebooks.common import read_config_and_run
+ 
+-configs_folder = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs")
++configs_folder = os.path.join(root, "fsvi_cl/exps/publish/configs")
+ 
+ task_sequence = "smnist_mh"
+ 
+diff --git a/publish/notebooks/smnist_sh.ipynb b/publish/notebooks/smnist_sh.ipynb
+index f7760fe5..a90d829a 100644
+--- a/publish/notebooks/smnist_sh.ipynb
++++ b/publish/notebooks/smnist_sh.ipynb
+@@ -71,7 +71,7 @@
+     "root = os.path.abspath(os.path.join(os.getcwd(), \"../..\"))\n",
+     "if root not in sys.path:\n",
+     "\tsys.path.insert(0, root)\n",
+-    "import fsvi_cl.src_cl.exps.utils.load_utils as lutils\n",
++    "import fsvi_cl.exps.utils.load_utils as lutils\n",
+     "from publish.notebooks.common import read_config_and_run\n",
+     "\n",
+     "configs_folder = os.path.join(root, \"fsvi_cl/src_cl/exps/publish/configs\")\n",
+diff --git a/publish/notebooks/smnist_sh.py b/publish/notebooks/smnist_sh.py
+index 7424a904..417204cc 100644
+--- a/publish/notebooks/smnist_sh.py
++++ b/publish/notebooks/smnist_sh.py
+@@ -7,10 +7,10 @@ import sys
+ root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+ if root not in sys.path:
+ 	sys.path.insert(0, root)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
++import fsvi_cl.exps.utils.load_utils as lutils
+ from publish.notebooks.common import read_config_and_run
+ 
+-configs_folder = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs")
++configs_folder = os.path.join(root, "fsvi_cl/exps/publish/configs")
+ 
+ task_sequence = "smnist_sh"
+ 
+diff --git a/publish/notebooks/split_cifar.ipynb b/publish/notebooks/split_cifar.ipynb
+index cd86314f..46fec496 100644
+--- a/publish/notebooks/split_cifar.ipynb
++++ b/publish/notebooks/split_cifar.ipynb
+@@ -71,7 +71,7 @@
+     "root = os.path.abspath(os.path.join(os.getcwd(), \"../..\"))\n",
+     "if root not in sys.path:\n",
+     "\tsys.path.insert(0, root)\n",
+-    "import fsvi_cl.src_cl.exps.utils.load_utils as lutils\n",
++    "import fsvi_cl.exps.utils.load_utils as lutils\n",
+     "from publish.notebooks.common import read_config_and_run\n",
+     "\n",
+     "configs_folder = os.path.join(root, \"fsvi_cl/src_cl/exps/publish/configs\")\n",
+diff --git a/publish/notebooks/split_cifar.py b/publish/notebooks/split_cifar.py
+index c24ab88d..b179d52a 100644
+--- a/publish/notebooks/split_cifar.py
++++ b/publish/notebooks/split_cifar.py
+@@ -7,10 +7,10 @@ import sys
+ root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+ if root not in sys.path:
+ 	sys.path.insert(0, root)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
++import fsvi_cl.exps.utils.load_utils as lutils
+ from publish.notebooks.common import read_config_and_run
+ 
+-configs_folder = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs")
++configs_folder = os.path.join(root, "fsvi_cl/exps/publish/configs")
+ 
+ task_sequence = "cifar"
+ 
+diff --git a/publish/notebooks/toy2d.ipynb b/publish/notebooks/toy2d.ipynb
+index 78a22e0f..f9052d24 100644
+--- a/publish/notebooks/toy2d.ipynb
++++ b/publish/notebooks/toy2d.ipynb
+@@ -72,8 +72,8 @@
+     "root = os.path.abspath(os.path.join(os.getcwd(), \"../..\"))\n",
+     "if root not in sys.path:\n",
+     "\tsys.path.insert(0, root)\n",
+-    "import fsvi_cl.src_cl.exps.utils.load_utils as lutils\n",
+-    "from fsvi_cl.src_cl.exps.publish.toy2d import plot_toy_2d\n",
++    "import fsvi_cl.exps.utils.load_utils as lutils\n",
++    "from fsvi_cl.exps.publish.toy2d import plot_toy_2d\n",
+     "from cli import run_config\n",
+     "\n",
+     "\n",
+diff --git a/publish/notebooks/toy_2d.py b/publish/notebooks/toy_2d.py
+index 7e061de2..d31abbb0 100644
+--- a/publish/notebooks/toy_2d.py
++++ b/publish/notebooks/toy_2d.py
+@@ -8,12 +8,12 @@ import sys
+ root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+ if root not in sys.path:
+ 	sys.path.insert(0, root)
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
+-from fsvi_cl.src_cl.exps.publish.toy2d import plot_toy_2d
++import fsvi_cl.exps.utils.load_utils as lutils
++from fsvi_cl.exps.publish.toy2d import plot_toy_2d
+ from cli import run_config
+ 
+ 
+-path = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs/toy2d.pkl")
++path = os.path.join(root, "fsvi_cl/exps/publish/configs/toy2d.pkl")
+ with open(path, "rb") as p:
+ 	config = pickle.load(p)
+ 
+diff --git a/publish/test.py b/publish/test.py
+index d83558fc..ee969814 100644
+--- a/publish/test.py
++++ b/publish/test.py
+@@ -8,21 +8,21 @@ root = os.path.dirname(cwd)
+ if root not in sys.path:
+     sys.path.insert(0, root)
+ 
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
++import fsvi_cl.exps.utils.load_utils as lutils
+ from cli import run_config
+ 
+ 
+ # `S-FSVI (ours)`
+-path = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs/fsvi_match.pkl")
++path = os.path.join(root, "fsvi_cl/exps/publish/configs/fsvi_match.pkl")
+ 
+ # # `S-FSVI (larger networks)`
+-# path = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs/fsvi_optimized.pkl")
++# path = os.path.join(root, "fsvi_cl/exps/publish/configs/fsvi_optimized.pkl")
+ 
+ # # `S-FSVI (no coreset)`
+-# path = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs/fsvi_no_coreset.pkl")
++# path = os.path.join(root, "fsvi_cl/exps/publish/configs/fsvi_no_coreset.pkl")
+ 
+ # # `S-FSVI (minimal coreset)`
+-# path = os.path.join(root, "fsvi_cl/src_cl/exps/publish/configs/fsvi_minimal_coreset.pkl")
++# path = os.path.join(root, "fsvi_cl/exps/publish/configs/fsvi_minimal_coreset.pkl")
+ 
+ 
+ with open(path, "rb") as p:
+diff --git a/tests/baselines/frcl/test_frcl_runner.py b/tests/baselines/frcl/test_frcl_runner.py
+index 6969b696..99dd24f4 100644
+--- a/tests/baselines/frcl/test_frcl_runner.py
++++ b/tests/baselines/frcl/test_frcl_runner.py
+@@ -1,4 +1,4 @@
+-from fsvi_cl.baselines.frcl.run_frcl import main, parse_args
++from baselines.frcl.run_frcl import main, parse_args
+ 
+ 
+ def test_run_frcl():
+diff --git a/tests/baselines/fromp/test_fromp_runner.py b/tests/baselines/fromp/test_fromp_runner.py
+index 34972150..53cb9b76 100644
+--- a/tests/baselines/fromp/test_fromp_runner.py
++++ b/tests/baselines/fromp/test_fromp_runner.py
+@@ -1,4 +1,4 @@
+-from fsvi_cl.baselines.fromp.run_fromp import main, parse_args
++from baselines.fromp.run_fromp import main, parse_args
+ 
+ 
+ def test_run_fromp():
+diff --git a/tests/baselines/vcl/test_vcl_runner.py b/tests/baselines/vcl/test_vcl_runner.py
+index ad196e54..44723cae 100644
+--- a/tests/baselines/vcl/test_vcl_runner.py
++++ b/tests/baselines/vcl/test_vcl_runner.py
+@@ -1,4 +1,4 @@
+-from fsvi_cl.baselines.vcl.run_vcl import main, parse_args
++from baselines.vcl.run_vcl import main, parse_args
+ 
+ 
+ def test_run_vcl():
+diff --git a/tests/fsvi_cl/src_cl/utils/test_new_datasets_cl.py b/tests/fsvi_cl/src_cl/utils/test_new_datasets_cl.py
+index d3325b4f..41a4c1f9 100644
+--- a/tests/fsvi_cl/src_cl/utils/test_new_datasets_cl.py
++++ b/tests/fsvi_cl/src_cl/utils/test_new_datasets_cl.py
+@@ -7,8 +7,8 @@ tf.config.experimental.set_visible_devices([], "GPU")
+ import numpy as np
+ 
+ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../../.."))
+-from fsvi_cl.src_cl.utils.datasets_cl import prepare_data as prepare_data_original
+-from fsvi_cl.src_cl.utils.data_loaders.get_data import DATA_LOAD
++from fsvi_cl.fsvi_utils.datasets_cl import prepare_data as prepare_data_original
++from benchmarking_tasks.continual_learning.data_loaders.get_data import DATA_LOAD
+ 
+ def to_np_array(tf_tensors):
+     return [np.array(t) for t in tf_tensors]
+diff --git a/tests/fsvi_cl/src_cl/utils/test_new_datasets_vcl.py b/tests/fsvi_cl/src_cl/utils/test_new_datasets_vcl.py
+index 524f7693..257a774f 100644
+--- a/tests/fsvi_cl/src_cl/utils/test_new_datasets_vcl.py
++++ b/tests/fsvi_cl/src_cl/utils/test_new_datasets_vcl.py
+@@ -7,9 +7,9 @@ import tensorflow as tf
+ tf.config.experimental.set_visible_devices([], "GPU")
+ import numpy as np
+ 
+-from fsvi_cl.baselines.vcl.alg.deprecated_data_loading import \
++from baselines.vcl.alg.deprecated_data_loading import \
+ 	prepare_data_vcl as prepare_data_original
+-from fsvi_cl.src_cl.utils.data_loaders.get_data import DATA_LOAD
++from benchmarking_tasks.continual_learning.data_loaders.get_data import DATA_LOAD
+ 
+ 
+ def to_np_array(tf_tensors):
+diff --git a/tests/fsvi_cl/test_reproduce_main_results.py b/tests/fsvi_cl/test_reproduce_main_results.py
+index 13174ac9..51b79836 100644
+--- a/tests/fsvi_cl/test_reproduce_main_results.py
++++ b/tests/fsvi_cl/test_reproduce_main_results.py
+@@ -3,23 +3,33 @@ This file is for analysing the experiments to see if we can reproduce the
+ accuracies of our method on MNIST in the paper.
+ """
+ import os
+-import pdb
++from typing import Dict
+ import pickle
+ 
+ import pytest
+ 
+-import fsvi_cl.src_cl.exps.utils.load_utils as lutils
++import fsvi_cl.exps.utils.load_utils as lutils
+ import sfsvi.general_utils.log import PROJECT_ROOT
+ 
+ 
+-def _load_configs():
+-	paths = [
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_match.pkl"),
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_optimized.pkl"),
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_no_coreset.pkl"),
+-		os.path.join(PROJECT_ROOT, "fsvi_cl/src_cl/exps/publish/configs/fsvi_minimal_coreset.pkl"),
+-	]
++FSVI_CONFIGS = [
++	os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_match.pkl"),
++	os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_optimized.pkl"),
++	os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_no_coreset.pkl"),
++	os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_minimal_coreset.pkl"),
+ 
++	os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_cifar.pkl"),
++	os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fsvi_omniglot.pkl"),
++]
++
++BASELINES_CONFIGS = [
++	os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/frcl.pkl"),
++	os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/fromp.pkl"),
++	os.path.join(PROJECT_ROOT, "fsvi_cl/exps/publish/configs/vcl.pkl"),
++]
++
++
++def _load_configs(paths):
+ 	configs = {}
+ 	for p in paths:
+ 		name = p.split("/")[-1].rstrip(".pkl")
+@@ -29,6 +39,19 @@ def _load_configs():
+ 	return configs
+ 
+ 
++def load_experiment(config: Dict, exp_folder: str):
++	exps = lutils.read_folder(exp_folder, only_config=True, only_successful=True)
++	keys = set(lutils.find_diff_keys(exps))
++	config = {k: v for k, v in config.items() if k in keys and k not in ["seed", "subdir", "data_ood"]}
++	matched_exps = lutils.filter_exps(exps, d=config)
++	if not matched_exps:
++		print(f"No experiment found in {exp_folder}")
++		return
++	exp = matched_exps[0]
++	print(lutils.read_slurm_log(exp))
++	return exp
++
++
+ def select_exps(exps, configs):
+ 	res = {}
+ 	keys = set(lutils.find_diff_keys(exps))
+@@ -39,7 +62,8 @@ def select_exps(exps, configs):
+ 			c = {k: v for k, v in c.items() if k in keys and k not in ["seed", "subdir", "data_ood"]}
+ 			temp[ts] = lutils.filter_exps(exps, d=c)
+ 			if not temp[ts]:
+-				pdb.set_trace()
++				print(f"No experiment found for config:\n\t{c}\n")
++				# pdb.set_trace()
+ 		res[group] = temp
+ 	return res
+ 
+@@ -56,7 +80,8 @@ def show_reprod_res(gexps):
+ 
+ 
+ @pytest.mark.skip(reason="This test requires loading experiments that are ran on the targeted configs.")
+-def test_exps(exps):
+-	configs = _load_configs()
++def test_exps(exps, baseline=False):
++	paths = BASELINES_CONFIGS if baseline else FSVI_CONFIGS
++	configs = _load_configs(paths)
+ 	gexps = select_exps(exps, configs)
+ 	show_reprod_res(gexps)
+diff --git a/tests/src/utils/test_replace_params.py b/tests/src/utils/test_replace_params.py
+index 3bcc4df6..be29763c 100644
+--- a/tests/src/utils/test_replace_params.py
++++ b/tests/src/utils/test_replace_params.py
+@@ -1,6 +1,6 @@
+ import pdb
+ 
+-from fsvi_cl.src_cl.utils.replace_params import replace_params_trained_heads
++from fsvi_cl.fsvi_utils.replace_params import replace_params_trained_heads
+ import haiku as hk
+ import jax
+ import jax.numpy as jnp
+diff --git a/tests/src/utils/test_utils.py b/tests/src/utils/test_utils.py
+index 3d8353ae..2736eb7f 100644
+--- a/tests/src/utils/test_utils.py
++++ b/tests/src/utils/test_utils.py
+@@ -4,7 +4,7 @@ import torch
+ from pytest import fixture
+ 
+ import sfsvi.utils.utils import kl_diag, kl_diag_tfd
+-from fsvi_cl.src_cl.utils.utils_cl import generate_4d_identity_cov
++from fsvi_cl.fsvi_utils.utils_cl import generate_4d_identity_cov
+ 
+ 
+ def test_kl_diag():

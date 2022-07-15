@@ -1,0 +1,404 @@
+Running on clpc158.cs.ox.ac.uk
+Running with: fsvi cl --data_training continual_learning_pmnist --data_ood not_specified --model_type fsvi_mlp --optimizer adam --optimizer_var not_specified --momentum 0.0 --momentum_var 0.0 --schedule not_specified --architecture fc_100_100 --activation relu --prior_mean 0.0 --prior_cov 0.001 --prior_covs 0.0 --prior_type bnn_induced --epochs 5 --start_var_opt 0 --batch_size 128 --learning_rate 0.0001 --learning_rate_var 0.001 --dropout_rate 0.0 --regularization 0.0 --inducing_points 0 --n_marginals 1 --n_condition 0 --inducing_input_type uniform_rand --inducing_input_ood_data not_specified --inducing_input_ood_data_size 50000 --kl_scale equal --feature_map_type not_specified --td_prior_scale 0.0 --feature_update 1 --n_samples 5 --n_samples_eval 5 --tau 1.0 --noise_std 1.0 --ind_lim ind_-1_1 --logging_frequency 10 --figsize 10 4 --seed 12 --save_path debug --name  --stochastic_prior_mean not_specified --batch_normalization_mod not_specified --kl_sup not_specified --init_logvar 0.0 0.0 --init_logvar_lin 0.0 0.0 --init_logvar_conv 0.0 0.0 --perturbation_param 0.01 --debug --logroot ablation --subdir reproduce_main_results_2 --wandb_project not_specified --n_inducing_inputs 40 --n_inducing_inputs_first_task not_specified --n_inducing_inputs_second_task not_specified --inducing_inputs_bound 0.0 1.0 --inducing_inputs_add_mode 0 --not_use_coreset --logging 1 --use_val_split --not_use_val_split --coreset random --coreset_entropy_mode soft_highest --coreset_entropy_offset 0.0 --coreset_kl_heuristic lowest --coreset_kl_offset 0.0 --coreset_elbo_heuristic lowest --coreset_elbo_offset 0.0 --coreset_elbo_n_samples not_specified --coreset_n_tasks not_specified --coreset_entropy_n_mixed 1 --n_coreset_inputs_per_task not_specified --n_permuted_tasks 10 --n_omniglot_tasks 20 --epochs_first_task 10 --n_epochs_save_params not_specified --n_augment not_specified --augment_mode constant --n_valid same --learning_rate_first_task not_specified --save_alt --first_task_load_exp_path not_specified --only_task_id not_specified --loss_type 1 --n_omniglot_coreset_chars 2 --n_inducing_input_adjust_amount not_specified
+WARNING: TensorFlow is set to only use CPU.
+Jax is running on gpu
+WARNING: TensorFlow is set to only use CPU.
+
+Device: gpu
+
+Input arguments:
+ {
+    "command":"cl",
+    "data_training":"continual_learning_pmnist",
+    "data_ood":[
+        "not_specified"
+    ],
+    "model_type":"fsvi_mlp",
+    "optimizer":"adam",
+    "optimizer_var":"not_specified",
+    "momentum":0.0,
+    "momentum_var":0.0,
+    "schedule":"not_specified",
+    "architecture":[
+        100,
+        100
+    ],
+    "activation":"relu",
+    "prior_mean":"0.0",
+    "prior_cov":"0.001",
+    "prior_covs":[
+        0.0
+    ],
+    "prior_type":"bnn_induced",
+    "epochs":5,
+    "start_var_opt":0,
+    "batch_size":128,
+    "learning_rate":0.0001,
+    "learning_rate_var":0.001,
+    "dropout_rate":0.0,
+    "regularization":0.0,
+    "inducing_points":0,
+    "n_marginals":1,
+    "n_condition":128,
+    "inducing_input_type":"uniform_rand",
+    "inducing_input_ood_data":[
+        "not_specified"
+    ],
+    "inducing_input_ood_data_size":50000,
+    "kl_scale":"equal",
+    "feature_map_jacobian":false,
+    "feature_map_jacobian_train_only":false,
+    "feature_map_type":"not_specified",
+    "td_prior_scale":0.0,
+    "feature_update":1,
+    "full_cov":false,
+    "n_samples":5,
+    "n_samples_eval":5,
+    "tau":1.0,
+    "noise_std":1.0,
+    "ind_lim":"ind_-1_1",
+    "logging_frequency":10,
+    "figsize":[
+        "10",
+        "4"
+    ],
+    "seed":12,
+    "save_path":"debug",
+    "save":false,
+    "name":"",
+    "evaluate":false,
+    "resume_training":false,
+    "no_final_layer_bias":false,
+    "extra_linear_layer":false,
+    "map_initialization":false,
+    "stochastic_linearization":false,
+    "grad_flow_jacobian":false,
+    "stochastic_prior_mean":"not_specified",
+    "batch_normalization":false,
+    "batch_normalization_mod":"not_specified",
+    "final_layer_variational":false,
+    "kl_sup":"not_specified",
+    "kl_sampled":false,
+    "fixed_inner_layers_variational_var":false,
+    "init_logvar":[
+        0.0,
+        0.0
+    ],
+    "init_logvar_lin":[
+        0.0,
+        0.0
+    ],
+    "init_logvar_conv":[
+        0.0,
+        0.0
+    ],
+    "perturbation_param":0.01,
+    "debug":true,
+    "logroot":"ablation",
+    "subdir":"reproduce_main_results_2",
+    "wandb_project":"not_specified",
+    "n_inducing_inputs":40,
+    "n_inducing_inputs_first_task":"not_specified",
+    "n_inducing_inputs_second_task":"not_specified",
+    "inducing_inputs_bound":[
+        0.0,
+        1.0
+    ],
+    "fix_shuffle":false,
+    "use_generative_model":false,
+    "debug_n_train":null,
+    "inducing_inputs_add_mode":0,
+    "inducing_input_adjustment":false,
+    "not_use_coreset":true,
+    "inducing_input_augmentation":false,
+    "plotting":false,
+    "logging":1,
+    "use_val_split":false,
+    "not_use_val_split":true,
+    "coreset":"random",
+    "coreset_entropy_mode":"soft_highest",
+    "coreset_entropy_offset":"0.0",
+    "coreset_kl_heuristic":"lowest",
+    "coreset_kl_offset":"0.0",
+    "coreset_elbo_heuristic":"lowest",
+    "coreset_elbo_offset":"0.0",
+    "coreset_elbo_n_samples":5,
+    "coreset_n_tasks":"not_specified",
+    "coreset_entropy_n_mixed":1,
+    "n_coreset_inputs_per_task":"not_specified",
+    "full_ntk":false,
+    "constant_inducing_points":false,
+    "n_permuted_tasks":10,
+    "n_omniglot_tasks":20,
+    "epochs_first_task":"10",
+    "identity_cov":false,
+    "n_epochs_save_params":"not_specified",
+    "n_augment":"not_specified",
+    "augment_mode":"constant",
+    "n_valid":"same",
+    "learning_rate_first_task":"not_specified",
+    "save_alt":true,
+    "save_first_task":false,
+    "first_task_load_exp_path":"not_specified",
+    "only_task_id":"not_specified",
+    "loss_type":1,
+    "only_trainable_head":false,
+    "n_omniglot_coreset_chars":2,
+    "omniglot_randomize_test_split":false,
+    "omniglot_randomize_task_sequence":false,
+    "n_inducing_input_adjust_amount":"not_specified",
+    "save_all_params":false,
+    "task":"continual_learning_pmnist",
+    "architecture_arg":"fc_100_100",
+    "init_logvar_minval":0.0,
+    "init_logvar_maxval":0.0,
+    "init_logvar_lin_minval":0.0,
+    "init_logvar_lin_maxval":0.0,
+    "init_logvar_conv_minval":0.0,
+    "init_logvar_conv_maxval":0.0
+} 
+
+
+MAP initialization: False
+Full NTK computation: False
+Stochastic linearization (posterior): False
+init_logvar_lin_minval: -10.0
+init_logvar_lin_maxval: -8.0
+Full NTK computation: False
+Stochastic linearization (prior): False
+
+
+Learning task 1
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------
+  epoch    mean acc    t1 acc
+-------  ----------  --------
+      0       40.74     40.74
+      1       76.29     76.29
+      2       84.52     84.52
+      3       87.70     87.70
+      4       89.13     89.13
+      5       90.13     90.13
+      6       90.81     90.81
+      7       91.37     91.37
+      8       91.99     91.99
+      9       92.61     92.61
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.9261 
+Accuracies (test): [0.9261]
+---
+
+
+Learning task 2
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc
+-------  ----------  --------  --------
+      0       89.67     91.22     88.13
+      1       90.59     90.60     90.58
+      2       91.01     90.20     91.82
+      3       91.22     89.68     92.77
+      4       90.86     88.35     93.37
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.9086 
+Accuracies (test): [0.8835, 0.9337]
+---
+
+
+Learning task 3
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc
+-------  ----------  --------  --------  --------
+      0       89.95     87.47     91.93     90.46
+      1       89.96     86.35     91.39     92.14
+      2       90.29     85.52     92.15     93.19
+      3       90.27     85.35     91.61     93.84
+      4       89.94     83.83     91.47     94.53
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8994 
+Accuracies (test): [0.8383, 0.9147, 0.9453]
+---
+
+
+Learning task 4
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc
+-------  ----------  --------  --------  --------  --------
+      0       89.95     83.06     91.44     93.66     91.66
+      1       90.08     81.89     91.82     93.45     93.17
+      2       89.45     79.30     91.70     93.11     93.71
+      3       89.33     78.46     91.46     93.17     94.22
+      4       89.05     76.88     91.16     93.33     94.82
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8905 
+Accuracies (test): [0.7688, 0.9116, 0.9333, 0.9482]
+---
+
+
+Learning task 5
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc
+-------  ----------  --------  --------  --------  --------  --------
+      0       89.55     80.14     88.86     91.79     94.58     92.37
+      1       89.09     77.53     87.93     91.58     94.42     93.98
+      2       89.50     77.94     88.19     92.09     94.54     94.75
+      3       88.56     74.86     85.96     92.32     94.50     95.16
+      4       87.84     73.64     84.45     91.46     94.12     95.52
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8784 
+Accuracies (test): [0.7364, 0.8445, 0.9146, 0.9412, 0.9552]
+---
+
+
+Learning task 6
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc    t6 acc
+-------  ----------  --------  --------  --------  --------  --------  --------
+      0       87.44     74.98     81.38     87.81     93.76     94.49     92.20
+      1       87.26     72.62     80.94     88.37     93.89     94.15     93.59
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/tensorflow_addons/utils/ensure_tf_install.py:53: UserWarning: Tensorflow Addons supports using Python ops for all Tensorflow versions above or equal to 2.3.0 and strictly below 2.6.0 (nightly versions are not supported). 
+ The versions of TensorFlow you are currently using is 2.6.0 and is not supported. 
+Some things might work, some things might not.
+If you were to encounter a bug, do not file an issue.
+If you want to make sure you're using a tested and supported configuration, either change the TensorFlow version or the TensorFlow Addons's version. 
+You can find the compatibility matrix in TensorFlow Addon's readme:
+https://github.com/tensorflow/addons
+  warnings.warn(
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/feature_extraction/image.py:167: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  dtype=np.int):
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+      2       86.92     72.15     79.96     87.91     92.98     94.11     94.42
+      3       86.79     72.05     79.22     87.63     93.01     93.91     94.94
+      4       85.58     69.83     77.60     85.22     91.90     93.54     95.38
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8558 
+Accuracies (test): [0.6983, 0.776, 0.8522, 0.919, 0.9354, 0.9538]
+---
+
+
+Learning task 7
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc    t6 acc    t7 acc
+-------  ----------  --------  --------  --------  --------  --------  --------  --------
+      0       87.30     74.52     76.49     89.89     90.64     92.97     94.60     91.99
+      1       87.25     74.73     75.79     89.15     90.24     92.52     94.65     93.69
+      2       86.98     74.72     75.85     88.84     88.88     91.41     94.57     94.58
+      3       86.76     73.50     74.92     88.63     89.12     91.66     94.60     94.90
+      4       86.73     73.05     75.38     88.48     88.74     91.29     94.74     95.41
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8673 
+Accuracies (test): [0.7305, 0.7538, 0.8848, 0.8874, 0.9129, 0.9474, 0.9541]
+---
+
+
+Learning task 8
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc    t6 acc    t7 acc    t8 acc
+-------  ----------  --------  --------  --------  --------  --------  --------  --------  --------
+      0       86.63     68.87     74.76     88.97     88.36     91.93     93.26     94.74     92.12
+      1       86.01     69.06     71.64     87.51     87.46     91.44     92.78     94.59     93.61
+      2       86.81     71.10     73.23     87.70     88.91     91.46     92.99     94.60     94.52
+      3       87.04     72.39     72.77     88.16     89.03     91.87     92.67     94.52     94.95
+      4       87.05     72.38     73.56     88.22     88.70     91.83     91.89     94.37     95.42
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8705 
+Accuracies (test): [0.7238, 0.7356, 0.8822, 0.887, 0.9183, 0.9189, 0.9437, 0.9542]
+---
+
+
+Learning task 9
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------  --------  --------  --------  --------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc    t6 acc    t7 acc    t8 acc    t9 acc
+-------  ----------  --------  --------  --------  --------  --------  --------  --------  --------  --------
+      0       86.81     71.73     71.43     86.76     87.49     89.37     92.37     94.07     95.27     92.83
+      1       86.45     68.71     70.61     85.63     87.37     88.98     92.98     94.31     95.35     94.11
+      2       86.43     69.40     69.75     86.02     87.06     89.20     92.80     93.90     95.02     94.75
+      3       86.16     69.83     69.67     84.90     85.90     88.80     92.14     93.64     95.23     95.30
+      4       85.86     68.55     68.13     84.63     86.25     89.00     92.27     93.44     94.90     95.55
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8586 
+Accuracies (test): [0.6855, 0.6813, 0.8463, 0.8625, 0.89, 0.9227, 0.9344, 0.949, 0.9555]
+---
+
+
+Learning task 10
+Nomenclature:
+	acc: accuracy in %
+	t1: the first task
+
+-------  ----------  --------  --------  --------  --------  --------  --------  --------  --------  --------  ---------
+  epoch    mean acc    t1 acc    t2 acc    t3 acc    t4 acc    t5 acc    t6 acc    t7 acc    t8 acc    t9 acc    t10 acc
+-------  ----------  --------  --------  --------  --------  --------  --------  --------  --------  --------  ---------
+      0       85.22     67.19     66.91     85.08     82.05     87.23     91.74     91.72     93.48     94.85      91.93
+      1       84.81     66.87     64.19     84.77     80.52     86.35     91.64     92.01     93.13     95.03      93.58
+      2       83.83     65.10     61.19     84.01     78.52     85.82     91.50     90.68     92.45     94.59      94.39
+      3       83.67     66.13     59.17     83.38     78.49     85.90     91.18     90.43     92.18     94.68      95.11
+      4       83.40     64.87     60.62     83.47     76.62     85.27     90.66     90.36     92.09     94.55      95.48
+Adding inducing inputs to the coreset randomly
+For tasks seen so far, 
+---
+Mean accuracy (test): 0.8340 
+Accuracies (test): [0.6487, 0.6062, 0.8347, 0.7662, 0.8527, 0.9066, 0.9036, 0.9209, 0.9455, 0.9548]
+---
+
+
+------------------- DONE -------------------
+

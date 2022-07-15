@@ -1,0 +1,54 @@
+Running on oat2.cs.ox.ac.uk
+Running with: python /auto/users/timner/qixuan/function-space-variational-inference/baselines/fromp/run_fromp.py --dataset smnist_sh --n_tasks 5 --batch_size 128 --hidden_size 256 --n_layers 2 --lr 0.0001 --n_epochs 15 --seed 6 --n_seeds 1 --n_points 40 --select_method lambda_descend --tau 10.0 --n_permuted_tasks 10 --smnist_eps 1e-06 --logroot ablation --subdir reproduce_main_results_3 --save_alt --n_coreset_inputs_per_task 200 --n_steps not_specified
+2022-07-14 19:06:41.832408: W tensorflow/core/common_runtime/gpu/gpu_bfc_allocator.cc:39] Overriding allow_growth setting because the TF_FORCE_GPU_ALLOW_GROWTH environment variable is set. Original config value was 0.
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/tensorflow_addons/utils/ensure_tf_install.py:53: UserWarning: Tensorflow Addons supports using Python ops for all Tensorflow versions above or equal to 2.3.0 and strictly below 2.6.0 (nightly versions are not supported). 
+ The versions of TensorFlow you are currently using is 2.6.0 and is not supported. 
+Some things might work, some things might not.
+If you were to encounter a bug, do not file an issue.
+If you want to make sure you're using a tested and supported configuration, either change the TensorFlow version or the TensorFlow Addons's version. 
+You can find the compatibility matrix in TensorFlow Addon's readme:
+https://github.com/tensorflow/addons
+  warnings.warn(
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/feature_extraction/image.py:167: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  dtype=np.int):
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+/users/timner/.conda/envs/fsvi-cl/lib/python3.8/site-packages/sklearn/utils/__init__.py:806: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  return floored.astype(np.int)
+/auto/users/timner/qixuan/function-space-variational-inference/baselines/fromp/opt_fromp.py:307: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha) (Triggered internally at  /opt/conda/conda-bld/pytorch_1616554796012/work/torch/csrc/utils/python_arg_parser.cpp:1005.)
+  exp_avg.mul_(beta1).add_(1-beta1, grad)
+
+smnist_sh, seed 6
+start working on task 0
+Test accuracies, task 1: mean = 0.9995, all = [0.9995]
+nb classes 10
+memorable points appended!
+updated fisher!
+start working on task 1
+Test accuracies, task 2: mean = 0.5496, all = [0.1154 0.9838]
+nb classes 10
+memorable points appended!
+updated fisher!
+start working on task 2
+Test accuracies, task 3: mean = 0.5618, all = [0.1674 0.526  0.992 ]
+nb classes 10
+memorable points appended!
+updated fisher!
+start working on task 3
+Test accuracies, task 4: mean = 0.4302, all = [0.1745 0.404  0.1515 0.9909]
+nb classes 10
+memorable points appended!
+updated fisher!
+start working on task 4
+Test accuracies, task 5: mean = 0.3344, all = [0.1121 0.2615 0.016  0.3046 0.9778]
+nb classes 10
+memorable points appended!
+updated fisher!
+
+Test accuracy: mean = 0.3344, std = 0.0000
