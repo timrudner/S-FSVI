@@ -31,7 +31,7 @@ $^1$ The implementation is based on the approximation proposed in <a href="https
 [//]: # (>📋 [todo] figure 1, and explanation for our approach)
 
 
-## Installation & Requirements
+## Installation
 
 To install requirements:
 
@@ -73,28 +73,28 @@ To create an `fsvi` executable to run experiments, run `pip install -e .`.
 
 ### Split MNIST, Permuted MNIST, and Split FashionMNIST
 
-| Model name               | [Split MNIST (MH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/split_mnist_multihead.ipynb) <br/>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/split_mnist_multihead.ipynb) | [Split FashionMNIST (MH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/split_fashionmnist_multihead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/split_fashionmnist_multihead.ipynb)| [Permuted MNIST (SH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/permuted_mnist_singlehead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/permuted_mnist_singlehead.ipynb) | [Split MNIST (SH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/split_mnist_singlehead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/split_mnist_singlehead.ipynb) |
+| Method               | [Split MNIST (MH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/split_mnist_multihead.ipynb) <br/>[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/split_mnist_multihead.ipynb) | [Split FashionMNIST (MH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/split_fashionmnist_multihead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/split_fashionmnist_multihead.ipynb)| [Permuted MNIST (SH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/permuted_mnist_singlehead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/permuted_mnist_singlehead.ipynb) | [Split MNIST (SH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/split_mnist_singlehead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/split_mnist_singlehead.ipynb) |
 |--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
 | S-FSVI (ours)            | 99.54% &pm; 0.04                                                                                                                                                                                                                                                                                                     | 99.05% &pm; 0.03                                                                                                             | 95.76% &pm; 0.02                                                                                                | 92.87% &pm; 0.14                                                                                          |
 | S-FSVI (larger networks) | 99.76% &pm; 0.00                                                                                                                                                                                                                                                                                                     | 98.50% &pm; 0.11                                                                                                             | 97.50% &pm; 0.01                                                                                                | 93.38% &pm; 0.10                                                                                          |
 | S-FSVI (no coreset)      | 99.62% &pm; 0.01                                                                                                                                                                                                                                                                                                     | 99.17% &pm; 0.06                                                                                                             | 84.06% &pm; 0.46                                                                                                | 20.15% &pm; 0.52                                                                                          |
 | S-FSVI (minimal coreset$^2$) | NA$^3$                                                                                                                                                                                                                                                                                                               | NA$^3$                                                                                                                       | 89.59% &pm; 0.30                                                                                                | 51.44% &pm; 1.22                                                                                          |
 
-$^2$ ''Minimal coresets'' are constrcuted by randomly selecting one data point per class for a given task.
+$^2$ "Minimal coresets" are constructed by randomly selecting one data point per class for a given task.
 
 $^3$ Since S-FSVI already performs well without a coreset, the minimal coreset option is not useful.
 
 
 ### Split CIFAR
 
-| Model name               | [Split CIFAR (MH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/split_cifar_multihead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/split_cifar_multihead.ipynb) |
+| Method               | [Split CIFAR (MH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/split_cifar_multihead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/split_cifar_multihead.ipynb) |
 |--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | S-FSVI$^4$            | 77.57% &pm; 0.84                                                                                                                                                                                                                                                                                                    |
 
 ### Sequential Omniglot
 
 
-| Model name               | [Sequential Omniglot (MH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/sequential_omniglot_multihead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/sequential_omniglot_multihead.ipynb) |
+| Method               | [Sequential Omniglot (MH)](https://github.com/timrudner/S-FSVI/blob/main/notebooks/sequential_omniglot_multihead.ipynb) <br/> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/timrudner/S-FSVI/blob/main/notebooks/sequential_omniglot_multihead.ipynb) |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | S-FSVI$^4$            | 83.29% &pm; 1.2                                                                                                                                                                                                                                                                                                               |
 
@@ -115,7 +115,7 @@ $^4$ To speed up training and reduce the memory requirements, only the variance 
 ## Adding new methods or tasks
 
 - To implement a new method, create a file `method_cl_methodname.py` in `/benchmarking`. For reference, see `/benchmarking/method_cl_template.py` and `/benchmarking/method_cl_fsvi.py`.
-- To implement a new dataloader, add a a new method to `benchmarking/data_loaders`.
+- To implement a new dataloader, add a new method to `benchmarking/data_loaders`.
 
 
 ## Citation
