@@ -1,0 +1,47 @@
+channels:
+  - defaults
+  - conda-forge
+  - anaconda
+  - pytorch
+dependencies:
+  - python=3.7
+  - pip=21.0.1
+  - ipython
+  - pillow
+  - psutil
+  - jupyter
+  - seaborn=0.10.1
+  - tabulate=0.8.7
+  - tqdm=4.48.2
+  - plotly=4.9.0
+  - urllib3=1.26.4
+  - pytorch=1.8.1
+  - torchvision=0.9.1
+  - cpuonly
+  - cython=0.29.23  # cython must be installed before scikit-learn
+  - pip:
+    - --find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+    - jax==0.2.11
+    - jaxlib==0.3.10+cuda11.cudnn82
+    - neural-tangents==0.3.6
+    - uncertainty-metrics==0.0.81
+    - latex==0.7.0
+    - scikit-learn==0.21.3
+    - scipy==1.4.1
+    - seqtools==1.1.0
+    - pandas
+    - pyreadr
+    - gpustat==0.6.0
+    - tensorflow==2.4.1
+    - tensorflow-datasets==4.2.0
+    - tfp-nightly==0.12.0.dev20201117
+    - uncertainty_metrics
+    - joypy
+    - pytest
+    - retry==0.9.2
+    - dm-haiku==0.0.4
+    - optax==0.0.2
+    - dm-sonnet
+    - gpflow
+    - tensorflow-probability
+    - tensorflow-addons
