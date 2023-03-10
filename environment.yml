@@ -49,6 +49,7 @@ dependencies:
   - retry==0.9.2
   - dm-haiku==0.0.4
   - optax==0.0.2
+  - chex==0.0.7
   - dm-sonnet==2.0.0
   - dm-tree==0.1.6
   - keras==2.6.0
